@@ -22,4 +22,5 @@ private:
 void readInputfile(const std::string& inputfileName);
 void setParams();
 
-}
+};
+#endif
