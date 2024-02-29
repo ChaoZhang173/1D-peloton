@@ -20,6 +20,6 @@ Initializer();
 private:
 // currently not using
 void readInputfile(const std::string& inputfileName);
-void setParameters();
+void setParams();
 
 }
