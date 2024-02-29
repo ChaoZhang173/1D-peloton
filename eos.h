@@ -15,8 +15,9 @@ class EOS {
 
 protected:
   double gamma;
-  int EOSChoice; // the choice of EOS
-
+  // the choice of EOS, 1 for polytropic, 2 for saha neon
+  int EOSChoice; 
+  
 public:
   // destructor
   virtual ~EOS(){}; 
@@ -37,7 +38,11 @@ class PolytropicEOS : public EOS {
 protected:
 
 public:
-
+  virtual ~PolytropicEOS(){};
+  virtual double getEnergy(double pressure, double density);
+  virtual double getTemperature(double pressure, double density);
+  virtual double getSoundSpeed(double pressure, double density);
+  virtual double getElectricConductivity(double pressure, double density);
 };
 
 #endif
