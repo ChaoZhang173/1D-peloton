@@ -14,7 +14,9 @@ Other schemes maybe added in the future.
 
 ## Data Structure: 
 STL List.  
-Consider testing speed/memory using vector.
+Consider testing speed/memory using vector.  
+The std::vector support random access which allows constant-time access to any element.  
+Could use 'reserve' or 'resize' to manage memory allocation for vectors.
 
 ## Usage:
 
