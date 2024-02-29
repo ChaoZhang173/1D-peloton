@@ -39,6 +39,7 @@ Working on the code structure.
 4. restart
 5. makefile
 6. time anaylsis
+7. material 
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
