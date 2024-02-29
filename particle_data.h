@@ -1,6 +1,7 @@
 #ifndef __PARTICLE_DATA_H__
 #define __PARTICLE_DATA_H__
 
+#include <vector>
 #include "initializer.h"
 #include "boundary.h"
 
