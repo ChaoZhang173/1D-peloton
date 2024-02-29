@@ -12,6 +12,7 @@ Gloabal_Data::particle_data: a class that stores the list of all particle data (
 typedef struct pdata{
   double x; //! coordinate
   double v; //! velocity
+  double oldv; //! velocity used to update states for each timestep
   double pressure;
   double soundspeed;
   double temperature;
