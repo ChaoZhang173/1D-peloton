@@ -4,7 +4,7 @@
 #include <cstring> // strerror()
 
 #include "particle_data.h"
-#include "peloton_solver.h"
+#include "lp_solver.h"
 #include "particle_viewer.h"
 
 using namespace std;
