@@ -33,7 +33,8 @@ We are currently working on the following jobs:
 2. output result
 3. use of input file
 4. restart
-5. makefile 
+5. makefile
+6. time anaylsis
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
