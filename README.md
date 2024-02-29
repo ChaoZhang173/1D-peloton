@@ -13,7 +13,7 @@ Now only using lax-wendroff scheme.
 Other schemes maybe added in the future.
 
 ## Data Structure: 
-STL List.
+STL List.  
 Consider testing speed/memory using vector.
 
 ## Usage:
