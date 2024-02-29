@@ -29,7 +29,7 @@ We are currently working on the following jobs:
 
 **3. Laxwendroff solver: Chao**
 
-**4. 1D solver: Chao**
+**4. 1D solver: Chao**  
 Working on the code structure.  
 
 ## Future Work:
