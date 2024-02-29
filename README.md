@@ -44,5 +44,5 @@ Finished the basic code structure (with content empty):
 - 10. eos  
 
 2. EOS class: Chao 02/29/2024  
-Finished the EOS file:
+Finished the EOS file:  
 The polytropic gas eos with EOSChoice = 1.
