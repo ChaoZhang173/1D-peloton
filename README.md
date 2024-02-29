@@ -28,6 +28,10 @@ We are currently working on the following jobs:
 **2. Boundary Conditions: James**
 
 **3. Laxwendroff solver: Chao**
+
+**4. 1D solver: Chao**
+Working on the code structure.  
+
 ## Future Work:
 1. heat decomposition with heating source  
 2. output result
