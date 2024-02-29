@@ -39,16 +39,16 @@ We are currently working on the following jobs:
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
 Finished the basic code structure (with content empty):
-- 1. lp_main
-- 2.  initializer  
-- 3. particle_data   
-- 4. lp_solver   
-- 5. particle_viewer  
-- 6. pellet_solver  
-- 7. state_pellet  
-- 8. geometry_pellet  
-- 9. boundary_pellet
-- 10. eos  
+- lp_main
+- initializer  
+- particle_data   
+- lp_solver   
+- particle_viewer  
+- pellet_solver  
+- state_pellet  
+- geometry_pellet  
+- boundary_pellet
+- eos  
 
 2. EOS class: Chao 02/29/2024  
 Finished the EOS file:  
