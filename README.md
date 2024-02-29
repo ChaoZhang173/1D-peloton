@@ -30,7 +30,7 @@ We are currently working on the following jobs:
 
 
 ## Previous Work:
-1. Code Structure: Chao    
+1. Code Structure: Chao  02/28/2024  
 Finished the basic code structure (with content empty):
 - 1. lp_main
 - 2.  initializer  
