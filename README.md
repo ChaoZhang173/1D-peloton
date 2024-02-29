@@ -21,11 +21,11 @@ Consider testing speed/memory using vector.
 ## Current Work:
 We are currently working on the following jobs:  
 
-**2. Particle data structure: James**
+**1. Particle data structure: James**
 
-**3. Boundary Conditions: James**
+**2. Boundary Conditions: James**
 
-**4. Eos and laxwendroff solver: Chao**
+**3. Eos and laxwendroff solver: Chao**
 ## Future Work:
 
 
