@@ -3,7 +3,7 @@
 This repository is used for developing 1D peloton code.  
 The 1D peloton code is used do quick analysis for pellet ablation in tokamaks.
 
-## Developer:
+## Author:
 
 Chao Zhang   
 James Corbett
