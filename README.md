@@ -16,7 +16,7 @@ Other schemes maybe added in the future.
 
 ## Current Work:
 We are currently working on the following jobs:   
-**1. Code Structure: Chao** 
+**1. Code Structure: Chao**    
 Finished the basic code structure (with content empty):
 lp_main
 initializer
