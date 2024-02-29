@@ -20,7 +20,8 @@ public:
   void moveParticle();
   void solve_laxwendroff();
 
-  void computeSpatialDer(); 
+  void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, 
+  const double *inVolume, double *Ud, double *Pd, double *Vd); 
   void timeIntegration();
 
   void computeCFLCondition();
