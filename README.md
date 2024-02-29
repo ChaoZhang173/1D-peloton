@@ -25,7 +25,7 @@ We are currently working on the following jobs:
 
 **2. Boundary Conditions: James**
 
-**3. Eos and laxwendroff solver: Chao**
+**3. Laxwendroff solver: Chao**
 ## Future Work:
 
 
@@ -41,4 +41,8 @@ Finished the basic code structure (with content empty):
 - 7. state_pellet  
 - 8. geometry_pellet  
 - 9. boundary_pellet
-- 10. eos
+- 10. eos  
+
+2. EOS class: Chao 02/29/2024  
+Finished the EOS file:
+The polytropic gas eos with EOSChoice = 1.
