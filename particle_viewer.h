@@ -12,7 +12,7 @@ features:
 
 class ParticleViewer {
 public:
-ParticleViewer(Global_Data * data);
+ParticleViewer(Global_Data * data,const std::string& outputfileName="");
 
 ~ParticleViewer(){}
 
