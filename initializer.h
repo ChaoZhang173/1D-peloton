@@ -16,6 +16,8 @@ friend class Global_Data; // Global_Data has access to private and proteced memb
 public:
 // constructor
 Initializer();
+// destructor
+~Initializer();
 
 private:
 // currently not using
