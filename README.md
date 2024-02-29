@@ -30,7 +30,13 @@ Finished the basic code structure (with content empty):
 9. boundary_pellet
 10. eos
 
+**2. Particle data structure: James**
+
+**3. Boundary Conditions: James**
+
+**4. Eos and laxwendroff solver: Chao**
 ## Future Work:
 
 
 ## Previous Work:
+
