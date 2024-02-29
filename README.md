@@ -9,7 +9,7 @@ Chao Zhang
 James Corbett
 
 ## Algorithm:
-Now only using lax-wendroff scheme.
+Now only using lax-wendroff scheme.  
 Other schemes maybe added in the future.
 
 ## Usage:
