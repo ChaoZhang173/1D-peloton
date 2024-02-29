@@ -27,7 +27,8 @@ Finished the basic code structure (with content empty):
 6. pellet_solver  
 7. state_pellet  
 8. geometry_pellet  
-9. boundary_pellet  
+9. boundary_pellet
+10. eos
 
 ## Future Work:
 
