@@ -29,7 +29,11 @@ We are currently working on the following jobs:
 
 **3. Laxwendroff solver: Chao**
 ## Future Work:
-
+1. heat decomposition with heating source  
+2. output result
+3. use of input file
+4. restart
+   
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
