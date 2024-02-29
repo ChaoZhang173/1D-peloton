@@ -9,6 +9,11 @@ Chao Zhang
 James Corbett
 
 ## Algorithm:
+Now only using lax-wendroff scheme.
+Other schemes maybe added in the future.
+
+## Usage:
+
 ## Current Work:
 We are currently working on the following jobs:
 **1. Code Structure: Chao** 
@@ -18,7 +23,10 @@ initializer
 particle_data
 lp_solver
 particle_viewer
-
+pellet_solver
+state_pellet
+geometry_pellet
+boundary_pellet
 
 ## Future Work:
 
