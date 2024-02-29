@@ -1,5 +1,5 @@
-#ifndef __PELOTON_SOLVER_H__
-#define __PELOTON_SOLVER_H__
+#ifndef __LP_SOLVER_H__
+#define __LP_SOLVER_H__
 
 #include "initializer.h"
 #include "particle_data.h"
