@@ -1,6 +1,6 @@
 # 1D-peloton
 
-This repository is used for developing 1D peloton code
+This repository is used for developing 1D peloton code.  
 The 1D peloton code is used do quick analysis for pellet ablation in tokamaks.
 
 ## People:
