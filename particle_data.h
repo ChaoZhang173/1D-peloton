@@ -54,6 +54,10 @@ public:
   int pelletnumber; //! =1
   double currenttime;
 
+  // a vector that stores all the particle data
+  std::vector<pdata_t> *particle_data;
+
+
   //--------print option-----------
   int printvelocity;
   int printdensity;
