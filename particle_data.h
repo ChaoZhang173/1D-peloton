@@ -37,6 +37,8 @@ public:
   // destructor
   ~Global_Data();
 
+  void initFluidParticles_line();
+
   Initializer *initializer;
   Geometry *geometry;
   State *state;
