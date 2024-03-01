@@ -102,3 +102,7 @@ void LPSolver::solve_laxwendroff(){
 
   
 }
+
+void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, const double *inVolume, double *Ud, double *Pd, double *Vd) {
+        
+}
