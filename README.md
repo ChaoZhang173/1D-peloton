@@ -31,6 +31,8 @@ We are currently working on the following jobs:
 Working on the compute spatial derivatice and time integration.  
 **4. 1D solver: Chao**  
 Finished the code structure.  
+**4. material library: Chao**  
+Finished the basic neon class, get(1+Z*) need to be finished
 
 ## Future Work:
 1. heat decomposition with heating source  
@@ -53,8 +55,10 @@ Finished the basic code structure (with content empty):
 - state_pellet  
 - geometry_pellet  
 - boundary_pellet
-- eos  
+- eos
+- material_lib
 
 2. EOS class: Chao 02/29/2024  
 Finished the EOS file:  
 The polytropic gas eos with EOSChoice = 1.
+
