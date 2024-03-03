@@ -50,6 +50,7 @@ void LPSolver::solve_laxwendroff(){
     double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
 
     // spatial derivative: u: velocity, p: pressure, v: volume
+    // order: /dx, /dx^2
     double Ud[2] = {0.,0.};
     double Pd[2] = {0.,0.};
     double Vd[2] = {0.,0.};
@@ -104,5 +105,9 @@ void LPSolver::solve_laxwendroff(){
 }
 
 void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, const double *inVolume, double *Ud, double *Pd, double *Vd) {
-        
+
+// use neighbourparticle to compute spatial derivative
+
+
+
 }

@@ -30,6 +30,9 @@ typedef struct pdata{
   double rightintegral;
   double rhointegral;
   double qplusminus;
+
+  std::vector<pdata_t> *neighbourparticle; //! a list of neighbor particles
+
 } pdata_t; //! an alias for stuct pdata, usage: pdata_t p;
 
 class Global_Data{
