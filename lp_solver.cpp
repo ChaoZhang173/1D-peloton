@@ -104,10 +104,52 @@ void LPSolver::solve_laxwendroff(){
   
 }
 
-void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, const double *inVolume, double *Ud, double *Pd, double *Vd) {
+void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
 
-// use neighbourparticle to compute spatial derivative
+    pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
+    pdata_t *pad_neir = &((*pad->neighbourparticle)[1]);
+
+    // the coefficients for Newton Interpolation
+    double *coefP[6] =[0.,0.,0.,0.,0.,0.];
+    double *coefV[6] =[0.,0.,0.,0.,0.,0.];
+    double *coefU[6] =[0.,0.,0.,0.,0.,0.];
+
+    computeDivdDifference(pad, coefU, coefP, coefV);
+
+    // compute spatial derivative
+    Ud[0] = coefU[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefU[5];
+    Ud[1] = 2*coefU[5];
+    Pd[0] = coefP[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefP[5];
+    Pd[1] = 2*coefP[5];
+    Vd[0] = coefV[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefV[5];
+    Vd[1] = 2*coefV[5];
+
+}
 
 
+void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV) {
+    pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
+    pdata_t *pad_neir = &((*pad->neighbourparticle)[1]); 
 
+    coefU[0] = pad_neil->v;
+    coefU[1] = pad->v;
+    coefU[2] = pad_neir->v;
+    coefU[3] = (coefU[1] - coefU[0])/(pad->x - pad_neil->x);
+    coefU[4] = (coefU[2] - coefU[1])/(pad_neir->x - pad->x);
+    coefU[5] = (coefU[4] - coefU[3])/(pad_neir->x - pad_neil->x);
+
+    coefP[0] = pad_neil->pressure;
+    coefP[1] = pad->pressure;
+    coefP[2] = pad_neir->pressure;
+    coefP[3] = (coefP[1] - coefP[0])/(pad->x - pad_neil->x);
+    coefP[4] = (coefP[2] - coefP[1])/(pad_neir->x - pad->x);
+    coefP[5] = (coefP[4] - coefP[3])/(pad_neir->x - pad_neil->x);
+
+    coefV[0] = pad_neil->volume;
+    coefV[1] = pad->volume;
+    coefV[2] = pad_neir->volume;
+    coefV[3] = (coefV[1] - coefV[0])/(pad->x - pad_neil->x);
+    coefV[4] = (coefV[2] - coefV[1])/(pad_neir->x - pad->x);
+    coefV[5] = (coefV[4] - coefV[3])/(pad_neir->x - pad_neil->x);
+    
 }
