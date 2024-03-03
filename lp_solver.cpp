@@ -105,7 +105,7 @@ void LPSolver::solve_laxwendroff(){
 }
 
 void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
-
+    // next: add null pointer check
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]);
 
@@ -128,6 +128,7 @@ void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *V
 
 
 void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV) {
+    // next: add null pointer check
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]); 
 
