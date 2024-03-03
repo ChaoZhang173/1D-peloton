@@ -30,11 +30,12 @@ We are currently working on the following jobs:
 **2. Boundary Conditions: James**
 
 **3. Laxwendroff solver: Chao**  
-Working on the compute spatial derivatice and time integration.  
+     Finished spatial derivative.
+     Working on the time integration.  
 **4. 1D solver: Chao**  
-Finished the code structure.  
+     Finished the code structure.  
 **4. material library: Chao**  
-Finished the basic neon class, get(1+Z*) need to be finished
+     Finished the basic neon class, get(1+Z*) need to be finished
 
 ## Future Work:
 1. heat decomposition with heating source  
