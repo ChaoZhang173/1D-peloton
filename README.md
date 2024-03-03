@@ -9,9 +9,11 @@ Chao Zhang
 James Corbett
 
 ## Algorithm:
-Now only using lax-wendroff scheme.  
-Other schemes maybe added in the future.
-
+1. MHD equations:  
+   Now only using lax-wendroff scheme.  
+   Other schemes maybe added in the future.
+2. spatial derivative:  
+   Use Newton Interpolation 
 ## Data Structure: 
 STL Vector.  
 Consider testing speed/memory using vector.  
