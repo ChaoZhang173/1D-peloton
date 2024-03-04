@@ -29,7 +29,9 @@ We are currently working on the following jobs:
 
 **1. Particle data structure: James**
 
-**2. Boundary Conditions: James**
+**2. Boundary Conditions: James**  
+
+**3. heating model: Chao** 
 
 **4. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished
