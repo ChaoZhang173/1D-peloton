@@ -13,7 +13,9 @@ James Corbett
    Now only using lax-wendroff scheme.  
    Other schemes maybe added in the future.
 2. spatial derivative:  
-   Use Newton Interpolation 
+   Use Newton Interpolation
+3. eos:
+   polytropic eos, will add saha equations in the future
 ## Data Structure: 
 STL Vector.  
 Consider testing speed/memory using vector.  
