@@ -16,6 +16,8 @@ James Corbett
    Use Newton Interpolation
 3. eos:
    polytropic eos, will add saha equations in the future
+4. FIST:
+       
 ## Data Structure: 
 STL Vector.  
 Consider testing speed/memory using vector.  
