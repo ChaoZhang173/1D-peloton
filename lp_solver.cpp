@@ -6,6 +6,16 @@ using namespace std;
 LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     gdata = g;
     cfldt = 0.0;
+    cflcoeff = init->getCFLcoeff();
+    iswritestep = true;
+    tstart = init->getTstart();
+    tend = init->getTend();
+    writetimeinterval = init->getWriteTimeInterval();
+    currenttime = tstart;
+    timestep = 0;
+    // write result at tstart
+    nextwritetime = tstart;
+    gdata->currenttime = currenttime;
 }
 
 void LPSolver::solve_1d(){
@@ -18,8 +28,8 @@ void LPSolver::solve_1d(){
 
         // compute the cfl dt
         computeCFLCondition();
-        // adjust dt by write time interval
-        bool iswritestep = adjustDtByWriteTimeInterval(); 
+        // adjust dt by write time interval, update currenttime
+        iswritestep = adjustDtByWriteTimeInterval(); 
 
         // heating model
         
@@ -30,6 +40,8 @@ void LPSolver::solve_1d(){
 
         // update particle states
         gdata->updateParticleStates();
+        // update local spacing
+        updateLocalSpacing();
         // radiation cooling
 
         // move particles
@@ -223,5 +235,55 @@ void LPSolver::computeTemperature() {
         pad = &((*gdata->particle_data)[li]);
         if(pad->ifboundary) continue;
         pad->temperature = gdata->eos->getTemperature(pad->pressure, 1./pad->volume);
+    }
+}
+
+void LPSolver::updateLocalSpacing(){
+    pdata_t *pad;
+    int li, lpnum = gdata->particle_data->size();
+
+    for(li=0; li<lpnum; li++){
+        pad = &((*gdata->particle_data)[li]);
+        if(pad->ifboundary) continue;
+        pad->localspcing *= pad->volume/pad->volumeT1;
+    }
+}
+
+void LPSolver::computeCFLCondition(){
+    pdata_t *pad;
+    int li, lpnum = gdata->particle_data->size();
+
+    double mindt = 100;
+    double dt;
+    double soundspeed;
+
+    for (li = 0; li<lpnum; li++){
+        pad = &((*gdata->particle_data)[li]);
+        if (pad->ifboundary) continue;
+        soundspeed = pad->soundspeed;
+        dt = pad->loacalspacing/soundspeed;
+        if (dt<mindt) mindt = dt;
+
+        cfldt = mindt * cflcoeff;   
+    }
+}
+
+void LPSolver::adjustDtByWriteTimeInterval(){
+    if(currenttime + cfldt >= nextwritetime){
+        cfldt = nextwritetime - currenttime;
+        currenttime = nextwritetime;
+        nextwritetime += writetimeinterval;
+        // warning message if cfldt <0
+        if(cfldt < 0){
+            cout<<"[LPSolver] Warning: cfldt < 0!"<<endl;
+            cout<<"[LPSolver] currenttime = "<<currenttime<<", nextwritetime = "<<nextwritetime<<endl;
+            cout<<"[LPSolver] cfldt = "<<cfldt<<endl;
+            assert(false);
+        }
+        return true;
+    }
+    else {
+        currenttime += cfldt;
+        return false;
     }
 }

@@ -19,6 +19,11 @@ Initializer();
 // destructor
 ~Initializer();
 
+void getCFLcoeff();
+void getTstart();
+void getTend();
+void getWriteTimeInterval();
+
 private:
 // currently not using
 void readInputfile(const std::string& inputfileName);

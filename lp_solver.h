@@ -31,6 +31,10 @@ public:
 
   void computeTemperature();
 
+  void updateLocalSpacing();
+  // ! update currenttime, nextwritetime and gdata->currenttime 
+  void adjustDtByWriteTimeInterval();
+
   /* 
   ! compute the coefficients for Newton Interpolation, using divided difference
   coefF = f[t1], f[t2], f[t3], f[t1,t2], f[t2,t3], f[t1,t2,t3]
@@ -45,9 +49,13 @@ public:
   double tend;
   double currenttime;
   double cfldt;
+  double cflcoeff;
+  double nextwritetime;
 
   int timestep;
   double writetimeinterval;
+
+  bool iswritestep;
 };
 
 
