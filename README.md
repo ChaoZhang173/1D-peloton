@@ -79,6 +79,6 @@ The polytropic gas eos with EOSChoice = 1.
      Finished the code structure.  
      Finished the updatePatcileState.  
      Finished moveParticle().  
-     Finished computeTemperature().
+     Finished computeTemperature().  
      Finished adjustDtByWriteTimeInterval().  
 
