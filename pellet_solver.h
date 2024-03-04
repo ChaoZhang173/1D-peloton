@@ -17,6 +17,7 @@ public:
 
   void heatingModel(double dt);
 
+
   double mu;
   double mass;
   double Z;
