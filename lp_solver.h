@@ -22,7 +22,10 @@ public:
 
   void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, 
   const double *inVolume, double *Ud, double *Pd, double *Vd); 
-  void timeIntegration();
+
+  void timeIntegration(double inVelocity, double inPressure, double inVolume, 
+                  double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
+                  double *outPressure, double *outVolume);
 
   void computeCFLCondition();
 

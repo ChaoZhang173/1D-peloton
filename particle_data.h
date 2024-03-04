@@ -24,6 +24,8 @@ typedef struct pdata{
   double soundspeedT1;
   double mass;
 
+  int id; //! particle id
+
   bool ifboundary; //! if this is a boundary particle
 
   double leftintegral;

@@ -5,6 +5,7 @@ using namespace std;
 
 LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     gdata = g;
+    cfldt = 0.0;
 }
 
 void LPSolver::solve_1d(){
@@ -96,16 +97,29 @@ void LPSolver::solve_laxwendroff(){
         computeSpatialDer(pad, invelocity, inpressure, involume, Ud, Pd, Vd);
 
         // time integration
-        timeIntegration();
+        timeIntegration(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
+                                Pd, Vd, outvelocity, outpressure, outvolume);
+
+        // coumpute soundspeed
+        *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1/(*outvolume));
 
         // assign vaules to out state
+        pad->oldv = *outvelocity;
+        pad->pressureT1 = *outpressure;
+        pad->volumeT1 = *outvolume;
+        pad->soundspeedT1 = *outsoundspeed;
     }
 
   
 }
 
 void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
-    // next: add null pointer check
+
+    if(pad->neighbourparticle[0] == NULL || pad->neighbourparticle[1] == NULL) {
+        cout<<"[computeSpatialDer] Detect a particle has no neighbour!"<<endl;
+        cout<<"[computeSpatialDer] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
+        return;
+    }
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]);
 
@@ -128,7 +142,12 @@ void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *V
 
 
 void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV) {
-    // next: add null pointer check
+
+    if(pad->neighbourparticle[0] == NULL || pad->neighbourparticle[1] == NULL) {
+        cout<<"[computeSpatialDer] Detect a particle has no neighbour!"<<endl;
+        cout<<"[computeSpatialDer] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
+        return;
+    }
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]); 
 
@@ -153,4 +172,33 @@ void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP,
     coefV[4] = (coefV[2] - coefV[1])/(pad_neir->x - pad->x);
     coefV[5] = (coefV[4] - coefV[3])/(pad_neir->x - pad_neil->x);
     
+}
+
+void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVolume, 
+                  double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
+                  double *outPressure, double *outVolume) {
+
+    double dt = cfldt;
+    double gamma = inSoundspeed*inSoundspeed/inVolume/inPressure;
+    double pinf = gdata->pinf;
+
+    double ux = Ud[0];
+    double uxx = Ud[1];
+    double px = Pd[0];
+    double pxx = Pd[1];
+    double vx = Vd[0];
+    double vxx = Vd[1];
+
+    *outVelocity = inVelocity - dt*inVolume*px + 0.5*dt*dt*(gamma*inVolume*inPressure*uxx - inVolume*ux*px);
+    *outPressure = inPressure - dt*gamma*inPressure*ux 
+                + 0.5*dt*dt*(gamma*gamma/inPressure*ux*ux + gamma*vx*inPressure/px+gamma*inVolume*inPressure*pxx
+                + gamma*inPressure*ux*ux);
+    *outVolume = inVolume +dt*inVolume*ux + 0.5*dt*dt*(-inVolume*vx*px - inVolume*inVolume*pxx);
+
+    if(isnan(*outVelocity) || isnan(*outPressure) || isnan(*outVolume)) {
+        cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
+        cout<<"[timeIntegration] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
+        assert(false);
+    }
+
 }

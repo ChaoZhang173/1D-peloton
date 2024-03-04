@@ -37,7 +37,7 @@ double PolytropicEOS::getSoundSpeed(double pressure, double density){
     }
     if(soundspeed > 0)
         return sqrt(soundspeed);
-    else if (soundspeed == 0)
+    else if (soundspeed > -1e-10 && soundspeed < 1e-10)
         return 0;
     else {
         cout<<"[EOS] Error: soundspeed is negative in PolytropicEOS::getSoundSpeed"<<endl;
