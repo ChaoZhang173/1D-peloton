@@ -35,7 +35,7 @@ void LPSolver::solve_1d(){
         // move particles
         moveParticle();       
         // coupute temperature
-
+        computeTemperature();
         // output data
 
         // delete remote particles
@@ -101,7 +101,7 @@ void LPSolver::solve_laxwendroff(){
                                 Pd, Vd, outvelocity, outpressure, outvolume);
 
         // coumpute soundspeed
-        *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1/(*outvolume));
+        *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
 
         // assign vaules to out state
         pad->oldv = *outvelocity;
@@ -212,5 +212,16 @@ void LPSolver::moveParticle() {
         pad = &((*gdata->particle_data)[li]);
         if(pad->ifboundary) continue;
         pad->x += 0.5*dt*(pad->v + pad->oldv);
+    }
+}
+
+void LPSolver::computeTemperature() {
+    pdata_t *pad;
+    int li, lpnum = gdata->particle_data->size();
+
+    for(li = 0; li < lpnum; li++){
+        pad = &((*gdata->particle_data)[li]);
+        if(pad->ifboundary) continue;
+        pad->temperature = gdata->eos->getTemperature(pad->pressure, 1./pad->volume);
     }
 }
