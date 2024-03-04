@@ -31,10 +31,7 @@ We are currently working on the following jobs:
 
 **2. Boundary Conditions: James**
 
-**3. Laxwendroff solver: Chao**  
-     Finished spatial derivative.
-     Working on the time integration.  
-**4. 1D solver: Chao**  
+**3. 1D solver: Chao**  
      Finished the code structure.  
 **4. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished
@@ -66,4 +63,8 @@ Finished the basic code structure (with content empty):
 2. EOS class: Chao 02/29/2024  
 Finished the EOS file:  
 The polytropic gas eos with EOSChoice = 1.
+
+3. Laxwendroff solver: Chao 03/04/2024  
+     Finished spatial derivative.
+     Finished the time integration.  
 
