@@ -29,7 +29,7 @@ void LPSolver::solve_1d(){
         // compute boundary condition
 
         // update particle states
-
+        gdata->updateParticleStates();
         // radiation cooling
 
         // move particles

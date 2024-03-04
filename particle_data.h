@@ -46,6 +46,9 @@ public:
 
   void initFluidParticles_line();
 
+  //! update particle states for each timestep
+  void updateParticleStates();
+
   Initializer *initializer;
   Geometry *geometry;
   State *state;
