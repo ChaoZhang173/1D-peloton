@@ -33,6 +33,7 @@ We are currently working on the following jobs:
 
 **3. 1D solver: Chao**  
      Finished the code structure.  
+     Finished the updatePatcileState.  
 **4. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished
 
