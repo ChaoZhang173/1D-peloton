@@ -18,6 +18,8 @@ LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     timestep = 0;
     nextwritetime = tstart + writetimeinterval;
     gdata->currenttime = currenttime;
+
+    pellet_solver = new PelletSolver(init, gdata);
 }
 
 void LPSolver::solve_1d(){
@@ -34,7 +36,7 @@ void LPSolver::solve_1d(){
         iswritestep = adjustDtByWriteTimeInterval(); 
 
         // heating model
-        
+        pellet_solver->heatingModel(cfldt);
         // lax-wendroff solver
         solve_laxwendroff();
 
@@ -60,6 +62,7 @@ void LPSolver::solve_1d(){
 
 }
 
+// ! the -∇·q term is implemented inside
 void LPSolver::solve_laxwendroff() {
     const double *invelocity, *inpressure, *involume, *insoundspeed;
     double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
@@ -119,6 +122,11 @@ void LPSolver::solve_laxwendroff() {
         cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
         cout<<"[timeIntegration] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
         assert(false);
+        }
+
+        // add -∇·q
+
+
         // coumpute soundspeed
         *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
 
@@ -128,8 +136,8 @@ void LPSolver::solve_laxwendroff() {
         pad->volumeT1 = *outvolume;
         pad->soundspeedT1 = *outsoundspeed;
         }
-    }
 }
+
 
 void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
 
