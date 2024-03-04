@@ -19,7 +19,10 @@ James Corbett
 4. FIST:
 5. write result:
    (to be done)write initial state at the beginning while write the output function   
-   other steps will be written normally.  
+   other steps will be written normally.
+6. local spacing:
+   the local spaing = 0.5((distance to left) + (distance to right))
+   no local spacing for the boundary particles
        
 ## Data Structure: 
 STL Vector.  
