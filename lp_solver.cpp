@@ -13,8 +13,7 @@ LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     writetimeinterval = init->getWriteTimeInterval();
     currenttime = tstart;
     timestep = 0;
-    // write result at tstart
-    nextwritetime = tstart;
+    nextwritetime = tstart + writetimeinterval;
     gdata->currenttime = currenttime;
 }
 
