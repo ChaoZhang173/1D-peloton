@@ -27,7 +27,7 @@ typedef struct pdata{
   int id; //! particle id
 
   // need to be initialized
-  double local_spacing; //! 0.5(dis_left + dis_right), no loscal spacing for boundary particles
+  double localspacing; //! 0.5(dis_left + dis_right), no loscal spacing for boundary particles
 
   bool ifboundary; //! if this is a boundary particle
 

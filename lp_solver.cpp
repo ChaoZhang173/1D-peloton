@@ -1,5 +1,8 @@
 #include <iostream>
+#include <cmath>
+#include <cassert>
 #include "lp_solver.h"
+
 
 using namespace std;
 
@@ -57,7 +60,7 @@ void LPSolver::solve_1d(){
 
 }
 
-void LPSolver::solve_laxwendroff(){
+void LPSolver::solve_laxwendroff() {
     const double *invelocity, *inpressure, *involume, *insoundspeed;
     double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
 
@@ -105,12 +108,17 @@ void LPSolver::solve_laxwendroff(){
         }
 
         // compute spatial derivative
-        computeSpatialDer(pad, invelocity, inpressure, involume, Ud, Pd, Vd);
+        computeSpatialDer(pad, Ud, Pd, Vd);
 
         // time integration
         timeIntegration(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
                                 Pd, Vd, outvelocity, outpressure, outvolume);
 
+        // check if time integration gives nan value
+        if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
+        cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
+        cout<<"[timeIntegration] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
+        assert(false);
         // coumpute soundspeed
         *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
 
@@ -119,26 +127,20 @@ void LPSolver::solve_laxwendroff(){
         pad->pressureT1 = *outpressure;
         pad->volumeT1 = *outvolume;
         pad->soundspeedT1 = *outsoundspeed;
+        }
     }
-
-  
 }
 
 void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
 
-    if(pad->neighbourparticle[0] == NULL || pad->neighbourparticle[1] == NULL) {
-        cout<<"[computeSpatialDer] Detect a particle has no neighbour!"<<endl;
-        cout<<"[computeSpatialDer] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
-        return;
-    }
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]);
 
     // the coefficients for Newton Interpolation
-    double *coefP[6] =[0.,0.,0.,0.,0.,0.];
-    double *coefV[6] =[0.,0.,0.,0.,0.,0.];
-    double *coefU[6] =[0.,0.,0.,0.,0.,0.];
-
+    double coefP[6] ={0.,0.,0.,0.,0.,0.};
+    double coefV[6] ={0.,0.,0.,0.,0.,0.};
+    double coefU[6] ={0.,0.,0.,0.,0.,0.};
+    // pass array to function = pass the pointer to the first element of the array
     computeDivdDifference(pad, coefU, coefP, coefV);
 
     // compute spatial derivative
@@ -154,11 +156,6 @@ void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *V
 
 void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV) {
 
-    if(pad->neighbourparticle[0] == NULL || pad->neighbourparticle[1] == NULL) {
-        cout<<"[computeSpatialDer] Detect a particle has no neighbour!"<<endl;
-        cout<<"[computeSpatialDer] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
-        return;
-    }
     pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
     pdata_t *pad_neir = &((*pad->neighbourparticle)[1]); 
 
@@ -205,13 +202,6 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
                 + 0.5*dt*dt*(gamma*gamma/inPressure*ux*ux + gamma*vx*inPressure/px+gamma*inVolume*inPressure*pxx
                 + gamma*inPressure*ux*ux);
     *outVolume = inVolume +dt*inVolume*ux + 0.5*dt*dt*(-inVolume*vx*px - inVolume*inVolume*pxx);
-
-    if(isnan(*outVelocity) || isnan(*outPressure) || isnan(*outVolume)) {
-        cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
-        cout<<"[timeIntegration] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
-        assert(false);
-    }
-
 }
 
 void LPSolver::moveParticle() {
@@ -244,7 +234,7 @@ void LPSolver::updateLocalSpacing(){
     for(li=0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
         if(pad->ifboundary) continue;
-        pad->localspcing *= pad->volume/pad->volumeT1;
+        pad->localspacing *= pad->volume/pad->volumeT1;
     }
 }
 
@@ -260,14 +250,14 @@ void LPSolver::computeCFLCondition(){
         pad = &((*gdata->particle_data)[li]);
         if (pad->ifboundary) continue;
         soundspeed = pad->soundspeed;
-        dt = pad->loacalspacing/soundspeed;
+        dt = pad->localspacing/soundspeed;
         if (dt<mindt) mindt = dt;
 
         cfldt = mindt * cflcoeff;   
     }
 }
 
-void LPSolver::adjustDtByWriteTimeInterval(){
+bool LPSolver::adjustDtByWriteTimeInterval(){
     if(currenttime + cfldt >= nextwritetime){
         cfldt = nextwritetime - currenttime;
         currenttime = nextwritetime;

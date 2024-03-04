@@ -6,10 +6,11 @@
 #include "particle_viewer.h"
 #include "pellet_solver.h"
 
+
 /*
 This file is for LPSolver class, it implements functions to solve PDE using lax-wendroff method
 */
-clas LPSolver {
+class LPSolver {
 public:
   LPSolver(Initializer* init, Global_Data *g, ParticleViewer *viewer);
 
@@ -20,8 +21,7 @@ public:
   void moveParticle();
   void solve_laxwendroff();
 
-  void computeSpatialDer(pdata_t *pad, const double *inVelocity, const double *inPressure, 
-  const double *inVolume, double *Ud, double *Pd, double *Vd); 
+  void computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd); 
 
   void timeIntegration(double inVelocity, double inPressure, double inVolume, 
                   double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
@@ -33,7 +33,7 @@ public:
 
   void updateLocalSpacing();
   // ! update currenttime, nextwritetime and gdata->currenttime 
-  void adjustDtByWriteTimeInterval();
+  bool adjustDtByWriteTimeInterval();
 
   /* 
   ! compute the coefficients for Newton Interpolation, using divided difference

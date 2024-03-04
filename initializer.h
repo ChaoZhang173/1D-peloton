@@ -19,10 +19,10 @@ Initializer();
 // destructor
 ~Initializer();
 
-void getCFLcoeff();
-void getTstart();
-void getTend();
-void getWriteTimeInterval();
+double getCFLcoeff();
+double getTstart();
+double getTend();
+double getWriteTimeInterval();
 
 private:
 // currently not using
