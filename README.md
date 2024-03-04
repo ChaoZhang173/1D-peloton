@@ -17,6 +17,9 @@ James Corbett
 3. eos:
    polytropic eos, will add saha equations in the future
 4. FIST:
+5. write result:
+   (to be done)write initial state at the beginning while write the output function   
+   other steps will be written normally.  
        
 ## Data Structure: 
 STL Vector.  
@@ -73,5 +76,6 @@ The polytropic gas eos with EOSChoice = 1.
      Finished the code structure.  
      Finished the updatePatcileState.  
      Finished moveParticle().  
-     Finished computeTemperature().  
+     Finished computeTemperature().
+     Finished adjustDtByWriteTimeInterval().  
 
