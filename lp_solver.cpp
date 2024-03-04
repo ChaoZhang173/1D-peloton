@@ -33,7 +33,7 @@ void LPSolver::solve_1d(){
         // radiation cooling
 
         // move particles
-
+        moveParticle();       
         // coupute temperature
 
         // output data
@@ -62,7 +62,7 @@ void LPSolver::solve_laxwendroff(){
     int li, lpnum = gdata->particle_data->size();
 
     for(li = 0; li<lpnum; li++){
-        pad = &(gdata->particle_data[li]);
+        pad = &((*gdata->particle_data)[li]);
         
         // if the particle is at the boundray (inside the pellet), skip it
         if (pad->ifboundary) 
@@ -201,4 +201,16 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
         assert(false);
     }
 
+}
+
+void LPSolver::moveParticle() {
+    pdata_t *pad;
+    int li, lpnum = gdata->particle_data->size();
+    double dt = cfldt;
+
+    for(li = 0; li < lpnum; li++){
+        pad = &((*gdata->particle_data)[li]);
+        if(pad->ifboundary) continue;
+        pad->x += 0.5*dt*(pad->v + pad->oldv);
+    }
 }
