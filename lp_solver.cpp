@@ -30,6 +30,8 @@ void LPSolver::solve_1d(){
 
         // reorder particles, make sure particle position is in order
 
+        // generate ghost partilces(for boundary particles)
+
         // compute the cfl dt
         computeCFLCondition();
         // adjust dt by write time interval, update currenttime
@@ -125,7 +127,7 @@ void LPSolver::solve_laxwendroff() {
         }
 
         // add -∇·q
-
+        *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
 
         // coumpute soundspeed
         *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));

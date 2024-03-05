@@ -35,6 +35,7 @@ typedef struct pdata{
   double rightintegral;
   double rhointegral;
   double qplusminus;
+  double deltaq; // ! -∇·q
   //! a list of neighbor particles, 0: left, 1: right
   std::vector<pdata_t> *neighbourparticle; 
 
