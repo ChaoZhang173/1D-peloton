@@ -23,6 +23,8 @@ James Corbett
 6. local spacing:
    the local spaing = 0.5((distance to left) + (distance to right))
    no local spacing for the boundary particles
+7. electron density integral:  
+   the 1D code only has left integral, and right integral is not used.  
        
 ## Data Structure: 
 STL Vector.  
@@ -39,9 +41,7 @@ We are currently working on the following jobs:
 
 **2. Boundary Conditions: James**  
 
-**3. heating model: Chao** 
-
-**4. material library: Chao**  
+**3. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished
 
 ## Future Work:
@@ -75,10 +75,13 @@ The polytropic gas eos with EOSChoice = 1.
 3. Laxwendroff solver: Chao 03/04/2024  
      Finished spatial derivative.
      Finished the time integration.
-4. 1D solver: Chao*  03/04/2024    
+4. 1D solver: Chao  03/04/2024    
      Finished the code structure.  
      Finished the updatePatcileState.  
      Finished moveParticle().  
      Finished computeTemperature().  
      Finished adjustDtByWriteTimeInterval().  
-
+5. heating model: Chao 03/05/2024
+- finished the computeDensityIntegral
+- finished addHeatSource for heat deposition
+- finished computeHeatDeposition
