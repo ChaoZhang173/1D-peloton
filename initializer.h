@@ -24,6 +24,8 @@ double getTstart();
 double getTend();
 double getWriteTimeInterval();
 
+int getHeatingSourceNumber();
+
 private:
 // currently not using
 void readInputfile(const std::string& inputfileName);

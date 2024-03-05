@@ -35,10 +35,9 @@ public:
   // ! update currenttime, nextwritetime and gdata->currenttime 
   bool adjustDtByWriteTimeInterval();
 
-  /* 
-  ! compute the coefficients for Newton Interpolation, using divided difference
-  coefF = f[t1], f[t2], f[t3], f[t1,t2], f[t2,t3], f[t1,t2,t3]
-  */
+  
+  //! compute the coefficients for Newton Interpolation, using divided difference
+  //  coefF = f[t1], f[t2], f[t3], f[t1,t2], f[t2,t3], f[t1,t2,t3]
   void computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV);
 
   Global_Data *gdata; 

@@ -4,6 +4,7 @@
 #include <vector>
 #include "initializer.h"
 #include "boundary.h"
+#include "pellet_solver.h"
 
 /*
 This file is used for particle data. It has a struct pdata and a class Global_Data
@@ -31,8 +32,8 @@ typedef struct pdata{
 
   bool ifboundary; //! if this is a boundary particle
 
-  double leftintegral;
-  double rightintegral;
+  double leftintegral; //! for 1D code, only has left integral
+  double rightintegral; // ! not used
   double rhointegral;
   double qplusminus;
   double deltaq; // ! -∇·q

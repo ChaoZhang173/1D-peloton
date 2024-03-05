@@ -38,7 +38,7 @@ void LPSolver::solve_1d(){
         iswritestep = adjustDtByWriteTimeInterval(); 
 
         // heating model
-        pellet_solver->heatingModel(cfldt);
+        pellet_solver->heatingModel(currenttime);
         // lax-wendroff solver
         solve_laxwendroff();
 
@@ -56,7 +56,7 @@ void LPSolver::solve_1d(){
         computeTemperature();
         // output data
 
-        // delete remote particles
+        // delete remote particles/ghost particles
 
     }
 
