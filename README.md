@@ -50,6 +50,7 @@ We are currently working on the following jobs:
      Finished the basic neon class, get(1+Z*) need to be finished
 
 ## Future Work:
+0. initialize the variables (important)
 1. heat decomposition with heating source  
 2. output result
 3. use of input file
