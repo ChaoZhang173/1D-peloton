@@ -32,8 +32,8 @@ void PelletSolver::computeDensityIntegral(){
     int li, lpnum = gdata->particle_data->size();
     double integral_sum = 0.;
     double integral_local = 0.;
-
-    for(li = 0; li < lpnum; li++){
+    // from right end to the pellet 
+    for(li = lpnum-1; li >= 0; li--){
         pad = &((*gdata->particle_data)[li]);
         if(pad->ifboundary){
             continue;

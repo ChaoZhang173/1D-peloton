@@ -31,8 +31,10 @@ typedef struct pdata{
   double localspacing; //! 0.5(dis_left + dis_right), no loscal spacing for boundary particles
 
   bool ifboundary; //! if this is a boundary particle
-
-  double leftintegral; //! for 1D code, only has left integral
+  
+  //! for 1D code, only has left integral,
+  // it is from the right neighbour to the particle itself
+  double leftintegral; 
   double rightintegral; // ! not used
   double rhointegral;
   double qplusminus;
