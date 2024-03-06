@@ -51,14 +51,13 @@ We are currently working on the following jobs:
 
 ## Future Work:
 0. initialize the variables (important)
-1. heat decomposition with heating source  
+1. makefile
 2. output result
 3. use of input file
 4. restart
-5. makefile
-6. time anaylsis
-7. material
-8. merge the computeDensityIntegral with computeHeatDeposition
+5. time anaylsis
+6. material
+7. merge the computeDensityIntegral with computeHeatDeposition
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
