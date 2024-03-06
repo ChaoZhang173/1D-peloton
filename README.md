@@ -26,7 +26,7 @@ James Corbett
 7. electron density integral and heat deposition:   
    the 1D code only has left integral, and right integral is not used.  
    at the end of computeDensityIntegral, set the -∇·q and q+- to 0 for every partilce,  
-   this is for the following function: computeHeatDeposition.
+   this is for the following function: computeHeatDeposition.  
    Currently the two functions are seperately, but they could merge together.
    Maybe work on it later
    
