@@ -13,7 +13,6 @@ using namespace std;
 int main(){
   //initialize the files
 
-  
   // initialize the initializer  may use input file in later developement
   Initializer *init = new Initializer();
 
@@ -30,7 +29,7 @@ int main(){
   gdata->initFluidParticles_line();
 
   // solve the pde
-  lpsolver->solver_1d();
+  lpsolver->solve_1d();
 
   // clean the data
   gdata->cleanUpArrays();

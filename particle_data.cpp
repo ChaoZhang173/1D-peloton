@@ -8,6 +8,9 @@ using namespace std;
 
 Global_Data::Global_Data(Initializer *init) {
 
+    gamma = init->getGamma();
+    // to be finished
+    setEOS();
 
 }
 

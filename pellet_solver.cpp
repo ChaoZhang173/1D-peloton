@@ -9,9 +9,12 @@ using namespace std;
 
 PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     gdata = g;
-    heatsource_numer = init->getHeatingSourceNumber()-1;
-
-    warmuptime = 0.01;
+    heatsource_numer = init->getHeatingSourceNumber();
+    for(int i = 0; i < heatsource_numer; i++){
+        teinf.push_back(init->getTeinf(i));
+        neinf.push_back(init->getNeinf(i));
+    }
+    warmuptime = init->getWarmupTime();
 }
 
 void PelletSolver::heatingModel(double currenttime){

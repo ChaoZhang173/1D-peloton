@@ -5,6 +5,7 @@
 #include "initializer.h"
 #include "boundary.h"
 #include "pellet_solver.h"
+#include "state.h"
 
 /*
 This file is used for particle data. It has a struct pdata and a class Global_Data
@@ -56,11 +57,15 @@ public:
   //! update particle states for each timestep
   void updateParticleStates();
 
+  //! set the eos 
+  void setEOS();
+
   Initializer *initializer;
-  Geometry *geometry;
   State *state;
   EOS *eos;
   PelletSolver *pellet_solver;
+
+  int eoschoice;
 
   double gamma;
   double pinf;
@@ -70,6 +75,9 @@ public:
 
   int pelletnumber; //! =1
   double currenttime;
+
+  //! the length of layer that will generate initial particles
+  double initiallayerlength;
 
   // a vector that stores all the particle data
   std::vector<pdata_t> *particle_data;
