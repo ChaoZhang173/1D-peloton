@@ -64,6 +64,7 @@ We are currently working on the following jobs:
 4. restart
 5. time anaylsis
 6. merge the computeDensityIntegral with computeHeatDeposition
+7. set up eos
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
