@@ -34,12 +34,16 @@ James Corbett
    
        
 ## Data Structure: 
-STL Vector.  
+1. STL Vector.  
 Consider testing speed/memory using vector.  
 The std::vector support random access which allows constant-time access to any element.  
 Could use `reserve` or `resize` to manage memory allocation for vectors.  
 Switch to use smart pointer `std::unique_ptr<std::vector<pdata_t>> particle_data`  
-smart pointer could manage memory automatically.  
+smart pointer could manage memory automatically.
+2. Particle Data
+   Use a smart pointer particle_data to store all particles in Global_Data class.
+   The 1st particle is near but NOT at the pellet surface 
+   New particles will be push and added into the particle list  
 
 ## Usage:
 
