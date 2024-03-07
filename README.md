@@ -70,7 +70,8 @@ finished the initializing particles
 5. time anaylsis
 6. merge the computeDensityIntegral with computeHeatDeposition
 7. set up eos
-8. understand how state works
+8. understand the state library    
+9. understand the boundary library  
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
@@ -82,7 +83,7 @@ Finished the basic code structure (with content empty):
 - particle_viewer  
 - pellet_solver  
 - state_pellet  
-- geometry_pellet  
+- geometry_pellet(not used)  
 - boundary_pellet
 - eos
 - material_lib
