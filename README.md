@@ -35,7 +35,9 @@ James Corbett
 STL Vector.  
 Consider testing speed/memory using vector.  
 The std::vector support random access which allows constant-time access to any element.  
-Could use `reserve` or `resize` to manage memory allocation for vectors.
+Could use `reserve` or `resize` to manage memory allocation for vectors.  
+Switch to use smart pointer 'std::unique_ptr<std::vector<pdata_t>> particle_data'  
+smart pointer could manage memory automatically.  
 
 ## Usage:
 
