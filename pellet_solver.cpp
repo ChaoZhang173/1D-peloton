@@ -9,6 +9,7 @@ using namespace std;
 
 PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     gdata = g;
+    setPelletMaterial(init->getMaterialChoice());
     heatsource_numer = init->getHeatingSourceNumber();
     for(int i = 0; i < heatsource_numer; i++){
         teinf.push_back(init->getTeinf(i));
@@ -30,8 +31,8 @@ void PelletSolver::heatingModel(double currenttime){
 void PelletSolver::computeDensityIntegral(){
     cout << "[Heat] Enter computeDensityIntegral..." << endl;
     
-    pdata_t *pad;
-    pdata_t *pad2; // the right neighbour particle
+    pdata *pad;
+    pdata *pad2; // the right neighbour particle
     int li, lpnum = gdata->particle_data->size();
     double integral_sum = 0.;
     double integral_local = 0.;
@@ -69,7 +70,7 @@ void PelletSolver::computeHeatDeposition(double currenttime){
 
 void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
 
-    pdata_t *pad;
+    pdata *pad;
     int li, lpnum = gdata->particle_data->size();
     
     const double e = heatK*(2.99792458e7)/100;
@@ -103,6 +104,10 @@ void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
     
 
 
+}
+
+void PelletSolver::setPelletMaterial(int materialid){
+    // to be finished
 }
 
 double Bessel_I0(double x)

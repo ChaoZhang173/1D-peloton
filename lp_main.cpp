@@ -32,7 +32,7 @@ int main(){
   lpsolver->solve_1d();
 
   // clean the data
-  gdata->cleanUpArrays();
+  
 
   // clean the objects
   delete init;

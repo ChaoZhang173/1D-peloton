@@ -21,7 +21,7 @@ public:
   void moveParticle();
   void solve_laxwendroff();
 
-  void computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd); 
+  void computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd); 
 
   void timeIntegration(double inVelocity, double inPressure, double inVolume, 
                   double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
@@ -38,7 +38,7 @@ public:
   
   //! compute the coefficients for Newton Interpolation, using divided difference
   //  coefF = f[t1], f[t2], f[t3], f[t1,t2], f[t2,t3], f[t1,t2,t3]
-  void computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV);
+  void computeDivdDifference(pdata *pad, double *coefU, double *coefP, double *coefV);
 
   Global_Data *gdata; 
   ParticleViewer *viewer;

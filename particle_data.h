@@ -2,6 +2,7 @@
 #define __PARTICLE_DATA_H__
 
 #include <vector>
+#include <memory>
 #include "initializer.h"
 #include "boundary.h"
 #include "pellet_solver.h"
@@ -12,7 +13,7 @@ This file is used for particle data. It has a struct pdata and a class Global_Da
 pdata: a data structure for a single particle
 Gloabal_Data::particle_data: a class that stores the list of all particle data (pdata) and functions
 */
-typedef struct pdata{
+struct pdata{
   double x; //! coordinate
   double v; //! velocity
   double oldv; //! velocity used to update states for each timestep
@@ -41,9 +42,9 @@ typedef struct pdata{
   double qplusminus;
   double deltaq; // ! -∇·q
   //! a list of neighbor particles, 0: left, 1: right
-  std::vector<pdata_t> *neighbourparticle; 
+  std::unique_ptr<std::vector<pdata>> neighbourparticle; 
 
-} pdata_t; //! an alias for stuct pdata, usage: pdata_t p;
+};
 
 class Global_Data{
 public:
@@ -52,6 +53,11 @@ public:
   // destructor
   ~Global_Data();
 
+
+  //! initialize fluid particles 
+  // the particles are initialized in a layer that close to the pellet surface 
+  // the first particle is set as the pellet surface,
+  // all the particles are set as fluid particles
   void initFluidParticles_line();
 
   //! update particle states for each timestep
@@ -71,6 +77,8 @@ public:
   double pinf;
   double einf;
 
+  double initialspacing;
+
   double backgroundpressure; 
 
   int pelletnumber; //! =1
@@ -80,7 +88,12 @@ public:
   double initiallayerlength;
 
   // a vector that stores all the particle data
-  std::vector<pdata_t> *particle_data;
+  std::unique_ptr<std::vector<pdata>> particle_data;
+  //! the estimated max number of particles, 
+  // used to preallocate memory for particle list
+  // could be changed if the size is not enough
+  // currently using smart pointer, not used
+  int maxparticlenum;
 
 
   //--------print option-----------

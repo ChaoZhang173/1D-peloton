@@ -76,7 +76,7 @@ void LPSolver::solve_laxwendroff() {
     double Vd[2] = {0.,0.};
     
     // data for one particle
-    pdata_t *pad;
+    pdata *pad;
 
     int li, lpnum = gdata->particle_data->size();
 
@@ -141,10 +141,10 @@ void LPSolver::solve_laxwendroff() {
 }
 
 
-void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *Vd) {
+void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd) {
 
-    pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
-    pdata_t *pad_neir = &((*pad->neighbourparticle)[1]);
+    pdata *pad_neil = &((*pad->neighbourparticle)[0]);
+    pdata *pad_neir = &((*pad->neighbourparticle)[1]);
 
     // the coefficients for Newton Interpolation
     double coefP[6] ={0.,0.,0.,0.,0.,0.};
@@ -164,10 +164,10 @@ void LPSolver::computeSpatialDer(pdata_t *pad, double *Ud, double *Pd, double *V
 }
 
 
-void LPSolver::computeDivdDifference(pdata_t *pad, double *coefU, double *coefP, double *coefV) {
+void LPSolver::computeDivdDifference(pdata *pad, double *coefU, double *coefP, double *coefV) {
 
-    pdata_t *pad_neil = &((*pad->neighbourparticle)[0]);
-    pdata_t *pad_neir = &((*pad->neighbourparticle)[1]); 
+    pdata *pad_neil = &((*pad->neighbourparticle)[0]);
+    pdata *pad_neir = &((*pad->neighbourparticle)[1]); 
 
     coefU[0] = pad_neil->v;
     coefU[1] = pad->v;
@@ -215,7 +215,7 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
 }
 
 void LPSolver::moveParticle() {
-    pdata_t *pad;
+    pdata *pad;
     int li, lpnum = gdata->particle_data->size();
     double dt = cfldt;
 
@@ -227,7 +227,7 @@ void LPSolver::moveParticle() {
 }
 
 void LPSolver::computeTemperature() {
-    pdata_t *pad;
+    pdata *pad;
     int li, lpnum = gdata->particle_data->size();
 
     for(li = 0; li < lpnum; li++){
@@ -238,7 +238,7 @@ void LPSolver::computeTemperature() {
 }
 
 void LPSolver::updateLocalSpacing(){
-    pdata_t *pad;
+    pdata *pad;
     int li, lpnum = gdata->particle_data->size();
 
     for(li=0; li<lpnum; li++){
@@ -249,7 +249,7 @@ void LPSolver::updateLocalSpacing(){
 }
 
 void LPSolver::computeCFLCondition(){
-    pdata_t *pad;
+    pdata *pad;
     int li, lpnum = gdata->particle_data->size();
 
     double mindt = 100;

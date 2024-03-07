@@ -26,6 +26,8 @@ public:
   void computeHeatDeposition(double currenttime);
   //! add heating source
   void addHeatSource(double teinf, double neinf, double currenttime);
+  //！ set parameters of pellet material
+  void setPelletMaterial(int materialid);
 
   int heatsource_numer;//! the number of heating sources
   std::vector<double> teinf;

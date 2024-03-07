@@ -35,8 +35,8 @@ class Initializer {
     int getMaterialChoice(){return i_MaterialChoice;};
     double getLayerLength(){return i_layerlength;};
     double getGamma(){return i_Gamma;};
-    
-
+    int getMaxParticleNumber(){return i_maxParticleNumber;};
+    double getInitialSpacing(){return i_Initialspacing;};
 
 
     private:
@@ -60,12 +60,15 @@ class Initializer {
     void setNeinf(double n){i_Neinf.push_back(n);};
     void setLayerLength(double l){i_layerlength = l;};
     void setGamma(double g){i_Gamma = g;};
+    void setMaxParticleNumber(int n){i_maxParticleNumber = n;};
+    void setInitialSpacing(double s){i_Initialspacing = s;};
 
     double i_StartTime;
     double i_EndTime;
     double i_CFLCoeff;
     double i_WriteStep;//! the time interval to write data
     double i_Gamma;
+    double i_Initialspacing;
     int i_HeatingSourceNumber;
     double i_WarmUpTime;
     int i_EOSChoice;
@@ -75,6 +78,7 @@ class Initializer {
 
     //! a length that used to generate initial particles
     double i_layerlength;
-
+    //! the estimated max number of particles
+    int i_maxParticleNumber;
 };
 #endif

@@ -30,5 +30,6 @@ void Initializer::setInputs() {
   setEOSChoice(1);
   setMaterialChoice(1);
   setLayerLength(0.01);
-
+  setMaxParticleNumber(10000);
+  setInitialSpacing(0.0001);
 }
