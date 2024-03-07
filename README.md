@@ -29,7 +29,7 @@ James Corbett
    this is for the following function: computeHeatDeposition.  
    Currently the two functions are seperately, but they could merge together.
    Maybe work on it later
-8. the state library is used to initializing the particles at the beginning,
+8. the state library is used to initializing the particles at the beginning,  
    in the following steps new particles will be added by generateBoundaryParticles in pellet_solver  
    
        
