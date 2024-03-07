@@ -42,7 +42,8 @@ Switch to use smart pointer `std::unique_ptr<std::vector<pdata_t>> particle_data
 smart pointer could manage memory automatically.
 2. Particle Data
    Use a smart pointer particle_data to store all particles in Global_Data class.
-   The 1st particle is near but NOT at the pellet surface 
+   The 1st particle is near but NOT at the pellet surface
+   Pellet surface: -0.5*initial spacing
    New particles will be push and added into the particle list  
 
 ## Usage:
