@@ -56,6 +56,7 @@ use smart pointer
 **2. Boundary Conditions: Chao**    
 finished the initializing particles  
 Need to understand Pinflow and Vinflow  
+Need to finish computeMassFlowRate  
 **3. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished   
      The 1+Z* function in 3D code returns 0, need to work with   
