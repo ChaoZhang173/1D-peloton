@@ -32,4 +32,6 @@ void Initializer::setInputs() {
   setLayerLength(0.01);
   setMaxParticleNumber(10000);
   setInitialSpacing(0.0001);
+  // set state name
+  setStateName("pelletstate");
 }

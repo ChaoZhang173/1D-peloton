@@ -37,6 +37,7 @@ class Initializer {
     double getGamma(){return i_Gamma;};
     int getMaxParticleNumber(){return i_maxParticleNumber;};
     double getInitialSpacing(){return i_Initialspacing;};
+    string getStateName(){return i_StateName;};
 
 
     private:
@@ -62,6 +63,7 @@ class Initializer {
     void setGamma(double g){i_Gamma = g;};
     void setMaxParticleNumber(int n){i_maxParticleNumber = n;};
     void setInitialSpacing(double s){i_Initialspacing = s;};
+    void setStateName(string s){i_StateName = s;};
 
     double i_StartTime;
     double i_EndTime;
@@ -75,6 +77,8 @@ class Initializer {
     int i_MaterialChoice;
     vector<double> i_Teinf;
     vector<double> i_Neinf;
+
+    string i_StateName;
 
     //! a length that used to generate initial particles
     double i_layerlength;

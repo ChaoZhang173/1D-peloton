@@ -9,31 +9,20 @@ public:
 	/**
 	 * \brief      Calculates pressure based on the Cartesian coordinate (x,y,z) of a particle 
 	 * \param [in] x  The x-coordinate
-	 * \param [in] y  The y-coordinate
-	 * \param [in] z  The z-coordinate
 	 * \return     The calculated pressure value
 	 */
-	virtual double pressure(double x, double y, double z)=0;
+	virtual double pressure()=0;
     /**
 	 * \brief      Calculates density based on the Cartesian coordinate (x,y,z) of a particle 
-	 * \param [in] x  The x-coordinate
-	 * \param [in] y  The y-coordinate
-	 * \param [in] z  The z-coordinate
 	 * \return     The calculated density value
 	 */
-	virtual double density(double x, double y, double z)=0;
+	virtual double density()=0;
 
     /**
 	 * \brief       Calculates velocity based on the Cartesian coordinate (x,y,z) of a particle 
-	 * \param [in]  x  The x-coordinate
-	 * \param [in]  y  The y-coordinate
-	 * \param [in]  z  The z-coordinate
-	 * \param [out] vX  The calculated velocity value in x-coordinate
-	 * \param [out] vY  The calculated velocity value in y-coordinate
-	 * \param [out] vZ  The calculated velocity value in z-coordinate
 	 * \return None
 	 */
-	virtual void velocity(double x, double y, double z, double& vX, double& vY, double& vZ)=0;
+	virtual double velocity()=0;
 	/**
 	 * \brief Destructor 
 	 */
