@@ -39,9 +39,6 @@ void PelletSolver::computeDensityIntegral(){
     // from right end to the pellet 
     for(li = lpnum-1; li >= 0; li--){
         pad = &((*gdata->particle_data)[li]);
-        if(pad->ifboundary){
-            continue;
-        }
         pad2 = &((*pad->neighbourparticle)[1]);
         integral_local = 0.5*(pad2->x - pad->x)*(1./pad2->volume + 1./pad->volume);
         integral_sum += integral_local;
@@ -87,9 +84,6 @@ void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
 
     for(li = 0; li < lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        if(pad->ifboundary){
-         continue;
-        }
         tauleft = pad->leftintegral/mass*Z;
         tauinf = heatK*heatK*teinf*teinf/(8.0*3.1416*e*e*e*e*lnLambda);
         taueff = tauinf/(0.625+0.55*sqrt(one_plus_Zstar));

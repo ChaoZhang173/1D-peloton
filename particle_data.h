@@ -95,6 +95,10 @@ public:
   // currently using smart pointer, not used
   int maxparticlenum;
 
+  //! boundary objects
+  std::vector<Boundary*> boundary;
+  //! number of boundary objects
+  int boundarynumber;
 
   //--------print option-----------
   int printvelocity;

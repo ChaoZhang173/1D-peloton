@@ -34,4 +34,6 @@ void Initializer::setInputs() {
   setInitialSpacing(0.0001);
   // set state name
   setStateName("pelletstate");
+  setBoundaryNumber(1);
+  setBoundaryName("pelletinflowboundary");
 }

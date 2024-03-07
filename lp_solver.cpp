@@ -27,7 +27,9 @@ void LPSolver::solve_1d(){
     while(currenttime < tend)
     {
         // generate boundary particles
-
+        for(int id = 0; id < gdata->boundarynumber; id++){
+            gdata->boundary[id]->generateBoundaryParticles();
+        }
         // reorder particles, make sure particle position is in order
 
         // generate ghost partilces(for boundary particles)
@@ -82,10 +84,6 @@ void LPSolver::solve_laxwendroff() {
 
     for(li = 0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        
-        // if the particle is at the boundray (inside the pellet), skip it
-        if (pad->ifboundary) 
-            continue;
         
         // get the in state
         invelocity = &(pad->v);
@@ -221,7 +219,6 @@ void LPSolver::moveParticle() {
 
     for(li = 0; li < lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        if(pad->ifboundary) continue;
         pad->x += 0.5*dt*(pad->v + pad->oldv);
     }
 }
@@ -232,7 +229,6 @@ void LPSolver::computeTemperature() {
 
     for(li = 0; li < lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        if(pad->ifboundary) continue;
         pad->temperature = gdata->eos->getTemperature(pad->pressure, 1./pad->volume);
     }
 }
@@ -243,7 +239,6 @@ void LPSolver::updateLocalSpacing(){
 
     for(li=0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        if(pad->ifboundary) continue;
         pad->localspacing *= pad->volume/pad->volumeT1;
     }
 }
@@ -258,7 +253,6 @@ void LPSolver::computeCFLCondition(){
 
     for (li = 0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
-        if (pad->ifboundary) continue;
         soundspeed = pad->soundspeed;
         dt = pad->localspacing/soundspeed;
         if (dt<mindt) mindt = dt;

@@ -38,6 +38,8 @@ class Initializer {
     int getMaxParticleNumber(){return i_maxParticleNumber;};
     double getInitialSpacing(){return i_Initialspacing;};
     string getStateName(){return i_StateName;};
+    int getBoundaryNumber(){return i_BoundaryNumber;};
+    string getBoundaryName(int i){return i_BoundaryNames[i];};
 
 
     private:
@@ -64,6 +66,8 @@ class Initializer {
     void setMaxParticleNumber(int n){i_maxParticleNumber = n;};
     void setInitialSpacing(double s){i_Initialspacing = s;};
     void setStateName(string s){i_StateName = s;};
+    void setBoundaryNumber(int n){i_BoundaryNumber = n;};
+    void setBoundaryName(string s){i_BoundaryNames.push_back(s);};
 
     double i_StartTime;
     double i_EndTime;
@@ -79,6 +83,9 @@ class Initializer {
     vector<double> i_Neinf;
 
     string i_StateName;
+
+    int i_BoundaryNumber;
+    vector<string> i_BoundaryNames;
 
     //! a length that used to generate initial particles
     double i_layerlength;

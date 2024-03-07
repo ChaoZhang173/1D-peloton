@@ -19,6 +19,13 @@ Global_Data::Global_Data(Initializer *init) {
     statename = init->getStateName();
     state= StateFactory::instance().createState(statename);
 
+    // boundary objects
+    boundarynumber = init->getBoundaryNumber();
+    for(int i = 0; i < boundarynumber; i++){
+        string boundaryname = init->getBoundaryName(i);
+        boundary.push_back(BoundaryFactory::instance().createBoundary(boundaryname));
+    }
+
 }
 
 void Global_Data::initFluidParticles_line(){
@@ -28,17 +35,8 @@ void Global_Data::initFluidParticles_line(){
     unique_ptr<vector<pdata>> particle_data = make_unique<vector<pdata>>(pnum);
     
     pdata *pad;
-    // the first particle is set as the pellet surface
-    pad = &((*particle_data)[0]);
-    pad->x = 0.0;
-    pad->v = state->velocity();
-    pad->volume = 1./state->density();
-    pad->pressure = state->pressure();
-    pad->localspacing = initialspacing;
-    pad->soundspeed = eos->getSoundSpeed(pad->pressure, 1./pad->volume);
-    pad->ifboundary = true;
-    
-    for (int i = 1; i < pnum; i++){
+    // the first particle is set near but not at the pellet surface
+    for (int i = 0; i < pnum; i++){
         pad = &((*particle_data)[i]);
         pad->x = i * initialspacing;
         pad->v = state->velocity();
@@ -57,7 +55,6 @@ void Global_Data::updateParticleStates(){
 
     for(li = 0; li < lpnum; li++){
         pad = &((*particle_data)[li]);
-        if (pad->ifboundary) continue;
         swap(pad->pressure, pad->pressureT1);
         swap(pad->volume, pad->volumeT1);
         swap(pad->soundspeed, pad->soundspeedT1);
