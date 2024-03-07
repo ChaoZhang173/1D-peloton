@@ -15,6 +15,9 @@ Global_Data::Global_Data(Initializer *init) {
     // to be finished
     setEOS();
 
+    // at the first step
+    ifStart = true;
+
     string statename;
     statename = init->getStateName();
     state= StateFactory::instance().createState(statename);

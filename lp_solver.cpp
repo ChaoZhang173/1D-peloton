@@ -60,6 +60,8 @@ void LPSolver::solve_1d(){
 
         // delete remote particles/ghost particles
 
+        // update the ifStart
+        gdata->ifStart = false;
     }
 
 

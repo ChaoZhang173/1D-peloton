@@ -40,7 +40,7 @@ class Initializer {
     string getStateName(){return i_StateName;};
     int getBoundaryNumber(){return i_BoundaryNumber;};
     string getBoundaryName(int i){return i_BoundaryNames[i];};
-
+    int getPelletNumber(){return i_PelletNumber;};
 
     private:
     // currently not using
@@ -68,6 +68,7 @@ class Initializer {
     void setStateName(string s){i_StateName = s;};
     void setBoundaryNumber(int n){i_BoundaryNumber = n;};
     void setBoundaryName(string s){i_BoundaryNames.push_back(s);};
+    void setPellentNumber(int n){i_PelletNumber = n;};
 
     double i_StartTime;
     double i_EndTime;
@@ -86,6 +87,9 @@ class Initializer {
 
     int i_BoundaryNumber;
     vector<string> i_BoundaryNames;
+
+    //! number of pellets
+    int i_PelletNumber;
 
     //! a length that used to generate initial particles
     double i_layerlength;

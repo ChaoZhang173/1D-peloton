@@ -34,6 +34,8 @@ void Initializer::setInputs() {
   setInitialSpacing(0.0001);
   // set state name
   setStateName("pelletstate");
-  setBoundaryNumber(1);
+  setBoundaryNumber(1);// currently only one boundary
   setBoundaryName("pelletinflowboundary");
+  // set pellets, currently only use 1 pellet
+  setPellentNumber(1);
 }

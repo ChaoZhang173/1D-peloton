@@ -1,15 +1,15 @@
 #ifndef __BOUNDARY_PELLET_H__
 #define __BOUNDARY_PELLET_H__
 
+#include <vector>
+
 #include "boundary.h"
 #include "eos.h"
-#include <vector>
 
 class PelletInflowBoundary: public Boundary {
 public:
     PelletInflowBoundary();	
     virtual ~PelletInflowBoundary() {};
-//	virtual void UpdateInflowBoundary(Global_Data* gdata, EOS* m_pEOS, double dt, double m_fInitParticleSpacing);
     virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing, double dt); 
 
 private:
@@ -18,15 +18,5 @@ private:
 	double Vinflow;//inflow specific volume, constant
 };
 
-class PelletOutflowBoundary: public Boundary {
-
-    public:
-        PelletOutflowBoundary();
-        virtual ~PelletOutflowBoundary() {};
-        virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing, double dt); 
-    
-    private:
-        double thickness;
-};
 
 #endif

@@ -66,6 +66,9 @@ public:
   //! set the eos 
   void setEOS();
 
+  //! true: at the first step
+  bool ifStart;
+
   Initializer *initializer;
   State *state;
   EOS *eos;

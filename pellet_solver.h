@@ -12,6 +12,16 @@ This file is for pellet solver.
 The class PelletSolver stores all functions that related to pellet problem.
 */
 
+//! struct to store pellet information
+struct pellet_info{
+  double x;
+  double layerlength;
+  double pelletvelocity;
+  double vinflow;
+  double pinflow;
+  double massflowrate;
+};
+
 class PelletSolver{
 public:
   PelletSolver (Initializer* init,Global_Data *gdata);
@@ -28,6 +38,8 @@ public:
   void addHeatSource(double teinf, double neinf, double currenttime);
   //！ set parameters of pellet material
   void setPelletMaterial(int materialid);
+  //! compute mass flow rate  
+  void computeMassFlowRate();
 
   int heatsource_numer;//! the number of heating sources
   std::vector<double> teinf;
@@ -46,6 +58,11 @@ public:
   Global_Data *gdata;
 
   const double heatK = 1.602e-18; // ! 1.602e-18, 1eV = 1.602e-19J
-  const double masse = 9.109e-28; // ! mass of electron, 9.109e-28g
+  const double masse = 9.109e-28; // ! mass of electron, 9.109e-28g\
+
+  //! a smart pointer that stores a vector of pellet_info
+  std::unique_ptr<std::vector<pellet_info>> pelletlist;
+  //! number of pellets, only use 1 for now
+  int pelletnumber;
 };
 #endif

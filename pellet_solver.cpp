@@ -16,6 +16,17 @@ PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
         neinf.push_back(init->getNeinf(i));
     }
     warmuptime = init->getWarmupTime();
+
+    // initialize the pellets
+    pelletnumber = init->getPelletNumber();
+    pelletlist = make_unique<vector<pellet_info>>(pelletnumber);
+    pellet_info *pellet;
+    for (int i = 0; i < pelletnumber; i++){
+        pellet = &((*pelletlist)[i]);
+        pellet->x = -0.5*init->getInitialSpacing();
+        pellet->layerlength = init->getLayerLength();
+    }
+    
 }
 
 void PelletSolver::heatingModel(double currenttime){
