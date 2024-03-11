@@ -13,5 +13,5 @@ Neon::Neon(){
 
 // to be finished
 double Neon::getOne_Plus_Zstar(double teinf){
-
+    return 4.9;
 }
