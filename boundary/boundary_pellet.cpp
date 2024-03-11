@@ -42,8 +42,28 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
         }
         
         // output the particle_data[0]->x
+        cout<<"[Boundary] the smallest x = "<<g->particle_data->at(0).x<<endl;
+        // generate new particles
+        int newParticleNum = (int)(massflowrate*dt/mass_fix);
+        double dis = pellet->pelletvelocity*dt; // layer that will generate new particles
+        cout<<"[Boundary] layer thickness = "<<dis<<endl;
+        cout<<"[Boundary] new paticle number = "<<newParticleNum<<endl;
 
+        double actualdx = max(pelletvinflow*mass_fix,0.0);
 
+        // currently generate particle at 0~smallest x
+        double newdx = g->particle_data->at(0).x/newParticleNum;
+        for(li=0; li<newParticleNum; li++){
+            pad->x = li*newdx;
+            pad->v = pellet->pelletvelocity;
+            pad->volume = pelletvinflow;
+            pad->pressure = pelletpinflow;
+            pad->localspacing = actualdx;
+            pad->mass = mass_fix;
+            pad->soundspeed = m_pEOS->getSoundSpeed(pad->pressure, 1./pad->volume);
+            pad->ifboundary = false;
+
+        }
     }
 
 

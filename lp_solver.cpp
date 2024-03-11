@@ -28,9 +28,9 @@ void LPSolver::solve_1d(){
     {
         // generate boundary particles
         for(int id = 0; id < gdata->boundarynumber; id++){
-            gdata->boundary[id]->generateBoundaryParticles();
+            gdata->boundary[id]->generateBoundaryParticle(gdata,gdata->eos,gdata->initialspacing,cfldt);
         }
-        // reorder particles, make sure particle position is in order
+        // reorder particles, make sure particle position is in order and find neighbours
 
         // generate ghost partilces(for boundary particles)
 

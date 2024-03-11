@@ -14,11 +14,7 @@ public:
 	/**
 	 * \brief Get a boundary particle based on a fluid particle      
 	 * \param [in] x  The x-coordinate of fluid particle
-	 * \param [in] y  The y-coordinate of fluid particle
-	 * \param [in] z  The z-coordinate of fluid particle
-	 * \param [out] xb  The x-coordinate of boundary particle
-	 * \param [out] yb  The y-coordinate of boundary particle
-	 * \param [out] zb  The z-coordinate of boundary particle		
+	 * \param [out] xb  The x-coordinate of boundary particle	
 	 */
 	virtual void UpdateInflowBoundary(Global_Data* gdata, EOS* m_pEOS, double dt, double m_fInitParticleSpacing){return ;}
     virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing,double dt)  {return ;}  

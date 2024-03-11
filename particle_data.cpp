@@ -24,9 +24,9 @@ Global_Data::Global_Data(Initializer *init) {
 
     // boundary objects
     boundarynumber = init->getBoundaryNumber();
+    vector<string> boundarynames = init->getBoundaryNames();
     for(int i = 0; i < boundarynumber; i++){
-        string boundaryname = init->getBoundaryName(i);
-        boundary.push_back(BoundaryFactory::instance().createBoundary(boundaryname));
+        boundary.push_back(BoundaryFactory::instance().createBoundary(boundarynames[i]));
     }
 
 }

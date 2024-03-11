@@ -39,7 +39,7 @@ class Initializer {
     double getInitialSpacing(){return i_Initialspacing;};
     string getStateName(){return i_StateName;};
     int getBoundaryNumber(){return i_BoundaryNumber;};
-    string getBoundaryName(int i){return i_BoundaryNames[i];};
+    vector<string>& getBoundaryNames() {return i_BoundaryNames;}
     int getPelletNumber(){return i_PelletNumber;};
 
     private:
