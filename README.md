@@ -76,7 +76,7 @@ Need to understand Pinflow and Vinflow
 4. restart
 5. time anaylsis
 6. merge the computeDensityIntegral with computeHeatDeposition
-7. set up eos
+7. set up eos and pellet material  
 8. understand the state library    
 9. understand the boundary library  
 
