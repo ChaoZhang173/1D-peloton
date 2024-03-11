@@ -51,6 +51,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
 
         double actualdx = max(pelletvinflow*mass_fix,0.0);
 
+        // access the vector inside the unique_ptr
+        vector<pdata> *particle_data = g->particle_data.get();
         // currently generate particle at 0~smallest x
         double newdx = g->particle_data->at(0).x/newParticleNum;
         for(li=0; li<newParticleNum; li++){
@@ -62,10 +64,9 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
             pad->mass = mass_fix;
             pad->soundspeed = m_pEOS->getSoundSpeed(pad->pressure, 1./pad->volume);
             pad->ifboundary = false;
-
+            particle_data->emplace_back(*pad);
         }
     }
-
 
 }
 
