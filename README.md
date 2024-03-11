@@ -55,19 +55,14 @@ smart pointer could manage memory automatically.
 
 ## Current Work:
 We are currently working on the following jobs:  
-
-**1. Particle data structure: Chao**  
-use smart pointer  
-**2. Boundary Conditions: Chao**    
-finished the initializing particles  
-finished genreateBoundaryParticle:03/11/2024  
-working on coumpteMassFlowRate  
-Need to understand Pinflow and Vinflow    
-**3. material library: Chao**  
+    
+**1. Boundary Condition: Chao**    
+     
+**2. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished   
      The 1+Z* function return 4.9   
-**4. Initializer: Chao**   
-   Initializer is partially finished with using user set input.
+**3. Initializer: Chao**   
+   Initializer is partially finished with using user set input.  
    
 ## Future Work:
 0. initialize the variables (important)
@@ -79,7 +74,10 @@ Need to understand Pinflow and Vinflow
 6. merge the computeDensityIntegral with computeHeatDeposition
 7. set up eos and pellet material  
 8. understand the state library    
-9. understand the boundary library  
+9. understand the boundary library
+10. radiation cooling
+11. reorder and merge particles
+12. release memory  
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
@@ -112,4 +110,11 @@ The polytropic gas eos with EOSChoice = 1.
 5. heating model: Chao 03/05/2024
 - finished the computeDensityIntegral
 - finished addHeatSource for heat deposition
-- finished computeHeatDeposition
+- finished computeHeatDeposition  
+6. Generate Boundary particles: Chao 03/11/2024    
+finished the initializing particles  
+finished genreateBoundaryParticle:03/11/2024  
+finished coumpteMassFlowRate  
+Need to understand Pinflow and Vinflow
+7. Particle data structure: Chao 03/11/2024  
+  particle data/neighbour particle use smart pointer  
