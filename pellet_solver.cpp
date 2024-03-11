@@ -115,6 +115,11 @@ void PelletSolver::setPelletMaterial(int materialid){
     // to be finished
 }
 
+void PelletSolver::computeMassFlowRate(){
+    
+}
+
+
 double Bessel_I0(double x)
 {
     double   p1 = 1.0;
