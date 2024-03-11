@@ -117,6 +117,25 @@ void PelletSolver::setPelletMaterial(int materialid){
 
 void PelletSolver::computeMassFlowRate(){
     
+    pellet_info *pellet;
+    pdata *pad;
+    
+    int pi, pnum = pelletlist->size();
+    double massflowrate;
+    double qsum;
+    
+    pad = &((*gdata->particle_data)[0]);
+    for(pi = 0; pi < pnum; pi++){
+        pellet = &((*pelletlist)[pi]);
+        if(gdata->ifStart){
+            pellet->massflowrate = 0.;
+            continue;
+        }
+        qsum = pad->qplusminus;
+        massflowrate = qsum/sublimationenergy;
+        pellet->massflowrate = massflowrate;
+        cout<<"[Pellet] The mass flow rate = "<<massflowrate<<endl;
+    }
 }
 
 
