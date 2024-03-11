@@ -47,7 +47,8 @@ smart pointer could manage memory automatically.
    Use a smart pointer particle_data to store all particles in Global_Data class.
    The 1st particle is near but NOT at the pellet surface
    Pellet surface: -0.5*initial spacing
-   New particles will be push and added into the particle list  
+   New particles will be push and added into the particle list
+   Neighbour: Left neighbour for p0 and right neighbour for plast are stored in a ghost particle list  
 
 ## Usage:
 
@@ -58,11 +59,12 @@ We are currently working on the following jobs:
 use smart pointer  
 **2. Boundary Conditions: Chao**    
 finished the initializing particles  
-Need to understand Pinflow and Vinflow  
-Need to finish computeMassFlowRate  
+finished genreateBoundaryParticle:03/11/2024  
+working on coumpteMassFlowRate  
+Need to understand Pinflow and Vinflow    
 **3. material library: Chao**  
      Finished the basic neon class, get(1+Z*) need to be finished   
-     The 1+Z* function in 3D code returns 0, need to work with   
+     The 1+Z* function return 4.9   
 **4. Initializer: Chao**   
    Initializer is partially finished with using user set input.
    
