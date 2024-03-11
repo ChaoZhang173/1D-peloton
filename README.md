@@ -17,6 +17,7 @@ James Corbett
 3. eos:
    polytropic eos, will add saha equations in the future
 4. FIST:
+   Currently use a ifStart to indicate if at the first step  
 5. write result:
    (to be done)write initial state at the beginning while write the output function   
    other steps will be written normally.
