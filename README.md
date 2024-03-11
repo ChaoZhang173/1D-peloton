@@ -33,7 +33,7 @@ James Corbett
    in the following steps new particles will be added by generateBoundaryParticles in pellet_solver
 9. Generate boundary particles:
    Currently generate particles at 0~smallest x, could be changed to use 0 - pelletV*dt  
-   mass_fix = dx*Vinflow(100), need to understand
+   mass_fix = dx*Vinflow(100), particles have same mass
    
        
 ## Data Structure: 
