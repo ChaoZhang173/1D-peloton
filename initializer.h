@@ -39,7 +39,7 @@ class Initializer {
     double getInitialSpacing(){return i_Initialspacing;};
     string getStateName(){return i_StateName;};
     int getBoundaryNumber(){return i_BoundaryNumber;};
-    vector<string>& getBoundaryNames() {return i_BoundaryNames;}
+    string getBoundaryName(int i) {return i_BoundaryName[i];}
     int getPelletNumber(){return i_PelletNumber;};
 
     private:
@@ -67,7 +67,7 @@ class Initializer {
     void setInitialSpacing(double s){i_Initialspacing = s;};
     void setStateName(string s){i_StateName = s;};
     void setBoundaryNumber(int n){i_BoundaryNumber = n;};
-    void setBoundaryName(string s){i_BoundaryNames.push_back(s);};
+    void setBoundaryName(string s){i_BoundaryName.push_back(s);};
     void setPellentNumber(int n){i_PelletNumber = n;};
 
     double i_StartTime;
@@ -86,7 +86,7 @@ class Initializer {
     string i_StateName;
 
     int i_BoundaryNumber;
-    vector<string> i_BoundaryNames;
+    vector<string> i_BoundaryName;
 
     //! number of pellets
     int i_PelletNumber;
