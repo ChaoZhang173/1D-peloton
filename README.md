@@ -30,7 +30,9 @@ James Corbett
    Currently the two functions are seperately, but they could merge together.
    Maybe work on it later
 8. the state library is used to initializing the particles at the beginning,  
-   in the following steps new particles will be added by generateBoundaryParticles in pellet_solver  
+   in the following steps new particles will be added by generateBoundaryParticles in pellet_solver
+9. Generate boundary particles:
+   Currently generate particles at 0~smallest x, (could be changed to use 0~pelletV*dt)
    
        
 ## Data Structure: 
