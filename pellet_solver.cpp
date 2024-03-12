@@ -252,6 +252,9 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     }
 }
 
+double PelletSolver::computeQplusminuisGradient(pdata *pad, pellet_info *pellet){
+    
+}
 
 double Bessel_I0(double x)
 {
