@@ -58,10 +58,7 @@ We are currently working on the following jobs:
     
 **1. Boundary Condition: Chao**    
      
-**2. material library: Chao**  
-     Finished the basic neon class, get(1+Z*) need to be finished   
-     The 1+Z* function return 4.9   
-**3. Initializer: Chao**   
+**2. Initializer: Chao**   
    Initializer is partially finished with using user set input.  
    
 ## Future Work:
@@ -118,3 +115,6 @@ finished coumpteMassFlowRate
 Need to understand Pinflow and Vinflow
 7. Particle data structure: Chao 03/11/2024  
   particle data/neighbour particle use smart pointer  
+8. Material library: Chao  03/12/2024  
+     Finished the basic neon class   
+     The 1+Z* function return 4.9   
