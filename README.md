@@ -56,9 +56,6 @@ smart pointer could manage memory automatically.
 ## Current Work:
 We are currently working on the following jobs:  
     
-**1. Boundary Condition: Chao**    
-     finished compute boundary condition  
-     working on computeQplusminusGradient  
 **2. Initializer: Chao**   
    Initializer is partially finished with using user set input.  
    
@@ -118,4 +115,7 @@ Need to understand Pinflow and Vinflow
   particle data/neighbour particle use smart pointer  
 8. Material library: Chao  03/12/2024  
      Finished the basic neon class   
-     The 1+Z* function return 4.9   
+     The 1+Z* function return 4.9
+9. Boundary Condition: Chao 03/12/2024    
+     finished compute boundary condition  
+     finished computeQplusminusGradient  
