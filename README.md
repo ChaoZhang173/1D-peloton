@@ -25,17 +25,17 @@ James Corbett
    the local spaing = 0.5((distance to left) + (distance to right))  
    no local spacing for the boundary particles  
 7. electron density integral and heat deposition:   
-   the 1D code only has left integral, and right integral is not used.  
+   The 1D code only has left integral, and right integral is not used.  
    at the end of computeDensityIntegral, set the `-∇·q` and `q+-` to 0 for every partilce,  
-   this is for the following function: computeHeatDeposition.  
-   Currently the two functions are seperately, but they could merge together.
-   Maybe work on it later
-8. the state library is used to initializing the particles at the beginning,  
+   This is for the following function: computeHeatDeposition.  
+   Currently the two functions are seperately, but they could merge together.  
+   Maybe work on it later  
+9. the state library is used to initializing the particles at the beginning,  
    in the following steps new particles will be added by generateBoundaryParticles in pellet_solver  
-9. Generate boundary particles:
+10. Generate boundary particles:
    Currently generate particles at 0~smallest x, could be changed to use 0 - pelletV*dt  
    mass_fix = dx*Vinflow(100), particles have same mass
-10. dq/dx (QplusminusGradient):  
+11. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
    
        
