@@ -49,7 +49,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
         cout<<"[Boundary] layer thickness = "<<dis<<endl;
         cout<<"[Boundary] new paticle number = "<<newParticleNum<<endl;
 
-        double actualdx = max(pelletvinflow*mass_fix,0.0);
+        // used as localspacing in 3D code, not used in 1D code
+        //double actualdx = max(pelletvinflow*mass_fix,0.0);
 
         // access the vector inside the unique_ptr
         vector<pdata> *particle_data = g->particle_data.get();
@@ -60,7 +61,7 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
             pad->v = pellet->pelletvelocity;
             pad->volume = pelletvinflow;
             pad->pressure = pelletpinflow;
-            pad->localspacing = actualdx;
+            pad->localspacing = newdx;
             pad->mass = mass_fix;
             pad->soundspeed = m_pEOS->getSoundSpeed(pad->pressure, 1./pad->volume);
             pad->ifboundary = false;

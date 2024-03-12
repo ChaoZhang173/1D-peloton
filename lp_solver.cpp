@@ -45,10 +45,10 @@ void LPSolver::solve_1d(){
         solve_laxwendroff();
 
         // compute boundary condition
-
+        pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing/5);
         // update particle states
         gdata->updateParticleStates();
-        // update local spacing
+        // update local spacing, need to be updated
         updateLocalSpacing();
         // radiation cooling
 

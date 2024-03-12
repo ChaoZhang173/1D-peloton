@@ -160,8 +160,96 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     int li, lpnum = g->particle_data->size();
     int pi, pnum = pelletlist->size();
 
+    int counter_nei = 0;
+    double qsum = 0;
+    double qsum_bc = 0;
+    double vol = 0;
+    double vol_bc = 0;
+    double ur = 0;
+    double ur_bc = 0;
+    double pres = 0;
+    double pres_bc = 0;
+    double soundspeed = 0;
+    double soundspeed_bc = 0;
+    double massflowrate;
 
+    double B,C; 
 
+    // states from charactieristic
+    double pvolume, ppressure,pur;
+
+    double v,ss; 
+    double sound;
+    double r_shift;
+    double x; // the position of the particle
+    double pellet_cen; 
+
+    double gamma = g->gamma;
+    double R = 83.1466/mu;
+    double Ts = 450;
+
+    for (pi = 0; pi<pnum; pi++){
+        pellet = &((*pelletlist)[pi]);
+        counter_nei = 0;
+        qsum = 0;
+        vol = 0;
+        ur = 0;
+        pres = 0;
+        soundspeed = 0;
+        pad = &((*g->particle_data)[0]);
+        pellet_cen = -0.5*pad->localspacing;
+
+        for(li = 0; li < lpnum; li++){
+            pad = &((*g->particle_data)[li]);
+            x = pad->x;
+            v = (pad->v+pad->oldv)/2;
+            sound = (pad->soundspeed+pad->soundspeedT1)/2;
+            if(v == 0)
+                ss = 0;
+            else{
+                ss = sound;
+            }
+            r_shift = x-pellet_cen - ss*dt;
+            if(r_shift<pellet_cen+dx && r_shift>pellet_cen-dx){
+                pvolume = pad->volume;
+                ppressure = pad->pressure;
+                pur = v;
+                qsum += computeQplusminuisGradient(pad,pellet);
+                vol += pvolume;
+                pres += ppressure;
+                soundspeed += pad->soundspeed;
+                ur += pur;
+                counter_nei++;
+            }
+        }
+        if(counter_nei == 0){
+            cout<<"[Boundary] No neighbour particles found for pellet "<<pi<<"!"<<endl;
+        }
+        qsum_bc = qsum/counter_nei;
+        vol_bc = vol/counter_nei;
+        pres_bc = pres/counter_nei;
+        soundspeed_bc = soundspeed/counter_nei;
+        ur_bc = ur/counter_nei;
+        massflowrate = pellet->massflowrate;
+        if(abs(massflowrate) <1e-10){
+            B = C = 0;
+        }
+        else{
+            B = (pres_bc+dt*(gamma-1)*(qsum_bc))*vol_bc/soundspeed_bc - ur_bc;
+            C = -massflowrate*R*Ts*vol_bc/soundspeed_bc;
+        }
+        pellet->pelletvelocity = (-B+sqrt(B*B-4*C))/2;
+        pellet->vinflow = pellet->pelletvelocity/massflowrate;
+        pellet->pinflow = R*Ts/pellet->vinflow;
+
+        cout<<"[Boundary] Inflow volume = "<<vol_bc<<endl;
+        cout<<"[Boundary] Inflow pressure = "<<pres_bc<<endl;
+        cout<<"[Boundary] Inflow soundspeed = "<<soundspeed_bc<<endl;
+        cout<<"[Boundary] Inflow velocity = "<<ur_bc<<endl;
+        cout<<"[Boundary] Massflowrate = "<<massflowrate<<endl;
+        cout<<"[Boundary] Ts = "<<Ts<<endl;
+        cout<<"[Boundary] pellet velcoity = "<<pellet->pelletvelocity<<endl;
+    }
 }
 
 
