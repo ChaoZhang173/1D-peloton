@@ -89,18 +89,18 @@ Finished the basic code structure (with content empty):
 - material_lib
 
 2. EOS class: Chao 02/29/2024  
-Finished the EOS file:  
-The polytropic gas eos with EOSChoice = 1.
+- Finished the EOS file:  
+- The polytropic gas eos with EOSChoice = 1.
 
-3. Laxwendroff solver: Chao 03/04/2024  
-     Finished spatial derivative.
-     Finished the time integration.
+3. Laxwendroff solver: Chao 03/04/2024
+- Finished spatial derivative.
+- Finished the time integration.
 4. 1D solver: Chao  03/04/2024    
-     Finished the code structure.  
-     Finished the updatePatcileState.  
-     Finished moveParticle().  
-     Finished computeTemperature().  
-     Finished adjustDtByWriteTimeInterval().  
+- Finished the code structure.
+- Finished the updatePatcileState.
+- Finished moveParticle().
+- Finished computeTemperature().
+- Finished adjustDtByWriteTimeInterval().  
 5. heating model: Chao 03/05/2024
 - finished the computeDensityIntegral
 - finished addHeatSource for heat deposition
@@ -111,12 +111,12 @@ finished genreateBoundaryParticle:03/11/2024
 finished coumpteMassFlowRate  
 Need to understand Pinflow and Vinflow
 7. Particle data structure: Chao 03/11/2024  
-  particle data/neighbour particle use smart pointer  
+- particle data/neighbour particle use smart pointer  
 8. Material library: Chao  03/12/2024  
 9. Initializer: Chao 02/12/2024     
-   Initializer is partially finished with using user set input.  
-     Finished the basic neon class   
-     The 1+Z* function return 4.9
+- Initializer is partially finished with using user set input.  
+- Finished the basic neon class   
+- The 1+Z* function return 4.9
 9. Boundary Condition: Chao 03/12/2024    
-     finished compute boundary condition  
-     finished computeQplusminusGradient  
+- finished compute boundary condition
+- finished computeQplusminusGradient  
