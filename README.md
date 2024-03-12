@@ -35,7 +35,7 @@ James Corbett
 9. Generate boundary particles:
    Currently generate particles at 0~smallest x, could be changed to use 0 - pelletV*dt  
    mass_fix = dx*Vinflow(100), particles have same mass
-10. dq/dx (QplusminusGradient):
+10. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
    
        
