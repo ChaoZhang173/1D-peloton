@@ -117,6 +117,6 @@ Need to understand Pinflow and Vinflow
 - Initializer is partially finished with using user set input.  
 - Finished the basic neon class   
 - The 1+Z* function return 4.9
-9. Boundary Condition: Chao 03/12/2024    
+10. Boundary Condition: Chao 03/12/2024    
 - finished compute boundary condition
 - finished computeQplusminusGradient  
