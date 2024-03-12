@@ -11,7 +11,7 @@ class Material{
     public:
         double getMu() const {return mu;} 
         double getMass() const {return mass;}
-        double getZ()const {return Z;}
+        double getZ() const {return Z;}
         double getI() const{return I;}
         double getSublimationEnergy() const {return sublimationEnergy;}
         virtual double  getOne_Plus_Zstar(double teinf ) = 0;
@@ -27,7 +27,7 @@ class Material{
 class Neon: public Material{
     
     public:  
-         virtual double  getOne_Plus_Zstar(double teinf ); 
+        virtual double  getOne_Plus_Zstar(double teinf ); 
         Neon();
     
         ~Neon();

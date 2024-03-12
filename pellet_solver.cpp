@@ -111,8 +111,20 @@ void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
 
 }
 
-void PelletSolver::setPelletMaterial(int materialid){
-    // to be finished
+void PelletSolver::setPelletMaterial(int id){
+    materialid = id;
+    if(id == 0){
+        material = new Neon();
+    }
+    else{
+        assert(false);
+    }
+    mu = material->getMu();
+    mass = material->getMass();
+    Z = material->getZ();
+    I = material->getI();
+    sublimationenergy = material->getSublimationEnergy();
+    one_plus_Zstar = material->getOne_Plus_Zstar(teinf[0]);
 }
 
 void PelletSolver::computeMassFlowRate(){
@@ -136,6 +148,18 @@ void PelletSolver::computeMassFlowRate(){
         pellet->massflowrate = massflowrate;
         cout<<"[Pellet] The mass flow rate = "<<massflowrate<<endl;
     }
+}
+
+void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx){
+    
+    pdata *pad;
+    pellet_info *pellet;
+    
+    int li, lpnum = g->particle_data->size();
+    int pi, pnum = pelletlist->size();
+
+
+
 }
 
 

@@ -36,16 +36,20 @@ public:
   void computeHeatDeposition(double currenttime);
   //! add heating source
   void addHeatSource(double teinf, double neinf, double currenttime);
-  //！ set parameters of pellet material
-  void setPelletMaterial(int materialid);
+  //！ set parameters of pellet material, currently only have Neon = 0
+  void setPelletMaterial(int id);
   //! compute mass flow rate  
   void computeMassFlowRate();
+  //! compute boundary condition
+  void computeBoundaryCondition(Global_Data *g, double dt, double dx);
 
   int heatsource_numer;//! the number of heating sources
   std::vector<double> teinf;
   std::vector<double> neinf;
   double warmuptime;
 
+  Material *material;
+  int materialid;
   double mu;
   double mass;
   double Z;
