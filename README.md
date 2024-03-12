@@ -57,7 +57,8 @@ smart pointer could manage memory automatically.
 We are currently working on the following jobs:  
     
 **1. Boundary Condition: Chao**    
-     
+     finished compute boundary condition  
+     working on computeQplusminusGradient  
 **2. Initializer: Chao**   
    Initializer is partially finished with using user set input.  
    
