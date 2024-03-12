@@ -106,9 +106,9 @@ Finished the basic code structure (with content empty):
 - finished addHeatSource for heat deposition
 - finished computeHeatDeposition  
 6. Generate Boundary particles: Chao 03/11/2024    
-finished the initializing particles  
-finished genreateBoundaryParticle:03/11/2024  
-finished coumpteMassFlowRate  
+- finished the initializing particles  
+- finished genreateBoundaryParticle:03/11/2024  
+- finished coumpteMassFlowRate  
 Need to understand Pinflow and Vinflow
 7. Particle data structure: Chao 03/11/2024  
 - particle data/neighbour particle use smart pointer  
