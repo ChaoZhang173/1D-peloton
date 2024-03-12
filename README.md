@@ -22,8 +22,8 @@ James Corbett
    (to be done)write initial state at the beginning while write the output function   
    other steps will be written normally.
 6. local spacing:
-   the local spaing = 0.5((distance to left) + (distance to right))
-   no local spacing for the boundary particles
+   the local spaing = 0.5((distance to left) + (distance to right))  
+   no local spacing for the boundary particles  
 7. electron density integral and heat deposition:   
    the 1D code only has left integral, and right integral is not used.  
    at the end of computeDensityIntegral, set the `-∇·q` and `q+-` to 0 for every partilce,  
@@ -45,19 +45,23 @@ Could use `reserve` or `resize` to manage memory allocation for vectors.
 Switch to use smart pointer `std::unique_ptr<std::vector<pdata_t>> particle_data`  
 smart pointer could manage memory automatically.
 2. Particle Data
-   Use a smart pointer particle_data to store all particles in Global_Data class.
+   Use a smart pointer particle_data to store all particles in Global_Data class.  
    The 1st particle is near but NOT at the pellet surface
    Pellet surface: -0.5*initial spacing
    New particles will be push and added into the particle list
-   Neighbour: Left neighbour for p0 and right neighbour for plast are stored in a ghost particle list  
+   Neighbour: Left neighbour for p0 and right neighbour for plast are stored in a ghost particle list
+   Local spaicng: 0.5((distance to left) + (distance to right))  
 
 ## Usage:
 
 ## Current Work:
 We are currently working on the following jobs:  
     
-**2. Initializer: Chao**   
-   Initializer is partially finished with using user set input.  
+**1. radiation cooling: Chao**   
+**2. set up eos and pellet material: Chao**   
+
+**3. reorder and merge particles, update local spacing: Chao**  
+**4. ghost and neighbour particles: Chao** 
    
 ## Future Work:
 0. initialize the variables (important)
@@ -66,13 +70,8 @@ We are currently working on the following jobs:
 3. use of input file
 4. restart
 5. time anaylsis
-6. merge the computeDensityIntegral with computeHeatDeposition
-7. set up eos and pellet material  
-8. understand the state library    
-9. understand the boundary library
-10. radiation cooling
-11. reorder and merge particles
-12. release memory  
+6. merge the computeDensityIntegral with computeHeatDeposition 
+7. release memory  
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
@@ -114,6 +113,8 @@ Need to understand Pinflow and Vinflow
 7. Particle data structure: Chao 03/11/2024  
   particle data/neighbour particle use smart pointer  
 8. Material library: Chao  03/12/2024  
+9. Initializer: Chao 02/12/2024     
+   Initializer is partially finished with using user set input.  
      Finished the basic neon class   
      The 1+Z* function return 4.9
 9. Boundary Condition: Chao 03/12/2024    
