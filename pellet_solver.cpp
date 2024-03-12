@@ -214,7 +214,7 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
                 pvolume = pad->volume;
                 ppressure = pad->pressure;
                 pur = v;
-                qsum += computeQplusminuisGradient(pad,pellet);
+                qsum += computeQplusminuisGradient(pad);
                 vol += pvolume;
                 pres += ppressure;
                 soundspeed += pad->soundspeed;
@@ -252,8 +252,16 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     }
 }
 
-double PelletSolver::computeQplusminuisGradient(pdata *pad, pellet_info *pellet){
+double PelletSolver::computeQplusminuisGradient(pdata *pad){
     
+    pdata *pad1, *pad2;
+    double dq;
+
+    pad1 = &((*pad->neighbourparticle)[0]);
+    pad2 = &((*pad->neighbourparticle)[1]);
+
+    dq = (pad2->qplusminus - pad1->qplusminus)/(pad2->x - pad1->x);
+    return dq;
 }
 
 double Bessel_I0(double x)

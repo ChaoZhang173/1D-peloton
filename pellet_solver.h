@@ -44,7 +44,7 @@ public:
   //! compute boundary condition
   void computeBoundaryCondition(Global_Data *g, double dt, double dx);
   //! compute ∇q
-  double computeQplusminuisGradient(pdata *pad,pellet_info *pellet);
+  double computeQplusminuisGradient(pdata *pad);
 
   int heatsource_numer;//! the number of heating sources
   std::vector<double> teinf;
