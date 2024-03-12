@@ -37,7 +37,6 @@ public:
   //! add heating source
   void addHeatSource(double teinf, double neinf, double currenttime);
   //！ set parameters of pellet material, currently only have Neon = 0
-  // 1+Z* will be set in addHeatSource
   void setPelletMaterial(int id);
   //! compute mass flow rate  
   void computeMassFlowRate();

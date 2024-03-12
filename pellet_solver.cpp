@@ -80,9 +80,6 @@ void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
 
     pdata *pad;
     int li, lpnum = gdata->particle_data->size();
-
-    // get 1+Z*
-    one_plus_Zstar = material->getOne_Plus_Zstar(teinf);
     
     const double e = heatK*(2.99792458e7)/100;
     const double lnLambda = log(2*teinf/I*sqrt(exp(1)/2));
@@ -127,6 +124,7 @@ void PelletSolver::setPelletMaterial(int id){
     Z = material->getZ();
     I = material->getI();
     sublimationenergy = material->getSublimationEnergy();
+    one_plus_Zstar = material->getOne_Plus_Zstar(teinf[0]);
 }
 
 void PelletSolver::computeMassFlowRate(){
