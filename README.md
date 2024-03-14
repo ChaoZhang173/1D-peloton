@@ -14,17 +14,18 @@ James Corbett
    Other schemes maybe added in the future.
 2. spatial derivative:  
    Use Newton Interpolation
-3. eos:
+   unstable, may fail if some particles too close  
+4. eos:
    polytropic eos, will add saha equations in the future
-4. FIST:
+5. FIST:
    Currently use a ifStart to indicate if at the first step  
-5. write result:
+6. write result:
    (to be done)write initial state at the beginning while write the output function   
    other steps will be written normally.
-6. local spacing:
+7. local spacing:
    the local spaing = 0.5((distance to left) + (distance to right))  
    no local spacing for the boundary particles  
-7. electron density integral and heat deposition:   
+8. electron density integral and heat deposition:   
    The 1D code only has left integral, and right integral is not used.  
    at the end of computeDensityIntegral, set the `-∇·q` and `q+-` to 0 for every partilce,  
    This is for the following function: computeHeatDeposition.
