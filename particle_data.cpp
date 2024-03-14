@@ -85,7 +85,7 @@ void Global_Data::generateGhostParticles(){
     // left ghost particle
     pad = &((*particle_data)[0]);
     ghostpad = &((*ghostparticle_data)[0]);
-    ghostpad->x = pad->x - 0.5*pad->localspacing;
+    ghostpad->x = pad->x - pad->localspacing;
     ghostpad->v = pad->v;
     ghostpad->volume = pad->volume;
     ghostpad->pressure = pad->pressure;
