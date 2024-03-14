@@ -67,6 +67,7 @@ We are currently working on the following jobs:
 
 **3. reorder and merge particles, update local spacing: Chao**  
    Finished reorder particles  
+   Finished update local spacing  
 
 ## Future Work:
 0. initialize the variables (important)
