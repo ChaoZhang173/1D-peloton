@@ -30,10 +30,10 @@ void LPSolver::solve_1d(){
         for(int id = 0; id < gdata->boundarynumber; id++){
             gdata->boundary[id]->generateBoundaryParticle(gdata,gdata->eos,gdata->initialspacing,cfldt);
         }
-        // reorder particles, make sure particle position is in order and find neighbours
-
+        // reorder particles, make sure particle position is in order
+        gdata->reorderParticles();
         // generate ghost partilces(for boundary particles)
-
+        gdata->generateGhostParticles();
         // compute the cfl dt
         computeCFLCondition();
         // adjust dt by write time interval, update currenttime

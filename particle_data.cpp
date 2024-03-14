@@ -65,3 +65,13 @@ void Global_Data::updateParticleStates(){
         swap(pad->v, pad->oldv);
     }
 }
+
+void Global_Data::reorderParticles(){
+    sort(particle_data->begin(), particle_data->end(), [](const pdata &a, const pdata &b){
+        return a.x < b.x;
+    });
+}
+
+void Global_Data::generateGhostParticles(){
+    
+}

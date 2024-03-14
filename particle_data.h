@@ -66,6 +66,12 @@ public:
   //! set the eos 
   void setEOS();
 
+  //! reorder particles
+  void reorderParticles();
+
+  //! generate ghost particles
+  void generateGhostParticles();
+
   //! true: at the first step
   bool ifStart;
 
