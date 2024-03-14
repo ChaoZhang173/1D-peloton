@@ -41,7 +41,7 @@ James Corbett
 12. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
 13. mindx:  
-    The mindx in Global_Data is the smallest distance between two particles
+    The mindx in Global_Data is the smallest distance between two particles  
     If localspacing < 3*mindx will report a warning message and put particle to the middle   
        
 ## Data Structure: 
