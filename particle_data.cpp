@@ -1,7 +1,7 @@
 #include <iostream>
-#include <time.h>
-#include <math.h>
 #include <algorithm>
+#include <cassert>
+
 #include "particle_data.h"
 
 using namespace std;
@@ -10,6 +10,7 @@ Global_Data::Global_Data(Initializer *init) {
 
     initiallayerlength = init->getLayerLength();
     initialspacing = init->getInitialSpacing();
+    mindx = init->getMinDx();
     //maxparticlenum = init->getMaxParticleNumber();
     gamma = init->getGamma();
     // get background pressure
@@ -143,6 +144,22 @@ void Global_Data::updatelocalSpacing(){
 
     for(li=1; li<lpnum-1; li++){
         pad = &((*particle_data)[li]);
+        if(pad->x - (*particle_data)[li-1].x < mindx){
+            cout<<"[Local Spacing] Warning: replacing particle"<<endl;
+            cout<<"[Local Spacing] pad->x = "<<pad->x<<" for particle: "<<li<<endl;
+            pad->x = (*particle_data)[li-1].x + mindx;
+        } 
+        if((*particle_data)[li+1].x - pad->x < mindx){
+            cout<<"[Local Spacing] Warning: replacing particle"<<endl;
+            cout<<"[Local Spacing] pad->x = "<<pad->x<<" for particle: "<<li<<endl;
+            pad->x = (*particle_data)[li+1].x - mindx;
+        }
         pad->localspacing = 0.5*((*particle_data)[li-1].x + (*particle_data)[li+1].x);
+        if(pad->localspacing < 3*mindx){
+            cout<<"[Local Spacing] Warning: localspacing too small!"<<endl;
+            cout<<"[Local Spacing] pad->localspacing = "<<pad->localspacing<<endl;
+            pad->x = 0.5*((*particle_data)[li-1].x + (*particle_data)[li+1].x);
+            cout<<"[Local Spacing] pad->x = "<<pad->x<<" for particle: "<<li<<endl;
+        }
     }
 }

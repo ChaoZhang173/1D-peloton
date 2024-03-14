@@ -34,7 +34,7 @@ void LPSolver::solve_1d(){
         gdata->reorderParticles();
         // generate ghost partilces(for boundary particles)
         gdata->generateGhostParticles();
-        // update loacal spacing 
+        // update loacal spacing, replace particles if too close
         gdata->updatelocalSpacing();
         // compute the cfl dt
         computeCFLCondition();
@@ -126,7 +126,7 @@ void LPSolver::solve_laxwendroff() {
         // check if time integration gives nan value
         if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
         cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
-        cout<<"[timeIntegration] Particle ID= "<<pad->id<<", position = "<<(pad->x)<<endl;
+        cout<<"[timeIntegration] Particle ID= "<<li<<", position = "<<(pad->x)<<endl;
         assert(false);
         }
 

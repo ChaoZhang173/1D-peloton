@@ -32,6 +32,7 @@ void Initializer::setInputs() {
   setLayerLength(0.01);
   setMaxParticleNumber(10000);
   setInitialSpacing(0.0001);
+  setMinDx(1e-6);// the smallest dx between particles
   setBackgroundPressure(0.64);//2kev 1e14 -> 0.64
   // set state name
   setStateName("pelletstate");

@@ -27,8 +27,6 @@ struct pdata{
   double soundspeedT1;
   double mass;
 
-  int id; //! particle id
-
   // need to be initialized
   double localspacing; //! 0.5(dis_left + dis_right)
 
@@ -75,6 +73,7 @@ public:
   void generateGhostParticles();
 
   //! update local spacing: 0.5((distance to left) + (distance to right))
+  // if two particles too close, replace the particle
   void updatelocalSpacing();
 
   //! true: at the first step
@@ -92,7 +91,10 @@ public:
   double einf;
 
   double initialspacing;
-
+  
+  // smallest dx between particles
+  double mindx; 
+  
   double backgroundpressure; 
 
   int pelletnumber; //! =1
