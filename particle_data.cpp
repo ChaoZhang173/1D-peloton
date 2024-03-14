@@ -129,3 +129,20 @@ void Global_Data::generateGhostParticles(){
 
 
 }
+
+void Global_Data::updatelocalSpacing(){
+    pdata *pad;
+    size_t li, lpnum = particle_data->size();
+
+    // 1st particle
+    pad = &((*particle_data)[0]);
+    pad->localspacing = (*particle_data)[1].x - pad->x;
+    // last particle
+    pad = &((*particle_data)[lpnum-1]);
+    pad->localspacing = pad->x - (*particle_data)[lpnum-2].x;
+
+    for(li=1; li<lpnum-1; li++){
+        pad = &((*particle_data)[li]);
+        pad->localspacing = 0.5*((*particle_data)[li-1].x + (*particle_data)[li+1].x);
+    }
+}

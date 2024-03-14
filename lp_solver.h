@@ -30,7 +30,7 @@ public:
   void computeCFLCondition();
 
   void computeTemperature();
-
+  //! update localspacing using volumeT1, used in 3D code, not used in 1D code
   void updateLocalSpacing();
   // ! update currenttime, nextwritetime and gdata->currenttime 
   bool adjustDtByWriteTimeInterval();

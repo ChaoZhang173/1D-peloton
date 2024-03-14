@@ -35,7 +35,7 @@ void LPSolver::solve_1d(){
         // generate ghost partilces(for boundary particles)
         gdata->generateGhostParticles();
         // update loacal spacing 
-
+        gdata->updatelocalSpacing();
         // compute the cfl dt
         computeCFLCondition();
         // adjust dt by write time interval, update currenttime
@@ -57,7 +57,7 @@ void LPSolver::solve_1d(){
         // move particles
         moveParticle();       
         // update loacl spacing
-
+        gdata->updatelocalSpacing();
         // coupute temperature
         computeTemperature();
         // output data

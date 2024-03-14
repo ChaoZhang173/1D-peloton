@@ -74,6 +74,9 @@ public:
   //! generate ghost particles
   void generateGhostParticles();
 
+  //! update local spacing: 0.5((distance to left) + (distance to right))
+  void updatelocalSpacing();
+
   //! true: at the first step
   bool ifStart;
 
