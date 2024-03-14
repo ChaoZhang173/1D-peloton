@@ -147,8 +147,8 @@ void LPSolver::solve_laxwendroff() {
 
 void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd) {
 
-    pdata *pad_neil = &((*pad->neighbourparticle)[0]);
-    pdata *pad_neir = &((*pad->neighbourparticle)[1]);
+    pdata *pad_neil = pad->leftneighbour;
+    pdata *pad_neir = pad->rightneighbour;
 
     // the coefficients for Newton Interpolation
     double coefP[6] ={0.,0.,0.,0.,0.,0.};
@@ -170,8 +170,8 @@ void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd)
 
 void LPSolver::computeDivdDifference(pdata *pad, double *coefU, double *coefP, double *coefV) {
 
-    pdata *pad_neil = &((*pad->neighbourparticle)[0]);
-    pdata *pad_neir = &((*pad->neighbourparticle)[1]); 
+    pdata *pad_neil = pad->leftneighbour;
+    pdata *pad_neir = pad->rightneighbour; 
 
     coefU[0] = pad_neil->v;
     coefU[1] = pad->v;
