@@ -54,7 +54,7 @@ smart pointer could manage memory automatically.
    The 1st particle is near but NOT at the pellet surface  
    Pellet surface: -0.5*initial spacing  
    New particles will be push and added into the particle list  
-   Neighbour: Left neighbour for p0 and right neighbour for plast are stored in a ghost particle list  
+   Neighbour: Left neighbour for p0 and right neighbour for plast   
    Local spaicng: 0.5((distance to left) + (distance to right))  
 
 ## Usage:
@@ -66,8 +66,8 @@ We are currently working on the following jobs:
 **2. set up eos and pellet material: Chao**   
 
 **3. reorder and merge particles, update local spacing: Chao**  
-**4. ghost and neighbour particles: Chao** 
-   
+   Finished reorder particles  
+
 ## Future Work:
 0. initialize the variables (important)
 1. makefile
@@ -124,4 +124,7 @@ Need to understand Pinflow and Vinflow
 - The 1+Z* function return 4.9
 10. Boundary Condition: Chao 03/12/2024    
 - finished compute boundary condition
-- finished computeQplusminusGradient  
+- finished computeQplusminusGradient
+11. Ghost and neighbour particles: Chao 03/14/2024  
+   Finished generating ghost particles  
+   Finished set neighbours  
