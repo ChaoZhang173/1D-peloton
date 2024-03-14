@@ -154,11 +154,11 @@ void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd)
     computeDivdDifference(pad, coefU, coefP, coefV);
 
     // compute spatial derivative
-    Ud[0] = coefU[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefU[5];
+    Ud[0] = coefU[3]+(pad->x - pad_neil->x)*coefU[5];
     Ud[1] = 2*coefU[5];
-    Pd[0] = coefP[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefP[5];
+    Pd[0] = coefP[3]+(pad->x - pad_neil->x)*coefP[5];
     Pd[1] = 2*coefP[5];
-    Vd[0] = coefV[3]+(2*pad->x - pad_neil->x - pad_neir->x)*coefV[5];
+    Vd[0] = coefV[3]+(pad->x - pad_neil->x)*coefV[5];
     Vd[1] = 2*coefV[5];
 
 }
