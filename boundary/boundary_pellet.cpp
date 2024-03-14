@@ -17,8 +17,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
     pdata *pad;
     pellet_info *pellet;
 
-    int pi, pnum = p->pelletlist->size();
-    int li, lpnum = g->particle_data->size();
+    size_t pi, pnum = p->pelletlist->size();
+    size_t li, lpnum = g->particle_data->size();
 
     double mass_fix = dx/Vinflow;
     double massflowrate;

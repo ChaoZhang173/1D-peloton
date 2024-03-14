@@ -30,10 +30,12 @@ void LPSolver::solve_1d(){
         for(int id = 0; id < gdata->boundarynumber; id++){
             gdata->boundary[id]->generateBoundaryParticle(gdata,gdata->eos,gdata->initialspacing,cfldt);
         }
-        // reorder particles, make sure particle position is in order
+        // reorder particles, make sure particle position is in order, set neighbours
         gdata->reorderParticles();
         // generate ghost partilces(for boundary particles)
         gdata->generateGhostParticles();
+        // update loacal spacing 
+
         // compute the cfl dt
         computeCFLCondition();
         // adjust dt by write time interval, update currenttime
@@ -49,11 +51,13 @@ void LPSolver::solve_1d(){
         // update particle states
         gdata->updateParticleStates();
         // update local spacing, need to be updated
-        updateLocalSpacing();
+        // updateLocalSpacing();
         // radiation cooling
 
         // move particles
         moveParticle();       
+        // update loacl spacing
+
         // coupute temperature
         computeTemperature();
         // output data
@@ -82,7 +86,7 @@ void LPSolver::solve_laxwendroff() {
     // data for one particle
     pdata *pad;
 
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
 
     for(li = 0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
@@ -216,7 +220,7 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
 
 void LPSolver::moveParticle() {
     pdata *pad;
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
     double dt = cfldt;
 
     for(li = 0; li < lpnum; li++){
@@ -227,7 +231,7 @@ void LPSolver::moveParticle() {
 
 void LPSolver::computeTemperature() {
     pdata *pad;
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
 
     for(li = 0; li < lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
@@ -237,7 +241,7 @@ void LPSolver::computeTemperature() {
 
 void LPSolver::updateLocalSpacing(){
     pdata *pad;
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
 
     for(li=0; li<lpnum; li++){
         pad = &((*gdata->particle_data)[li]);
@@ -247,7 +251,7 @@ void LPSolver::updateLocalSpacing(){
 
 void LPSolver::computeCFLCondition(){
     pdata *pad;
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
 
     double mindt = 100;
     double dt;

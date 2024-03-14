@@ -59,7 +59,7 @@ void Global_Data::initFluidParticles_line(){
 
 void Global_Data::updateParticleStates(){
     pdata *pad;
-    int li, lpnum = particle_data->size();
+    size_t li, lpnum = particle_data->size();
 
     for(li = 0; li < lpnum; li++){
         pad = &((*particle_data)[li]);
@@ -71,9 +71,30 @@ void Global_Data::updateParticleStates(){
 }
 
 void Global_Data::reorderParticles(){
+    
+    pdata *pad;
+    size_t li, lpnum = particle_data->size();
+
     sort(particle_data->begin(), particle_data->end(), [](const pdata &a, const pdata &b){
         return a.x < b.x;
     });
+
+    // left boundary
+    pad = &((*particle_data)[0]);
+    pad->leftneighbour = &((*ghostparticle_data)[0]);
+    pad->rightneighbour = &((*particle_data)[1]);
+    // right boundary
+    pad = &((*particle_data)[lpnum-1]);
+    pad->leftneighbour = &((*particle_data)[lpnum-2]);
+    pad->rightneighbour = &((*ghostparticle_data)[1]);
+
+    for(li = 1; li<lpnum-1; li++){
+        pad = &((*particle_data)[li]);
+        
+        pad->leftneighbour = &((*particle_data)[li-1]);
+        pad->rightneighbour = &((*particle_data)[li+1]);
+       
+    }
 }
 
 void Global_Data::generateGhostParticles(){
@@ -105,5 +126,6 @@ void Global_Data::generateGhostParticles(){
     ghostpad->mass = 0.0;
     ghostpad->soundspeed = pad->soundspeed;
     ghostpad->ifboundary = true;
-    
+
+
 }

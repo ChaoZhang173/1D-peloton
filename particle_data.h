@@ -41,8 +41,10 @@ struct pdata{
   double rhointegral;
   double qplusminus;
   double deltaq; // ! -∇·q
-  //! a list of neighbor particles, 0: left, 1: right
-  std::unique_ptr<std::vector<pdata>> neighbourparticle; 
+  
+  //! neighbor particles
+  pdata *leftneighbour = nullptr;
+  pdata *rightneighbour = nullptr;
 
 };
 

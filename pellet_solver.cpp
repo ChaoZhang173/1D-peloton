@@ -44,7 +44,7 @@ void PelletSolver::computeDensityIntegral(){
     
     pdata *pad;
     pdata *pad2; // the right neighbour particle
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
     double integral_sum = 0.;
     double integral_local = 0.;
     // from right end to the pellet 
@@ -79,7 +79,7 @@ void PelletSolver::computeHeatDeposition(double currenttime){
 void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
 
     pdata *pad;
-    int li, lpnum = gdata->particle_data->size();
+    size_t li, lpnum = gdata->particle_data->size();
     
     const double e = heatK*(2.99792458e7)/100;
     const double lnLambda = log(2*teinf/I*sqrt(exp(1)/2));
@@ -132,7 +132,7 @@ void PelletSolver::computeMassFlowRate(){
     pellet_info *pellet;
     pdata *pad;
     
-    int pi, pnum = pelletlist->size();
+    size_t pi, pnum = pelletlist->size();
     double massflowrate;
     double qsum;
     
@@ -155,8 +155,8 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     pdata *pad;
     pellet_info *pellet;
     
-    int li, lpnum = g->particle_data->size();
-    int pi, pnum = pelletlist->size();
+    size_t li, lpnum = g->particle_data->size();
+    size_t pi, pnum = pelletlist->size();
 
     int counter_nei = 0;
     double qsum = 0;
