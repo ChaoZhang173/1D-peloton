@@ -40,7 +40,7 @@ James Corbett
    mass_fix = dx*Vinflow(100), particles have same mass  
 12. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
-13. mindx:
+13. mindx:  
     The mindx in Global_Data is the smallest distance between two particles
     If localspacing < 3*mindx will report a warning message and put particle to the middle   
        
