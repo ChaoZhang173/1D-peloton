@@ -41,7 +41,7 @@ struct pdata{
   double rhointegral;
   double qplusminus;
   double deltaq; // ! -∇·q
-  
+
   //! neighbor particles
   pdata *leftneighbour = nullptr;
   pdata *rightneighbour = nullptr;
@@ -68,7 +68,7 @@ public:
   //! set the eos 
   void setEOS();
 
-  //! reorder particles
+  //! reorder particles and set neighbours
   void reorderParticles();
 
   //! generate ghost particles
