@@ -98,6 +98,9 @@ public:
 
   // a vector that stores all the particle data
   std::unique_ptr<std::vector<pdata>> particle_data;
+  // a vector that stores the ghost particles
+  std::unique_ptr<std::vector<pdata>> ghostparticle_data;
+
   //! the estimated max number of particles, 
   // used to preallocate memory for particle list
   // could be changed if the size is not enough

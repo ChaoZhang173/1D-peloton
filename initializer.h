@@ -41,6 +41,7 @@ class Initializer {
     int getBoundaryNumber(){return i_BoundaryNumber;};
     string getBoundaryName(int i) {return i_BoundaryName[i];}
     int getPelletNumber(){return i_PelletNumber;};
+    double getBackgroundPressure(){return i_BackgroundPressure;};
 
     private:
     // currently not using
@@ -69,6 +70,7 @@ class Initializer {
     void setBoundaryNumber(int n){i_BoundaryNumber = n;};
     void setBoundaryName(string s){i_BoundaryName.push_back(s);};
     void setPellentNumber(int n){i_PelletNumber = n;};
+    void setBackgroundPressure(double p){i_BackgroundPressure = p;};
 
     double i_StartTime;
     double i_EndTime;
@@ -82,6 +84,7 @@ class Initializer {
     int i_MaterialChoice;
     vector<double> i_Teinf;
     vector<double> i_Neinf;
+    double i_BackgroundPressure;
 
     string i_StateName;
 

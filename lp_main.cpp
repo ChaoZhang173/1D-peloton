@@ -12,7 +12,7 @@ using namespace std;
 
 int main(){
   //initialize the files
-
+  
   // initialize the initializer  may use input file in later developement
   Initializer *init = new Initializer();
 
@@ -25,7 +25,7 @@ int main(){
   // initialize the lp solver
   LPSolver *lpsolver = new LPSolver(init, gdata, viewer);
 
-  // initialize the fluid particles, may add using restart later
+  // initialize the fluid particles, and ghost particles may add using restart later
   gdata->initFluidParticles_line();
 
   // solve the pde

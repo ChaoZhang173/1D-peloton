@@ -12,6 +12,8 @@ Global_Data::Global_Data(Initializer *init) {
     initialspacing = init->getInitialSpacing();
     //maxparticlenum = init->getMaxParticleNumber();
     gamma = init->getGamma();
+    // get background pressure
+    backgroundpressure = init->getBackgroundPressure();
     // to be finished
     setEOS();
 
@@ -37,6 +39,8 @@ void Global_Data::initFluidParticles_line(){
     int pnum = static_cast<int>(initiallayerlength/initialspacing)+1;
     // Allocate the vector on the heap and assign it to the unique_ptr
     unique_ptr<vector<pdata>> particle_data = make_unique<vector<pdata>>(pnum);
+    // allocate ghost particle data 
+    unique_ptr<vector<pdata>> ghostparticle_data = make_unique<vector<pdata>>(2);
     
     pdata *pad;
     // the first particle is set near but not at the pellet surface
@@ -73,5 +77,33 @@ void Global_Data::reorderParticles(){
 }
 
 void Global_Data::generateGhostParticles(){
+    pdata *pad;
+    pdata *ghostpad;
+    
+    double vacumm_volume = 1.0e6;
+
+    // left ghost particle
+    pad = &((*particle_data)[0]);
+    ghostpad = &((*ghostparticle_data)[0]);
+    ghostpad->x = pad->x - 0.5*pad->localspacing;
+    ghostpad->v = pad->v;
+    ghostpad->volume = pad->volume;
+    ghostpad->pressure = pad->pressure;
+    ghostpad->localspacing = pad->localspacing;
+    ghostpad->mass = pad->mass;
+    ghostpad->soundspeed = pad->soundspeed;
+    ghostpad->ifboundary = true;
+
+    // right ghost particle, vacumm
+    pad = &((*particle_data)[particle_data->size()-1]);
+    ghostpad = &((*ghostparticle_data)[1]);
+    ghostpad->x = pad->x + 0.5*pad->localspacing;
+    ghostpad->v = pad->v;
+    ghostpad->volume = vacumm_volume;
+    ghostpad->pressure = backgroundpressure;
+    ghostpad->localspacing = pad->localspacing;
+    ghostpad->mass = 0.0;
+    ghostpad->soundspeed = pad->soundspeed;
+    ghostpad->ifboundary = true;
     
 }

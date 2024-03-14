@@ -32,6 +32,7 @@ void Initializer::setInputs() {
   setLayerLength(0.01);
   setMaxParticleNumber(10000);
   setInitialSpacing(0.0001);
+  setBackgroundPressure(0.64);//2kev 1e14 -> 0.64
   // set state name
   setStateName("pelletstate");
   setBoundaryNumber(1);// currently only one boundary
