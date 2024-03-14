@@ -33,10 +33,11 @@ James Corbett
    Maybe work on it later  
 9. the state library is used to initializing the particles at the beginning,  
    in the following steps new particles will be added by generateBoundaryParticles in pellet_solver  
-10. Generate boundary particles:
-   Currently generate particles at 0~smallest x, could be changed to use 0 - pelletV*dt  
-   mass_fix = dx*Vinflow(100), particles have same mass
-11. dq/dx (QplusminusGradient):  
+10. Generate boundary particles:  
+   ~Currently generate particles at 0~smallest x,
+    Now use 0 - pelletV*dt  
+   mass_fix = dx*Vinflow(100), particles have same mass  
+12. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
    
        
