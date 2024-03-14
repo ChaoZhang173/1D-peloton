@@ -66,17 +66,15 @@ We are currently working on the following jobs:
     
 **1. radiation cooling: Chao**   
 **2. set up eos and pellet material: Chao**   
-
+**3. output result: Chao**   
+**3. timer: Chao**   
 
 ## Future Work:
-0. initialize the variables (important)
 1. makefile
-2. output result
-3. use of input file
-4. restart
-5. time anaylsis
-6. merge the computeDensityIntegral with computeHeatDeposition 
-7. release memory  
+2. use of input file
+3. restart
+4. merge the computeDensityIntegral with computeHeatDeposition 
+5. release memory  
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
