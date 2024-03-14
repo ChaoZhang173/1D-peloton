@@ -124,9 +124,9 @@ Need to understand Pinflow and Vinflow
 - finished compute boundary condition
 - finished computeQplusminusGradient
 11. Ghost and neighbour particles: Chao 03/14/2024  
-   Finished generating ghost particles  
-   Finished set neighbours
+- Finished generating ghost particles  
+- Finished set neighbours
 12. Reorder and re locate particles, update local spacing: Chao 03/14/2024  
-   Finished reorder particles  
-   Finished update local spacing  
-   Finished re locate particles in updatelocalSpacing  
+- Finished reorder particles  
+- Finished update local spacing  
+- Finished re locate particles in updatelocalSpacing  
