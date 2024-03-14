@@ -40,7 +40,9 @@ James Corbett
    mass_fix = dx*Vinflow(100), particles have same mass  
 12. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
-   
+13. mindx:
+    The mindx in Global_Data is the smallest distance between two particles
+    If localspacing < 3*mindx will report a warning message and put particle to the middle   
        
 ## Data Structure: 
 1. STL Vector.  
@@ -65,9 +67,6 @@ We are currently working on the following jobs:
 **1. radiation cooling: Chao**   
 **2. set up eos and pellet material: Chao**   
 
-**3. reorder and merge particles, update local spacing: Chao**  
-   Finished reorder particles  
-   Finished update local spacing  
 
 ## Future Work:
 0. initialize the variables (important)
@@ -128,4 +127,8 @@ Need to understand Pinflow and Vinflow
 - finished computeQplusminusGradient
 11. Ghost and neighbour particles: Chao 03/14/2024  
    Finished generating ghost particles  
-   Finished set neighbours  
+   Finished set neighbours
+12. Reorder and re locate particles, update local spacing: Chao 03/14/2024  
+   Finished reorder particles  
+   Finished update local spacing  
+   Finished re locate particles in updatelocalSpacing  
