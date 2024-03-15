@@ -24,8 +24,6 @@ public:
 
   int getEOSChoice() const {return EOSChoice;};
   double getGamma() const {return gamma;};
-  void setGamma(double g) {gamma = g;};
-  void setEOSChoice(int choice) {EOSChoice = choice;};
 
   virtual double getEnergy(double pressure, double density) = 0;
   virtual double getTemperature(double pressure, double density) = 0;
@@ -38,6 +36,8 @@ class PolytropicEOS : public EOS {
 protected:
 
 public:
+  PolytropicEOS(double gamma){EOSChoice = 1; this->gamma = gamma;};
+
   virtual ~PolytropicEOS(){};
   virtual double getEnergy(double pressure, double density);
   virtual double getTemperature(double pressure, double density);

@@ -163,3 +163,10 @@ void Global_Data::updatelocalSpacing(){
         }
     }
 }
+
+void Global_Data::setEOS(){
+    // 1: polytropic; 2: saha neon;
+    if(eoschoice == 1){
+        eos = new PolytropicEOS(gamma);
+    }
+}

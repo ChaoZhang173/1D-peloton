@@ -66,7 +66,7 @@ public:
   //! update particle states for each timestep
   void updateParticleStates();
 
-  //! set the eos 
+  //! set the eos, eoschoice = 1 for polytropic, 2 for saha neon 
   void setEOS();
 
   //! reorder particles and set neighbours
