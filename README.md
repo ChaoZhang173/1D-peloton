@@ -74,7 +74,6 @@ James Corbett
 ## Current Work:
 We are currently working on the following jobs:  
     
-**1. set up eos and pellet material: Chao**   
 **2. output result: Chao**   
 **3. timer: Chao**   
 **4. makefile: Chao**   
@@ -141,3 +140,7 @@ Need to understand Pinflow and Vinflow
 13. Radiation cooling: Chao 03/14/2024
 - Finished neon radiation cooling, used for eoschoice = 2 (saha neon)  
   but currently not used for eoschoice = 1 (polytropic)  
+14. Set up eos and pellet material: Chao 03/15/2024  
+- Finished pellet material   
+- Finished setEOS for polytropic eos,   
+  other eos will be added in the future  
