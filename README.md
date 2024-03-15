@@ -24,17 +24,18 @@ James Corbett
    other steps will be written normally.
 7. local spacing:
    the local spaing = 0.5((distance to left) + (distance to right))  
-   no local spacing for the boundary particles  
-8. electron density integral and heat deposition:   
+   1st particle: local spacing = x_2nd - x_1st  
+   last particle: local spacing = x_last - x_(last-1)  
+9. electron density integral and heat deposition:   
    The 1D code only has left integral, and right integral is not used.  
    at the end of computeDensityIntegral, set the `-∇·q` and `q+-` to 0 for every partilce,  
    This is for the following function: computeHeatDeposition.
    1+Z* is related to Tinf, need to take care of in setMaterial fucntion  
    Currently the two functions are seperately, but they could merge together.  
    Maybe work on it later  
-9. the state library is used to initializing the particles at the beginning,  
+10. the state library is used to initializing the particles at the beginning,  
    in the following steps new particles will be added by generateBoundaryParticles in pellet_solver  
-10. Generate boundary particles:  
+11. Generate boundary particles:  
    ~Currently generate particles at 0 - smallest x,~  
     Now use 0 - pelletV*dt  
    mass_fix = dx*Vinflow(100), particles have same mass  
@@ -52,12 +53,21 @@ Could use `reserve` or `resize` to manage memory allocation for vectors.
 Switch to use smart pointer `std::unique_ptr<std::vector<pdata_t>> particle_data`  
 smart pointer could manage memory automatically.  
 2. Particle Data
-   Use a smart pointer particle_data to store all particles in Global_Data class.  
-   The 1st particle is near but NOT at the pellet surface  
+-  Use a smart pointer particle_data to store all particles in Global_Data class.
+-  The 1st particle is near but NOT at the pellet surface  
    Pellet surface: -0.5*initial spacing  
    New particles will be push and added into the particle list  
-   Neighbour: Left neighbour for p0 and right neighbour for plast   
-   Local spaicng: 0.5((distance to left) + (distance to right))  
+-  Neighbour: Left neighbour for p0 and right neighbour for plast   
+   Local spaicng: 0.5((distance to left) + (distance to right))
+3. Ghost Particle
+-  A smart pointer to store all (currently 2) ghost particles in Global_Data
+-  1st element(0):
+   The left neighbour of 1st particle: x = x_1st - localspacing_1st;  
+   parameter = 1st particle  
+   It is symmetric about pellet (x_1st - 0.5*localspacing_1st)
+-  2nd element(1):
+   The right neighbour of last particle: x = x_last + 0.5*localspacing_last;
+   parameter = vacumm  
 
 ## Usage:
 
