@@ -44,6 +44,10 @@ public:
   void computeBoundaryCondition(Global_Data *g, double dt, double dx);
   //! compute ∇q
   double computeQplusminuisGradient(pdata *pad);
+  //! compute neon radiation cooling
+  void neonRadiationCooling(double dt);
+  double neon_radiation_power_density(double rho, double T);
+  double neon_radiation_data(int i, int j);
 
   int heatsource_numer;//! the number of heating sources
   std::vector<double> teinf;

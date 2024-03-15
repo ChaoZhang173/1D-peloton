@@ -53,7 +53,7 @@ void LPSolver::solve_1d(){
         // update local spacing, need to be updated
         // updateLocalSpacing();
         // radiation cooling
-
+        pellet_solver->neonRadiationCooling(cfldt);
         // move particles
         moveParticle();       
         // update loacl spacing

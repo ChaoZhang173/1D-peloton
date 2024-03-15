@@ -44,6 +44,9 @@ struct pdata{
   pdata *leftneighbour = nullptr;
   pdata *rightneighbour = nullptr;
 
+  // neon radiation cooling
+  double radcool;
+
 };
 
 class Global_Data{
@@ -84,6 +87,7 @@ public:
   EOS *eos;
   PelletSolver *pellet_solver;
 
+  //! 1: polytropic; 2: saha neon; 
   int eoschoice;
 
   double gamma;
