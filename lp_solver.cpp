@@ -152,7 +152,7 @@ void LPSolver::solve_laxwendroff() {
 void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd) {
 
     pdata *pad_neil = pad->leftneighbour;
-    pdata *pad_neir = pad->rightneighbour;
+    //pdata *pad_neir = pad->rightneighbour;
 
     // the coefficients for Newton Interpolation
     double coefP[6] ={0.,0.,0.,0.,0.,0.};
@@ -206,19 +206,18 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
 
     double dt = cfldt;
     double gamma = inSoundspeed*inSoundspeed/inVolume/inPressure;
-    double pinf = gdata->pinf;
+    //double pinf = gdata->pinf; // currently not used
 
     double ux = Ud[0];
     double uxx = Ud[1];
     double px = Pd[0];
     double pxx = Pd[1];
     double vx = Vd[0];
-    double vxx = Vd[1];
+    //double vxx = Vd[1];
 
     *outVelocity = inVelocity - dt*inVolume*px + 0.5*dt*dt*(gamma*inVolume*inPressure*uxx - inVolume*ux*px);
-    *outPressure = inPressure - dt*gamma*inPressure*ux 
-                + 0.5*dt*dt*(gamma*gamma/inPressure*ux*ux + gamma*vx*inPressure/px+gamma*inVolume*inPressure*pxx
-                + gamma*inPressure*ux*ux);
+    *outPressure = inPressure - dt*gamma*inPressure*ux + 0.5*dt*dt*(gamma*gamma*inPressure*ux*ux 
+                + gamma*vx*inPressure*px+gamma*inVolume*inPressure*pxx + gamma*inPressure*ux*ux);
     *outVolume = inVolume +dt*inVolume*ux + 0.5*dt*dt*(-inVolume*vx*px - inVolume*inVolume*pxx);
 }
 

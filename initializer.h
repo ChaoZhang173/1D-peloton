@@ -20,7 +20,7 @@ class Initializer {
     // constructor
     Initializer();
     // destructor
-    ~Initializer();
+    ~Initializer() {};
 
     double getCFLcoeff(){return i_CFLCoeff;};
     double getTstart(){return i_StartTime;};

@@ -5,7 +5,6 @@
 #include <memory>
 #include "initializer.h"
 #include "boundary.h"
-#include "pellet_solver.h"
 #include "state.h"
 
 /*
@@ -48,6 +47,8 @@ struct pdata{
   double radcool;
 
 };
+
+class PelletSolver;
 
 class Global_Data{
 public:

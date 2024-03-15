@@ -3,9 +3,13 @@
 #include <cassert>
 
 #include "pellet_solver.h"
-#include "geometry_pellet.h"
 
 using namespace std;
+
+double Bessel_Kn(int n, double x);
+double Bessel_K1(double x);
+double Bessel_I0(double x);
+double Bessel_I1(double x);
 
 PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     gdata = g;

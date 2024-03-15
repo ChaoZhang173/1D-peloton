@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "particle_data.h"
+#include "pellet_solver.h"
 
 using namespace std;
 
@@ -169,4 +170,12 @@ void Global_Data::setEOS(){
     if(eoschoice == 1){
         eos = new PolytropicEOS(gamma);
     }
+}
+
+Global_Data::~Global_Data(){
+    delete pellet_solver;
+    delete eos;
+    delete state;
+    delete initializer;
+    delete boundary[0];
 }

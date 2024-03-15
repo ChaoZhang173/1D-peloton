@@ -25,7 +25,7 @@ struct pellet_info{
 class PelletSolver{
 public:
   PelletSolver (Initializer* init,Global_Data *gdata);
-  ~PelletSolver();
+  ~PelletSolver(){}
 
   void heatingModel(double currenttime);
 
@@ -68,7 +68,7 @@ public:
   Global_Data *gdata;
 
   const double heatK = 1.602e-18; // ! 1.602e-18, 1eV = 1.602e-19J
-  const double masse = 9.109e-28; // ! mass of electron, 9.109e-28g\
+  const double masse = 9.109e-28; // ! mass of electron, 9.109e-28g
 
   //! a smart pointer that stores a vector of pellet_info
   std::unique_ptr<std::vector<pellet_info>> pelletlist;
