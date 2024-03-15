@@ -57,7 +57,7 @@ public:
   ~Global_Data();
 
 
-  //! initialize fluid particles 
+  //! initialize fluid particles and ghost particles 
   // the particles are initialized in a layer that close to the pellet surface 
   // the first particle is set as the pellet surface,
   // all the particles are set as fluid particles

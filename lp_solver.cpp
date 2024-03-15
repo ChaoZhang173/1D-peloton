@@ -56,11 +56,11 @@ void LPSolver::solve_1d(){
         pellet_solver->neonRadiationCooling(cfldt);
         // move particles
         moveParticle();       
-        // update loacl spacing
-        gdata->updatelocalSpacing();
+        // reorder particle and update loacl spacing, move to next timestep
+        //gdata->updatelocalSpacing();
         // coupute temperature
         computeTemperature();
-        // output data
+        // output data, move to begining of the next timestep
 
         // delete remote particles/ghost particles
 
