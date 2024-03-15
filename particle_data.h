@@ -21,7 +21,7 @@ struct pdata{
   double soundspeed;
   double temperature;
   double volume;
-  double sphdensity;
+  //double sphdensity;// currently not used
   double pressureT1; //! temperature used for updating states for each timestep
   double volumeT1;
   double soundspeedT1;

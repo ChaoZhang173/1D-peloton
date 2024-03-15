@@ -55,6 +55,7 @@ public:
   double writetimeinterval;
 
   bool iswritestep;
+  double writestep;
 };
 
 

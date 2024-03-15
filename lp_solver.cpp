@@ -11,12 +11,13 @@ LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     cfldt = 0.0;
     cflcoeff = init->getCFLcoeff();
     iswritestep = true;
+    writestep = -1;
     tstart = init->getTstart();
     tend = init->getTend();
     writetimeinterval = init->getWriteTimeInterval();
     currenttime = tstart;
     timestep = 0;
-    nextwritetime = tstart + writetimeinterval;
+    nextwritetime = tstart;
     gdata->currenttime = currenttime;
 
     pellet_solver = new PelletSolver(init, gdata);
@@ -40,7 +41,10 @@ void LPSolver::solve_1d(){
         computeCFLCondition();
         // adjust dt by write time interval, update currenttime
         iswritestep = adjustDtByWriteTimeInterval(); 
-
+        if(iswritestep) {
+            cout<<"[LPSolver] currenttime = "<<currenttime<<", nextwritetime = "<<nextwritetime<<endl;
+            viewer->writeResult(writestep, currenttime);
+        }
         // heating model
         pellet_solver->heatingModel(currenttime);
         // lax-wendroff solver
@@ -272,6 +276,7 @@ bool LPSolver::adjustDtByWriteTimeInterval(){
         cfldt = nextwritetime - currenttime;
         currenttime = nextwritetime;
         nextwritetime += writetimeinterval;
+        writestep++;
         // warning message if cfldt <0
         if(cfldt < 0){
             cout<<"[LPSolver] Warning: cfldt < 0!"<<endl;
@@ -285,4 +290,5 @@ bool LPSolver::adjustDtByWriteTimeInterval(){
         currenttime += cfldt;
         return false;
     }
+
 }

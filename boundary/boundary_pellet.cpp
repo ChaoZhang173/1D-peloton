@@ -48,7 +48,13 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
         double dis = pellet->pelletvelocity*dt; // layer that will generate new particles
         cout<<"[Boundary] new layer thickness = "<<dis<<endl;
         cout<<"[Boundary] new paticle number = "<<newParticleNum<<endl;
-
+        
+        // if no new particles will be generated, return
+        if(dis == 0 || newParticleNum == 0){
+            cout<<"[Boundary] no particles will be generated"<<endl;
+            return;
+        }
+        
         // used as localspacing in 3D code, not used in 1D code
         //double actualdx = max(pelletvinflow*mass_fix,0.0);
 

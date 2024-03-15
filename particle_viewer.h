@@ -12,11 +12,16 @@ features:
 
 class ParticleViewer {
 public:
-ParticleViewer(Global_Data * data,const std::string& outputfileName="");
+    ParticleViewer(Global_Data *g,const std::string& filename);
 
-~ParticleViewer(){}
+    ~ParticleViewer(){}
 
-void writeResult(int step,double time);
+    void writeResult(int step,double time);
+
+    Global_Data *gdata;
+    
+    string outputfilename;
+    int writestep;
 
 };
 #endif

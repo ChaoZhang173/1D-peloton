@@ -10,9 +10,14 @@
 using namespace std;
 
 
-int main(){
+int main(int argc, char *argv[]){
   //initialize the files
-  
+  if (argc != 2){
+    cerr <<"[Error] Invalid number of input arguments.\n";
+    cerr << "Usage: " << argv[0] << " <output file name>" << endl;
+    return 1;
+  }
+  string outputFilename = argv[1];
   // initialize the initializer  may use input file in later developement
   Initializer *init = new Initializer();
 
@@ -20,7 +25,7 @@ int main(){
   Global_Data *gdata = new Global_Data(init);
 
   // initialize the viewer part, used to output data
-  ParticleViewer *viewer = new ParticleViewer(gdata,outputfileNameFluid);
+  ParticleViewer *viewer = new ParticleViewer(gdata,outputFilename);
 
   // initialize the lp solver
   LPSolver *lpsolver = new LPSolver(init, gdata, viewer);
