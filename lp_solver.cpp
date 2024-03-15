@@ -25,7 +25,7 @@ LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
 
 void LPSolver::solve_1d(){
 
-    while(currenttime < tend)
+    while(currenttime <= tend)
     {
         // generate boundary particles
         for(int id = 0; id < gdata->boundarynumber; id++){
