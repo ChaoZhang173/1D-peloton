@@ -76,7 +76,7 @@ James Corbett
 We are currently working on the following jobs:  
     
 **1. timer: Chao**   
-**2. makefile: Chao**   
+
 ## Future Work:
 1. use of input file
 2. restart
@@ -151,4 +151,5 @@ Need to understand Pinflow and Vinflow
   However, the smallest x output by generateBoundaryParticle maybe incorrect  
   It will write a result at the 1st time step  
   By setting currenttime <= tend (instead of "<"), it will output at the result at last+1 step
-   
+16. Makefile: Chao 03/15/2024
+- Finished makefile     
