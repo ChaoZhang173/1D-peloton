@@ -38,6 +38,7 @@ int main(){
   delete init;
   delete gdata;
   delete lpsolver;
+  delete viewer;
   
   return 0;
 }

@@ -32,6 +32,7 @@ class Initializer {
     double getNeinf(int i){return i_Neinf[i];};
     double getWarmupTime(){return i_WarmUpTime;};
     int getEOSChoice(){return i_EOSChoice;};
+    //! pellet material; 0:neon 
     int getMaterialChoice(){return i_MaterialChoice;};
     double getLayerLength(){return i_layerlength;};
     double getGamma(){return i_Gamma;};
@@ -56,22 +57,39 @@ class Initializer {
     void setStartTime(double t){i_StartTime = t;};
     void setEndTime(double t){i_EndTime = t;};
     void setCFLCoeff(double c){i_CFLCoeff = c;};
+    //! set the time interval to write data
     void setWriteStep(double w){i_WriteStep = w;};
+    //! how many heating sources
     void setHeatingSourceNumber(int n){i_HeatingSourceNumber = n;};
+    //! the time to warm up the system, used in the heatingmodel
     void setWarmupTime(double t){i_WarmUpTime = t;};
+    //! the choice of EOS, 1 for polytropic, 2 for saha neon,
+    // currently only use 1
     void setEOSChoice(int c){i_EOSChoice = c;};
+    //! pellet material; 0:neon 
     void setMaterialChoice(int c){i_MaterialChoice = c;};
+    //! heating source temperature (electrons)
     void setTeinf(double t){i_Teinf.push_back(t);};
+    //! heating source density (electrons)
     void setNeinf(double n){i_Neinf.push_back(n);};
+    //! the length of layer that will generate initial particles
     void setLayerLength(double l){i_layerlength = l;};
     void setGamma(double g){i_Gamma = g;};
+    //! the estimated max number of particles, currently not used
     void setMaxParticleNumber(int n){i_maxParticleNumber = n;};
+    //! the initial distance between particles
     void setInitialSpacing(double s){i_Initialspacing = s;};
+    //! the state name, currently only use "pelletstate"
     void setStateName(string s){i_StateName = s;};
+    //! the number of boundary objects, currently only use 1
     void setBoundaryNumber(int n){i_BoundaryNumber = n;};
+    //! the name of boundary object, currently only use "pelletinflowboundary"
     void setBoundaryName(string s){i_BoundaryName.push_back(s);};
+    //! the number of pellets, currently only use 1
     void setPellentNumber(int n){i_PelletNumber = n;};
+    //! the background pressure
     void setBackgroundPressure(double p){i_BackgroundPressure = p;};
+    //! the smallest dx between particles
     void setMinDx(double dx){i_minDx = dx;};
 
     double i_StartTime;
