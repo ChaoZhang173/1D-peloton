@@ -64,17 +64,15 @@ smart pointer could manage memory automatically.
 ## Current Work:
 We are currently working on the following jobs:  
     
-**1. radiation cooling: Chao**   
-**2. set up eos and pellet material: Chao**   
-**3. output result: Chao**   
+**1. set up eos and pellet material: Chao**   
+**2. output result: Chao**   
 **3. timer: Chao**   
-
+**4. makefile: Chao**   
 ## Future Work:
-1. makefile
-2. use of input file
-3. restart
-4. merge the computeDensityIntegral with computeHeatDeposition 
-5. release memory  
+1. use of input file
+2. restart
+3. merge the computeDensityIntegral with computeHeatDeposition 
+4. release memory  
 
 ## Previous Work:
 1. Code Structure: Chao  02/28/2024  
@@ -129,4 +127,7 @@ Need to understand Pinflow and Vinflow
 12. Reorder and re locate particles, update local spacing: Chao 03/14/2024  
 - Finished reorder particles  
 - Finished update local spacing  
-- Finished re locate particles in updatelocalSpacing  
+- Finished re locate particles in updatelocalSpacing
+13. Radiation cooling: Chao 03/14/2024
+- Finished neon radiation cooling, used for eoschoice = 2 (saha neon)  
+  but currently not used for eoschoice = 1 (polytropic)  
