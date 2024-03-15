@@ -38,10 +38,11 @@ James Corbett
 11. Generate boundary particles:  
    ~Currently generate particles at 0 - smallest x,~  
     Now use 0 - pelletV*dt  
-   mass_fix = dx*Vinflow(100), particles have same mass  
-12. dq/dx (QplusminusGradient):  
+    mass_fix = dx *Vinflow(100), particles have same mass  
+    Note that the smallest x maybe incorrect, because didn't reorder the particles at last step  
+13. dq/dx (QplusminusGradient):  
     dq/dx = (q_right - q_left)/(x_right - x_left)   
-13. mindx:  
+14. mindx:  
     The mindx in Global_Data is the smallest distance between two particles  
     If localspacing < 3*mindx will report a warning message and put particle to the middle   
        
@@ -74,9 +75,8 @@ James Corbett
 ## Current Work:
 We are currently working on the following jobs:  
     
-**2. output result: Chao**   
-**3. timer: Chao**   
-**4. makefile: Chao**   
+**1. timer: Chao**   
+**2. makefile: Chao**   
 ## Future Work:
 1. use of input file
 2. restart
@@ -143,4 +143,12 @@ Need to understand Pinflow and Vinflow
 14. Set up eos and pellet material: Chao 03/15/2024  
 - Finished pellet material   
 - Finished setEOS for polytropic eos,   
-  other eos will be added in the future  
+  other eos will be added in the future
+15. Output result: Chao 03/15/2024  
+- Finished output result
+- Write result after adjustDtByWriteTimeInterval() function
+  Reason: don't need to reorder particles and update localspacing twice after moveParticle  
+  However, the smallest x output by generateBoundaryParticle maybe incorrect  
+  It will write a result at the 1st time step  
+  By setting currenttime <= tend (instead of "<"), it will output at the result at last+1 step
+   
