@@ -34,7 +34,7 @@ void Initializer::setInputs() {
   // set the choice of EOS, 1 for polytropic, 2 for saha neon,
   setEOSChoice(1);
   // set pellet material; 0:neon
-  setMaterialChoice(1);
+  setMaterialChoice(0);
   // the length of layer that will generate initial particles
   setLayerLength(0.01);
   // set the estimated max number of particles, currenlyt not used
