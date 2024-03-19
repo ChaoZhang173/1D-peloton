@@ -94,8 +94,11 @@ We are currently working on the following jobs:
 
 **0. debugging: Chao**  
   Finished debugging, code could run successfully 03/19/2024  
-  Fixed issue: uninitialized variable: vector<double> neeff 03/19/2024  
-  The accuracy needs to be verified   
+1. Fixed issues:  
+1.1. uninitialized variable: vector<double> neeff 03/19/2024  
+2. Current issues:  
+2.1. particles near the pellet didn't generated  
+3. The accuracy needs to be verified   
 **1. timer: Chao**   
 
 ## Future Work:
