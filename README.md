@@ -44,7 +44,10 @@ James Corbett
     dq/dx = (q_right - q_left)/(x_right - x_left)   
 14. mindx:  
     The mindx in Global_Data is the smallest distance between two particles  
-    If localspacing < 3*mindx will report a warning message and put particle to the middle   
+    If localspacing < 3*mindx will report a warning message and put particle to the middle
+15. Right Boundary:
+    The lax-wendroff method will introduce oscillation on the right boundary
+    So change to use upwind method.  
        
 ## Data Structure: 
 1. STL Vector.  
@@ -74,7 +77,10 @@ James Corbett
 
 ## Current Work:
 We are currently working on the following jobs:  
-    
+
+**0. debugging: Chao**  
+- Finished debugging, code could run successfully
+- The accuracy needs to be verified  
 **1. timer: Chao**   
 
 ## Future Work:
@@ -153,3 +159,5 @@ Need to understand Pinflow and Vinflow
   By setting currenttime <= tend (instead of "<"), it will output at the result at last+1 step
 16. Makefile: Chao 03/15/2024
 - Finished makefile     
+17. upwind solver for right boundary: Chao 03/19/2024  
+- Finished upwind solver  
