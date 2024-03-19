@@ -10,9 +10,10 @@ James Corbett
 
 ## Algorithm:
 1. MHD equations:  
-   Now only using lax-wendroff scheme.  
+   Now using lax-wendroff and upwind (only for right boundar) scheme.    
    Other schemes maybe added in the future.
-2. spatial derivative:  
+   The upwind is applied on the right boundary, laxwendroff has high oscillation near the boundary   
+3. spatial derivative:  
    Use Newton Interpolation  
    unstable, may fail if some particles too close  
 4. eos:
@@ -92,8 +93,8 @@ make clean
 We are currently working on the following jobs:  
 
 **0. debugging: Chao**  
-- Finished debugging, code could run successfully
-- The accuracy needs to be verified  
+  Finished debugging, code could run successfully
+  The accuracy needs to be verified   
 **1. timer: Chao**   
 
 ## Future Work:
