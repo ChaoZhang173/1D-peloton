@@ -93,7 +93,8 @@ make clean
 We are currently working on the following jobs:  
 
 **0. debugging: Chao**  
-  Finished debugging, code could run successfully
+  Finished debugging, code could run successfully 03/19/2024  
+  Fixed issue: uninitialized variable: vector<double> neeff 03/19/2024  
   The accuracy needs to be verified   
 **1. timer: Chao**   
 
