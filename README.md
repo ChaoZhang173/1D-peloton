@@ -74,7 +74,18 @@ James Corbett
    parameter = vacumm  
 
 ## Usage:
-
+-  compile by
+```
+make
+```
+delete by 
+```
+make clean
+```  
+-  run the code by
+```
+./lp <output_filename>
+``` 
 ## Current Work:
 We are currently working on the following jobs:  
 
