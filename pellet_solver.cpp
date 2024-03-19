@@ -12,13 +12,13 @@ double Bessel_I0(double x);
 double Bessel_I1(double x);
 
 PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
-    gdata = g;
-    setPelletMaterial(init->getMaterialChoice());
+    gdata = g;   
     heatsource_numer = init->getHeatingSourceNumber();
     for(int i = 0; i < heatsource_numer; i++){
         teinf.push_back(init->getTeinf(i));
         neinf.push_back(init->getNeinf(i));
     }
+    setPelletMaterial(init->getMaterialChoice());
     warmuptime = init->getWarmupTime();
 
     // initialize the pellets
@@ -30,7 +30,8 @@ PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
         pellet->x = -0.5*init->getInitialSpacing();
         pellet->layerlength = init->getLayerLength();
     }
-    
+    // asgin the pellet_solver to the global data
+    gdata->pellet_solver = this;
 }
 
 void PelletSolver::heatingModel(double currenttime){
@@ -48,7 +49,8 @@ void PelletSolver::computeDensityIntegral(){
     
     pdata *pad;
     pdata *pad2; // the right neighbour particle
-    size_t li, lpnum = gdata->particle_data->size();
+    int li;
+    size_t lpnum = gdata->particle_data->size();
     double integral_sum = 0.;
     double integral_local = 0.;
     // from right end to the pellet 

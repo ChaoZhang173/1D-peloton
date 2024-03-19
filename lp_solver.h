@@ -19,13 +19,26 @@ public:
   void solve_1d();
 
   void moveParticle();
+  // for all particles expect right boundary
   void solve_laxwendroff();
-
+  // for right boundary, using upwind
+  void solve_upwind_right_boundary();
+  //! compute spatial derivatives using Newton Interpolation
+  // order: /dx, /dx^2
   void computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd); 
-
+  //! compute spatial derivatives for upwind,
+  // order: /dx_left, /dx_right
+  void computeSpatialDer_upwind(pdata *pad, double *Ud, double *Pd, double *Vd);
+  //! compute spatial derivatives using devided difference
+  void computeSpatialDer_DD(pdata *pad, double *Ud, double *Pd, double *Vd);
+  //! time integration using Lax-Wendroff method
   void timeIntegration(double inVelocity, double inPressure, double inVolume, 
                   double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
                   double *outPressure, double *outVolume);
+  //! time integration using upwind method
+  void timeIntegration_upwind(double inVelocity, double inPressure, double inVolume, 
+                  double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
+                  double *outPressure, double *outVolume);              
 
   void computeCFLCondition();
 

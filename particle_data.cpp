@@ -16,7 +16,8 @@ Global_Data::Global_Data(Initializer *init) {
     gamma = init->getGamma();
     // get background pressure
     backgroundpressure = init->getBackgroundPressure();
-    // to be finished
+    eoschoice = init->getEOSChoice();
+    // set up eos
     setEOS();
 
     // at the first step
@@ -40,9 +41,9 @@ void Global_Data::initFluidParticles_line(){
     // the total number of particles to be initialized
     int pnum = static_cast<int>(initiallayerlength/initialspacing)+1;
     // Allocate the vector on the heap and assign it to the unique_ptr
-    unique_ptr<vector<pdata>> particle_data = make_unique<vector<pdata>>(pnum);
+    particle_data = make_unique<vector<pdata>>(pnum);
     // allocate ghost particle data 
-    unique_ptr<vector<pdata>> ghostparticle_data = make_unique<vector<pdata>>(2);
+    ghostparticle_data = make_unique<vector<pdata>>(2);
     
     pdata *pad;
     // the first particle is set near but not at the pellet surface
@@ -146,12 +147,12 @@ void Global_Data::updatelocalSpacing(){
     for(li=1; li<lpnum-1; li++){
         pad = &((*particle_data)[li]);
         if(pad->x - (*particle_data)[li-1].x < mindx){
-            cout<<"[Local Spacing] Warning: replacing particle"<<endl;
+            cout<<"[Local Spacing] Warning: re locate particle"<<endl;
             cout<<"[Local Spacing] pad->x = "<<pad->x<<" for particle: "<<li<<endl;
             pad->x = (*particle_data)[li-1].x + mindx;
         } 
         if((*particle_data)[li+1].x - pad->x < mindx){
-            cout<<"[Local Spacing] Warning: replacing particle"<<endl;
+            cout<<"[Local Spacing] Warning: re locate particle"<<endl;
             cout<<"[Local Spacing] pad->x = "<<pad->x<<" for particle: "<<li<<endl;
             pad->x = (*particle_data)[li+1].x - mindx;
         }

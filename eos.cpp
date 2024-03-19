@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 #include <cassert>
+
 #include "eos.h"
 
 using namespace std;

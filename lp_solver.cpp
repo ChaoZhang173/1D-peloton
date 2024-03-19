@@ -8,6 +8,7 @@ using namespace std;
 
 LPSolver::LPSolver(Initializer *init, Global_Data *g, ParticleViewer *v) {
     gdata = g;
+    viewer = v; 
     cfldt = 0.0;
     cflcoeff = init->getCFLcoeff();
     iswritestep = true;
@@ -49,13 +50,13 @@ void LPSolver::solve_1d(){
         pellet_solver->heatingModel(currenttime);
         // lax-wendroff solver
         solve_laxwendroff();
+        // calculate right boundary using upwind method
+        solve_upwind_right_boundary();
 
         // compute boundary condition
         pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing/5);
         // update particle states
         gdata->updateParticleStates();
-        // update local spacing, need to be updated
-        // updateLocalSpacing();
         // radiation cooling
         pellet_solver->neonRadiationCooling(cfldt);
         // move particles
@@ -91,8 +92,8 @@ void LPSolver::solve_laxwendroff() {
     pdata *pad;
 
     size_t li, lpnum = gdata->particle_data->size();
-
-    for(li = 0; li<lpnum; li++){
+    // for all particles except the right boundary
+    for(li = 0; li<lpnum-1; li++){
         pad = &((*gdata->particle_data)[li]);
         
         // get the in state
@@ -122,6 +123,7 @@ void LPSolver::solve_laxwendroff() {
 
         // compute spatial derivative
         computeSpatialDer(pad, Ud, Pd, Vd);
+        //computeSpatialDer_DD(pad, Ud, Pd, Vd);
 
         // time integration
         timeIntegration(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
@@ -146,6 +148,7 @@ void LPSolver::solve_laxwendroff() {
         pad->volumeT1 = *outvolume;
         pad->soundspeedT1 = *outsoundspeed;
         }
+
 }
 
 
@@ -171,6 +174,26 @@ void LPSolver::computeSpatialDer(pdata *pad, double *Ud, double *Pd, double *Vd)
 
 }
 
+void LPSolver::computeSpatialDer_DD(pdata *pad, double *Ud, double *Pd, double *Vd) {
+
+    pdata *pad_neil = pad->leftneighbour;
+    pdata *pad_neir = pad->rightneighbour;
+
+    // the coefficients for Newton Interpolation
+    double coefP[6] ={0.,0.,0.,0.,0.,0.};
+    double coefV[6] ={0.,0.,0.,0.,0.,0.};
+    double coefU[6] ={0.,0.,0.,0.,0.,0.};
+    // pass array to function = pass the pointer to the first element of the array
+    computeDivdDifference(pad, coefU, coefP, coefV);
+
+    // compute spatial derivative
+    Ud[0] = 0.5 * (coefU[4] + coefU[3]);
+    Ud[1] = 2.0 * (coefU[4] - coefU[3])/(pad_neir->x - pad_neil->x);
+    Pd[0] = 0.5 * (coefP[4] + coefP[3]);
+    Pd[1] = 2.0 * (coefP[4] - coefP[3])/(pad_neir->x - pad_neil->x);
+    Vd[0] = 0.5 * (coefV[4] + coefV[3]);
+    Vd[1] = 2.0 * (coefV[4] - coefV[3])/(pad_neir->x - pad_neil->x);
+}
 
 void LPSolver::computeDivdDifference(pdata *pad, double *coefU, double *coefP, double *coefV) {
 
@@ -219,6 +242,122 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
     *outPressure = inPressure - dt*gamma*inPressure*ux + 0.5*dt*dt*(gamma*gamma*inPressure*ux*ux 
                 + gamma*vx*inPressure*px+gamma*inVolume*inPressure*pxx + gamma*inPressure*ux*ux);
     *outVolume = inVolume +dt*inVolume*ux + 0.5*dt*dt*(-inVolume*vx*px - inVolume*inVolume*pxx);
+}
+
+void LPSolver::solve_upwind_right_boundary() {
+
+    const double *invelocity, *inpressure, *involume, *insoundspeed;
+    double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
+
+    // spatial derivative: u: velocity, p: pressure, v: volume
+    // order: /dx_left, /dx_right
+    double Ud[2] = {0.,0.};
+    double Pd[2] = {0.,0.};
+    double Vd[2] = {0.,0.};
+
+    pdata *pad;
+    size_t lpnum = gdata->particle_data->size();
+    //double dt = cfldt;
+
+    pad = &((*gdata->particle_data)[lpnum-1]);
+    // get the in state
+    invelocity = &(pad->v);
+    inpressure = &(pad->pressure);
+    involume = &(pad->volume);
+    insoundspeed = &(pad->soundspeed);
+
+    // set out state 
+    outvelocity = &(pad->oldv);
+    outpressure = &(pad->pressureT1);
+    outvolume = &(pad->volumeT1);
+    outsoundspeed = &(pad->soundspeedT1);
+
+    // set out state = in state (incase solver fails)
+    *outvelocity = *invelocity;
+    *outpressure = *inpressure;
+    *outvolume = *involume;
+    *outsoundspeed = *insoundspeed;
+
+    // if the particle has 0 volume or 0 soundspeed, skip it
+    if(*insoundspeed < 1e-10 || *involume < 1e-10) {
+        cout<<"[LW] Detect a particle has 0 volume or 0 soundspeed!"<<endl;
+        cout<<"[LW] Particle ID= "<<lpnum-1<<", position = "<<(pad->x)<<endl;
+        return;
+    }
+
+    // compute spatial derivative
+    computeSpatialDer_upwind(pad, Ud, Pd, Vd);
+
+    // time integration
+    timeIntegration_upwind(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
+                            Pd, Vd, outvelocity, outpressure, outvolume);
+
+    // check if time integration gives nan value
+    if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
+    cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
+    cout<<"[timeIntegration] Particle ID= "<<lpnum-1<<", position = "<<(pad->x)<<endl;
+    assert(false);
+    }
+
+    // add -∇·q
+    *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
+
+    // coumpute soundspeed
+    *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
+
+    // assign vaules to out state
+    pad->oldv = *outvelocity;
+    pad->pressureT1 = *outpressure;
+    pad->volumeT1 = *outvolume;
+    pad->soundspeedT1 = *outsoundspeed;
+
+}
+
+void LPSolver::computeSpatialDer_upwind(pdata *pad, double *Ud, double *Pd, double *Vd) {
+
+    //pdata *pad_neil = pad->leftneighbour;
+    //pdata *pad_neir = pad->rightneighbour;
+
+    // the coefficients for Newton Interpolation
+    double coefP[6] ={0.,0.,0.,0.,0.,0.};
+    double coefV[6] ={0.,0.,0.,0.,0.,0.};
+    double coefU[6] ={0.,0.,0.,0.,0.,0.};
+    // pass array to function = pass the pointer to the first element of the array
+    computeDivdDifference(pad, coefU, coefP, coefV);
+
+    Ud[0] = coefU[3];
+    Ud[1] = coefU[4];
+    Pd[0] = coefP[3];
+    Pd[1] = coefP[4];
+    Vd[0] = coefV[3];
+    Vd[1] = coefV[4];
+
+}
+
+void LPSolver::timeIntegration_upwind(double inVelocity, double inPressure, double inVolume, 
+                  double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
+                  double *outPressure, double *outVolume) {
+    
+    double vt,pt,ut;
+    double dt = cfldt;
+    //double gamma = inSoundspeed*inSoundspeed/inVolume/inPressure;
+    double K = inSoundspeed*inSoundspeed/inVolume/inVolume;
+    //double pinf = gdata->pinf; // currently not used
+
+    double uxl = Ud[0];
+    double uxr = Ud[1];
+    double pxl = Pd[0];
+    double pxr = Pd[1];
+    //double vxl = Vd[0];
+    //double vxr = Vd[1];
+
+    vt = 0.5 * inVolume * (uxr + uxl) - 0.5 * inVolume / sqrt(K) * (pxr - pxl);
+    ut = 0.5 * inVolume * sqrt(K) * (uxr - uxl) - 0.5 * inVolume * (pxr + pxl);
+    pt = -0.5 * inVolume * K * (uxr + uxl) + 0.5 * inVolume * sqrt(K) * (pxr - pxl);
+
+    *outVelocity = inVelocity + dt*ut;
+    *outPressure = inPressure + dt*pt;
+    *outVolume = inVolume + dt*vt;
 }
 
 void LPSolver::moveParticle() {

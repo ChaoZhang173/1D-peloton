@@ -40,7 +40,7 @@ void Initializer::setInputs() {
   // set the estimated max number of particles, currenlyt not used
   //setMaxParticleNumber(10000);
   // set the initial spacing between particles
-  setInitialSpacing(0.0001);
+  setInitialSpacing(0.002);
   // set the smallest dx between particles
   setMinDx(1e-6);
   setBackgroundPressure(0.64);//2kev 1e14 -> 0.64
