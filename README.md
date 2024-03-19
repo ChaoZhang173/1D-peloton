@@ -74,6 +74,7 @@ James Corbett
    parameter = vacumm  
 
 ## Usage:
+-  The 1D peloton code uses C++20 for smart pointer (added at C++17)  
 -  compile by
 ```
 make
