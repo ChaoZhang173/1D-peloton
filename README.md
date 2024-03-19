@@ -74,7 +74,8 @@ James Corbett
    parameter = vacumm  
 
 ## Usage:
--  The 1D peloton code uses C++20 for smart pointer (added at C++17)  
+-  The 1D peloton code uses C++20 for smart pointer (added at C++17)
+-  Before compile, change initial seetings in the "initializer.cpp"  
 -  compile by
 ```
 make
