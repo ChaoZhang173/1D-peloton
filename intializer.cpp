@@ -22,7 +22,7 @@ void Initializer::setInputs() {
   setEndTime(0.1);
   setCFLCoeff(0.5);
   // set the time interval to write data
-  setWriteStep(0.05);
+  setWriteStep(0.01);
   setGamma(1.667);
   // set the number of heating sources
   setHeatingSourceNumber(1);
@@ -40,7 +40,7 @@ void Initializer::setInputs() {
   // set the estimated max number of particles, currenlyt not used
   //setMaxParticleNumber(10000);
   // set the initial spacing between particles
-  setInitialSpacing(0.002);
+  setInitialSpacing(0.001);
   // set the smallest dx between particles
   setMinDx(1e-6);
   setBackgroundPressure(0.64);//2kev 1e14 -> 0.64

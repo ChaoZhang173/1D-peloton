@@ -19,6 +19,13 @@ PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
         neinf.push_back(init->getNeinf(i));
     }
     setPelletMaterial(init->getMaterialChoice());
+
+    double neeff_value;
+    for(int i = 0; i < heatsource_numer; i++){
+        neeff_value = (1-(23.920538*log(1+0.201371*(one_plus_Zstar)))/100)*exp(-1.936)*neinf[i];
+        neeff.push_back(neeff_value);
+    }
+    
     warmuptime = init->getWarmupTime();
 
     // initialize the pellets
@@ -75,14 +82,14 @@ void PelletSolver::computeHeatDeposition(double currenttime){
 
     for(int i = 0; i < heatsource_numer; i++){
         cout << "Heating source " << i+1 << " : " << teinf[i] << "ev " << neinf[i] << endl;
-        addHeatSource(teinf[i], neinf[i], currenttime);
+        addHeatSource(teinf[i], neinf[i], neeff[i], currenttime);
     }
 
 
     cout << "[Heat] Exit computeHeatDeposition..." << endl;
 }
 
-void PelletSolver::addHeatSource(double teinf, double neinf,double currenttime){
+void PelletSolver::addHeatSource(double teinf, double neinf, double neeff, double currenttime){
 
     pdata *pad;
     size_t li, lpnum = gdata->particle_data->size();

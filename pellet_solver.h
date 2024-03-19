@@ -35,7 +35,7 @@ public:
   //! with multiple heating source
   void computeHeatDeposition(double currenttime);
   //! add heating source
-  void addHeatSource(double teinf, double neinf, double currenttime);
+  void addHeatSource(double teinf, double neinf, double neeff, double currenttime);
   //！ set parameters of pellet material, currently only have Neon = 0
   void setPelletMaterial(int id);
   //! compute mass flow rate  
@@ -61,7 +61,7 @@ public:
   double Z;
   double I;
   double sublimationenergy;
-  double neeff;
+  std::vector<double> neeff;
 
   double one_plus_Zstar; // ! 1 + Z*
 
