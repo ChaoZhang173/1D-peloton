@@ -46,8 +46,8 @@ James Corbett
 14. mindx:  
     The mindx in Global_Data is the smallest distance between two particles  
     If localspacing < 3*mindx will report a warning message and put particle to the middle
-15. Right Boundary:
-    The lax-wendroff method will introduce oscillation on the right boundary
+15. Right Boundary:  
+    The lax-wendroff method will introduce oscillation on the right boundary  
     So change to use upwind method.  
        
 ## Data Structure: 
