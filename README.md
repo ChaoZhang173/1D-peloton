@@ -25,7 +25,7 @@ James Corbett
    other steps will be written normally.
 7. local spacing:
    the local spaing = 0.5((distance to left) + (distance to right))  
-   1st particle: local spacing = x_2nd - x_1st  
+   1st particle: local spacing = 0.5*(x_2nd - pellet_cen(0))    
    last particle: local spacing = x_last - x_(last-1)  
 9. electron density integral and heat deposition:   
    The 1D code only has left integral, and right integral is not used.  
@@ -48,7 +48,11 @@ James Corbett
     If localspacing < 3*mindx will report a warning message and put particle to the middle
 15. Right Boundary:  
     The lax-wendroff method will introduce oscillation on the right boundary  
-    So change to use upwind method.  
+    So change to use upwind method.
+16. Left Boundary:
+    The left boundary is near the pellet, pellet location = 0
+    If the 1st particle is close to pellet, neighbour is set to pellet properity  
+    If the 1st particle is too far away (currenly 10*initialspacing), will generate vacumm neighbour with same pressure
        
 ## Data Structure: 
 1. STL Vector.  
@@ -57,19 +61,19 @@ James Corbett
    Could use `reserve` or `resize` to manage memory allocation for vectors.  
 -  Switch to use smart pointer `std::unique_ptr<std::vector<pdata_t>> particle_data`  
    Smart pointer could manage memory automatically.  
-2. Particle Data
--  Use a smart pointer particle_data to store all particles in Global_Data class.
--  The 1st particle is near but NOT at the pellet surface  
-   Pellet surface: -0.5*initial spacing  
+2. Particle Data  
+-  Use a smart pointer particle_data to store all particles in Global_Data class.  
+-  The 1st particle is near but NOT at the pellet surface(x = initialspacing)  
+   Pellet surface: x = 0   
    New particles will be push and added into the particle list  
 -  Neighbour: Left neighbour for p0 and right neighbour for plast   
    Local spaicng: 0.5((distance to left) + (distance to right))
 3. Ghost Particle
 -  A smart pointer to store all (currently 2) ghost particles in Global_Data
 -  1st element(0):
-   The left neighbour of 1st particle: x = x_1st - localspacing_1st;  
-   parameter = 1st particle  
-   It is symmetric about pellet (x_1st - 0.5*localspacing_1st)
+   The left neighbour of 1st particle: x = x_1st - localspacing_1st;
+   if it is close to the pellet, parameter = pellet particle
+   if it is far away from it, parameter = vacumm (with particle pressure)  
 -  2nd element(1):
    The right neighbour of last particle: x = x_last + 0.5*localspacing_last;
    parameter = vacumm  
@@ -96,9 +100,11 @@ We are currently working on the following jobs:
   Finished debugging, code could run successfully 03/19/2024  
 1. Fixed issues:  
 1.1. uninitialized variable: vector<double> neeff 03/19/2024  
+1.2. x=0 is the pellet, 1st particle x = 1*initial spacing 03/20/2024  
 2. Current issues:  
 2.1. particles near the pellet didn't generated  
-3. The accuracy needs to be verified
+2.2. the left boundary needs to change to use upwind method  
+4. The accuracy needs to be verified
 
 **1. timer: Chao**   
 
