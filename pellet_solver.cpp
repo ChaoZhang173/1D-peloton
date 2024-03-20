@@ -34,7 +34,7 @@ PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     pellet_info *pellet;
     for (int i = 0; i < pelletnumber; i++){
         pellet = &((*pelletlist)[i]);
-        pellet->x = -0.5*init->getInitialSpacing();
+        pellet->x = init->getPelletLocation();
         pellet->layerlength = init->getLayerLength();
     }
     // asgin the pellet_solver to the global data
@@ -48,6 +48,7 @@ void PelletSolver::heatingModel(double currenttime){
     computeDensityIntegral();
     // compute heat deposition 
     computeHeatDeposition(currenttime);
+    cout<<"[Heat] The heatingmodel is finished!"<<endl;
 
 }
 
@@ -198,7 +199,7 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     double gamma = g->gamma;
     double R = 83.1466/mu;
     double Ts = 450;
-
+    cout<<"----------computeBoundaryCondition---------"<<endl;
     for (pi = 0; pi<pnum; pi++){
         pellet = &((*pelletlist)[pi]);
         counter_nei = 0;
@@ -208,8 +209,9 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
         pres = 0;
         soundspeed = 0;
         pad = &((*g->particle_data)[0]);
-        pellet_cen = -0.5*pad->localspacing;
-
+        // the position of the pellet
+        pellet_cen = pellet->x;
+        cout<<"[BoundaryCondition] searching radius: "<<pellet_cen-dx<<" ~ "<<pellet_cen+dx<<endl;
         for(li = 0; li < lpnum; li++){
             pad = &((*g->particle_data)[li]);
             x = pad->x;
@@ -234,7 +236,7 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
             }
         }
         if(counter_nei == 0){
-            cout<<"[Boundary] No neighbour particles found for pellet "<<pi<<"!"<<endl;
+            cout<<"[Boundary Condition] No neighbour particles found for pellet "<<pi<<"!"<<endl;
         }
         qsum_bc = qsum/counter_nei;
         vol_bc = vol/counter_nei;
@@ -253,14 +255,15 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
         pellet->vinflow = pellet->pelletvelocity/massflowrate;
         pellet->pinflow = R*Ts/pellet->vinflow;
 
-        cout<<"[Boundary] Inflow volume = "<<vol_bc<<endl;
-        cout<<"[Boundary] Inflow pressure = "<<pres_bc<<endl;
-        cout<<"[Boundary] Inflow soundspeed = "<<soundspeed_bc<<endl;
-        cout<<"[Boundary] Inflow velocity = "<<ur_bc<<endl;
-        cout<<"[Boundary] Massflowrate = "<<massflowrate<<endl;
-        cout<<"[Boundary] Ts = "<<Ts<<endl;
-        cout<<"[Boundary] pellet velcoity = "<<pellet->pelletvelocity<<endl;
+        cout<<"[Boundary Condition] Inflow volume = "<<vol_bc<<endl;
+        cout<<"[Boundary Condition] Inflow pressure = "<<pres_bc<<endl;
+        cout<<"[Boundary Condition] Inflow soundspeed = "<<soundspeed_bc<<endl;
+        cout<<"[Boundary Condition] Inflow velocity = "<<ur_bc<<endl;
+        cout<<"[Boundary Condition] Massflowrate = "<<massflowrate<<endl;
+        cout<<"[Boundary Condition] Ts = "<<Ts<<endl;
+        cout<<"[Boundary Condition] pellet velcoity = "<<pellet->pelletvelocity<<endl;
     }
+    cout<<"-------------------"<<endl;
 }
 
 double PelletSolver::computeQplusminuisGradient(pdata *pad){
@@ -300,7 +303,7 @@ void PelletSolver::neonRadiationCooling(double dt){
                 pad->pressure = pressure;
                 break;
             }
-            pad->soundspeed = gdata->eos->getSoundSpeed(pad->pressure, density);
+            pad->soundspeed = gdata->eos->getSoundSpeed(pad->pressure, density, li);
         }
     }
 

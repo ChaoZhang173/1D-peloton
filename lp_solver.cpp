@@ -53,8 +53,8 @@ void LPSolver::solve_1d(){
         // calculate right boundary using upwind method
         solve_upwind_right_boundary();
 
-        // compute boundary condition
-        pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing/5);
+        // compute boundary condition, the choice of dx needs to be updated
+        pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing*10);
         // update particle states
         gdata->updateParticleStates();
         // radiation cooling
@@ -79,6 +79,7 @@ void LPSolver::solve_1d(){
 
 // ! the -∇·q term is implemented inside
 void LPSolver::solve_laxwendroff() {
+    cout<<"[LPSolver] Entering solve_laxwendroff..."<<endl;
     const double *invelocity, *inpressure, *involume, *insoundspeed;
     double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
 
@@ -92,8 +93,8 @@ void LPSolver::solve_laxwendroff() {
     pdata *pad;
 
     size_t li, lpnum = gdata->particle_data->size();
-    // for all particles except the right boundary
-    for(li = 0; li<lpnum-1; li++){
+    // for all particles except the right & left boundaries
+    for(li = 1; li<lpnum-1; li++){
         pad = &((*gdata->particle_data)[li]);
         
         // get the in state
@@ -140,7 +141,7 @@ void LPSolver::solve_laxwendroff() {
         *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
 
         // coumpute soundspeed
-        *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
+        *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume), li);
 
         // assign vaules to out state
         pad->oldv = *outvelocity;
@@ -148,7 +149,7 @@ void LPSolver::solve_laxwendroff() {
         pad->volumeT1 = *outvolume;
         pad->soundspeedT1 = *outsoundspeed;
         }
-
+    cout<<"[LPSolver] solve_laxwendroff finished!"<<endl;
 }
 
 
@@ -303,7 +304,7 @@ void LPSolver::solve_upwind_right_boundary() {
     *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
 
     // coumpute soundspeed
-    *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume));
+    *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume),lpnum-1);
 
     // assign vaules to out state
     pad->oldv = *outvelocity;
@@ -372,6 +373,7 @@ void LPSolver::moveParticle() {
 }
 
 void LPSolver::computeTemperature() {
+    cout<<"[LPSolver] Entering computeTemperature..."<<endl;
     pdata *pad;
     size_t li, lpnum = gdata->particle_data->size();
 
@@ -379,6 +381,7 @@ void LPSolver::computeTemperature() {
         pad = &((*gdata->particle_data)[li]);
         pad->temperature = gdata->eos->getTemperature(pad->pressure, 1./pad->volume);
     }
+    cout<<"[LPSolver] ComputeTemperature finished!"<<endl;
 }
 
 void LPSolver::updateLocalSpacing(){

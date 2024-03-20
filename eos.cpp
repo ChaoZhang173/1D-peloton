@@ -26,7 +26,7 @@ double PolytropicEOS::getTemperature(double pressure, double density){
     return mu*pressure/(R*density)/11604.525;
 }
 
-double PolytropicEOS::getSoundSpeed(double pressure, double density){
+double PolytropicEOS::getSoundSpeed(double pressure, double density, int num){
     double soundspeed;
 
     if(density != 0)
@@ -34,6 +34,7 @@ double PolytropicEOS::getSoundSpeed(double pressure, double density){
     else {
         cout<<"[EOS] Error: density is zero in PolytropicEOS::getSoundSpeed"<<endl;
         cout<<"[EOS] gamma = "<<gamma<<", pressure = "<<pressure<<", density = "<<density<<endl;
+        cout<<"[EOS] particle number = "<<num<<endl;
         assert(false);
     }
     if(soundspeed > 0)
@@ -43,6 +44,7 @@ double PolytropicEOS::getSoundSpeed(double pressure, double density){
     else {
         cout<<"[EOS] Error: soundspeed is negative in PolytropicEOS::getSoundSpeed"<<endl;
         cout<<"[EOS] gamma = "<<gamma<<", pressure = "<<pressure<<", density = "<<density<<endl;
+        cout<<"[EOS] particle number = "<<num<<endl;
         assert(false);
     }
 }

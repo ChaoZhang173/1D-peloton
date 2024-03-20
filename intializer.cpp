@@ -22,7 +22,7 @@ void Initializer::setInputs() {
   setEndTime(0.1);
   setCFLCoeff(0.5);
   // set the time interval to write data
-  setWriteStep(0.01);
+  setWriteStep(0.001);
   setGamma(1.667);
   // set the number of heating sources
   setHeatingSourceNumber(1);
@@ -36,18 +36,19 @@ void Initializer::setInputs() {
   // set pellet material; 0:neon
   setMaterialChoice(0);
   // the length of layer that will generate initial particles
-  setLayerLength(0.01);
+  setLayerLength(0.1);
   // set the estimated max number of particles, currenlyt not used
   //setMaxParticleNumber(10000);
   // set the initial spacing between particles
   setInitialSpacing(0.001);
   // set the smallest dx between particles
-  setMinDx(1e-6);
+  setMinDx(1e-10);
   setBackgroundPressure(0.64);//2kev 1e14 -> 0.64
   // set state name
   setStateName("pelletstate");
   setBoundaryNumber(1);// currently only one boundary
   setBoundaryName("pelletinflowboundary");
   // set pellets, currently only use 1 pellet
-  setPellentNumber(1);
+  setPelletNumber(1);
+  setPelletLocation(0);
 }

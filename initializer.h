@@ -41,7 +41,10 @@ class Initializer {
     string getStateName(){return i_StateName;};
     int getBoundaryNumber(){return i_BoundaryNumber;};
     string getBoundaryName(int i) {return i_BoundaryName[i];}
+
     int getPelletNumber(){return i_PelletNumber;};
+    double getPelletLocation(){return i_PelletLocation;};
+    
     double getBackgroundPressure(){return i_BackgroundPressure;};
     double getMinDx(){return i_minDx;};
 
@@ -86,7 +89,9 @@ class Initializer {
     //! the name of boundary object, currently only use "pelletinflowboundary"
     void setBoundaryName(string s){i_BoundaryName.push_back(s);};
     //! the number of pellets, currently only use 1
-    void setPellentNumber(int n){i_PelletNumber = n;};
+    void setPelletNumber(int n){i_PelletNumber = n;};
+    //! the location of pellet, currently only use 0
+    void setPelletLocation(double l){i_PelletLocation = l;};
     //! the background pressure
     void setBackgroundPressure(double p){i_BackgroundPressure = p;};
     //! the smallest dx between particles
@@ -115,6 +120,8 @@ class Initializer {
 
     //! number of pellets
     int i_PelletNumber;
+    //! the location of pellet
+    double i_PelletLocation;
 
     //! a length that used to generate initial particles
     double i_layerlength;

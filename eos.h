@@ -27,7 +27,7 @@ public:
 
   virtual double getEnergy(double pressure, double density) = 0;
   virtual double getTemperature(double pressure, double density) = 0;
-  virtual double getSoundSpeed(double pressure, double density) = 0;
+  virtual double getSoundSpeed(double pressure, double density, int num) = 0;
   virtual double getElectricConductivity(double pressure, double density) = 0;
 
 };
@@ -41,7 +41,7 @@ public:
   virtual ~PolytropicEOS(){};
   virtual double getEnergy(double pressure, double density);
   virtual double getTemperature(double pressure, double density);
-  virtual double getSoundSpeed(double pressure, double density);
+  virtual double getSoundSpeed(double pressure, double density, int num);
   virtual double getElectricConductivity(double pressure, double density);
 };
 

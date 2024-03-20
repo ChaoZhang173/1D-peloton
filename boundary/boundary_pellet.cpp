@@ -42,11 +42,17 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
             pellet->pinflow = pelletpinflow = Pinflow;
         }
         
+        cout<<"-----------------"<<endl;
         // output the particle_data[0]->x
         cout<<"[Boundary] the smallest x = "<<g->particle_data->at(0).x<<endl;
         // generate new particles
         size_t newParticleNum = (size_t)(massflowrate*dt/mass_fix);
+        cout<<"[Boundary] massflowrate = "<<massflowrate<<endl;
+        cout<<"[Boundary] dt = "<<dt<<endl;
+        cout<<"[Boundary] mass_fix = "<<mass_fix<<endl;
+        cout<<"[Boundary] newParticleNum = "<<newParticleNum<<endl;
         double dis = pellet->pelletvelocity*dt; // layer that will generate new particles
+        cout<<"[Boundary] pellet velocity = "<<pellet->pelletvelocity<<endl;
         cout<<"[Boundary] new layer thickness = "<<dis<<endl;
         cout<<"[Boundary] new paticle number = "<<newParticleNum<<endl;
         
@@ -55,22 +61,22 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
             cout<<"[Boundary] no particles will be generated"<<endl;
             return;
         }
-
+        cout<<"-----------------"<<endl;
         // used as localspacing in 3D code, not used in 1D code
         //double actualdx = max(pelletvinflow*mass_fix,0.0);
 
         // access the vector inside the unique_ptr
         vector<pdata> *particle_data = g->particle_data.get();
-        // currently generate particle at 0~pellet velocity *dt
+        // currently generate particle at 1*newdx~pellet velocity *dt
         double newdx = dis/newParticleNum;
         for(li=0; li<newParticleNum; li++){
-            pad->x = li*newdx;
+            pad->x = (li+1)*newdx;
             pad->v = pellet->pelletvelocity;
             pad->volume = pelletvinflow;
             pad->pressure = pelletpinflow;
             pad->localspacing = newdx; // some of them need to be updated
             pad->mass = mass_fix;
-            pad->soundspeed = m_pEOS->getSoundSpeed(pad->pressure, 1./pad->volume);
+            pad->soundspeed = m_pEOS->getSoundSpeed(pad->pressure, 1./pad->volume, li);
             pad->ifboundary = false;
             particle_data->emplace_back(*pad);
         }
