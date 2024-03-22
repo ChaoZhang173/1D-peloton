@@ -103,6 +103,10 @@ public:
   
   double backgroundpressure; 
 
+  // invalid pressure and density
+  double invalidpressure;
+  double invaliddensity;
+
   int pelletnumber; //! =1
   double currenttime;
 

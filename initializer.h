@@ -48,6 +48,9 @@ class Initializer {
     double getBackgroundPressure(){return i_BackgroundPressure;};
     double getMinDx(){return i_minDx;};
 
+    double getInvalidPressure(){return i_invalidPressure;};
+    double getInvalidDensity(){return i_invalidDensity;};
+
     private:
     // currently not using
     void readInputfile(const std::string& inputfileName);
@@ -96,6 +99,10 @@ class Initializer {
     void setBackgroundPressure(double p){i_BackgroundPressure = p;};
     //! the smallest dx between particles
     void setMinDx(double dx){i_minDx = dx;};
+    //! set the invalid pressure
+    void setInvalidPressure(double p){i_invalidPressure = p;};
+    //! set the invalid density
+    void setInvalidDensity(double d){i_invalidDensity = d;};
 
     double i_StartTime;
     double i_EndTime;
@@ -110,6 +117,9 @@ class Initializer {
     vector<double> i_Teinf;
     vector<double> i_Neinf;
     double i_BackgroundPressure;
+
+    double i_invalidPressure;
+    double i_invalidDensity;
 
     double i_minDx;
 

@@ -131,16 +131,29 @@ void LPSolver::solve_laxwendroff() {
         // time integration
         timeIntegration(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
                                 Pd, Vd, outvelocity, outpressure, outvolume);
-
+        
+        // add -∇·q
+        *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
+        
         // check if time integration gives nan value
         if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
         cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
         cout<<"[timeIntegration] Particle ID= "<<li<<", position = "<<(pad->x)<<endl;
         assert(false);
         }
-
-        // add -∇·q
-        *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
+        if(isinf(*outvelocity) || isinf(*outpressure) || isinf(*outvolume)) {
+        cout<<"[timeIntegration] Detect a particle has inf value!"<<endl;
+        cout<<"[timeIntegration] Particle ID= "<<li<<", position = "<<(pad->x)<<endl;
+        assert(false);
+        }
+        // check if the value is within the physical range
+        if(*outpressure < gdata->invalidpressure || 1./(*outvolume) < gdata->invaliddensity) {
+            double gamma = (*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure);
+            cout<<"[LW Solver] inpressure: "<<*inpressure<<", outpressure: "<<*outpressure<<endl;
+            cout<<"   involume: "<<*involume<<", outvolume: "<<*outvolume<<endl;
+            cout<<"   position: "<<pad->x<<", heating: "<<(gamma-1)*cfldt*pad->deltaq<<endl;
+            assert(false);
+        }
 
         // coumpute soundspeed
         *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume), li);
@@ -306,15 +319,28 @@ void LPSolver::solve_upwind_particle(pdata *pad, int pnum) {
     timeIntegration_upwind(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
                             Pd, Vd, outvelocity, outpressure, outvolume);
 
-    // check if time integration gives nan value
+    // add -∇·q
+    *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
+ 
+    // check if time integration gives nan/inf value
     if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
     cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
     cout<<"[timeIntegration] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
     assert(false);
     }
-
-    // add -∇·q
-    *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
+    if(isinf(*outvelocity) || isinf(*outpressure) || isinf(*outvolume)) {
+    cout<<"[timeIntegration] Detect a particle has inf value!"<<endl;
+    cout<<"[timeIntegration] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
+    assert(false);
+    }
+    // check if the value is within the physical range
+    if(*outpressure < gdata->invalidpressure || 1./(*outvolume) < gdata->invaliddensity) {
+        double gamma = (*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure);
+        cout<<"[UW Solver] inpressure: "<<*inpressure<<", outpressure: "<<*outpressure<<endl;
+        cout<<"   involume: "<<*involume<<", outvolume: "<<*outvolume<<endl;
+        cout<<"   position: "<<pad->x<<", heating: "<<(gamma-1)*cfldt*pad->deltaq<<endl;
+        assert(false);
+    }
 
     // coumpute soundspeed
     *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume),pnum);

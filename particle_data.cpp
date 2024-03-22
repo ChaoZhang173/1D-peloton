@@ -16,6 +16,11 @@ Global_Data::Global_Data(Initializer *init) {
     gamma = init->getGamma();
     // get background pressure
     backgroundpressure = init->getBackgroundPressure();
+    
+    // get invalid pressure and density
+    invalidpressure = init->getInvalidPressure();
+    invaliddensity = init->getInvalidDensity();
+
     eoschoice = init->getEOSChoice();
     // set up eos
     setEOS();
