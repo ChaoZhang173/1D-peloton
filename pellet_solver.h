@@ -74,5 +74,8 @@ public:
   std::unique_ptr<std::vector<pellet_info>> pelletlist;
   //! number of pellets, only use 1 for now
   int pelletnumber;
+
+  //! accumulated ablated mass for each pellet
+  double mass_accum; 
 };
 #endif

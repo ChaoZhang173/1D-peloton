@@ -10,7 +10,7 @@ class PelletInflowBoundary: public Boundary {
 public:
     PelletInflowBoundary();	
     virtual ~PelletInflowBoundary() {};
-    virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing, double dt); 
+    virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing, double dt, double *mass); 
 
 private:
     double Pinflow;//inflow pressure, constant

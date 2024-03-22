@@ -19,10 +19,10 @@ void Initializer::readInputfile(const std::string& inputfileName) {
 
 void Initializer::setInputs() {
   setStartTime(0.0);
-  setEndTime(0.1);
+  setEndTime(0.5);
   setCFLCoeff(0.5);
   // set the time interval to write data
-  setWriteStep(0.001);
+  setWriteStep(0.05);
   setGamma(1.667);
   // set the number of heating sources
   setHeatingSourceNumber(1);
@@ -36,7 +36,7 @@ void Initializer::setInputs() {
   // set pellet material; 0:neon
   setMaterialChoice(0);
   // the length of layer that will generate initial particles
-  setLayerLength(0.1);
+  setLayerLength(0.01);
   // set the estimated max number of particles, currenlyt not used
   //setMaxParticleNumber(10000);
   // set the initial spacing between particles

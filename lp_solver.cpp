@@ -30,7 +30,7 @@ void LPSolver::solve_1d(){
     {
         // generate boundary particles
         for(int id = 0; id < gdata->boundarynumber; id++){
-            gdata->boundary[id]->generateBoundaryParticle(gdata,gdata->eos,gdata->initialspacing,cfldt);
+            gdata->boundary[id]->generateBoundaryParticle(gdata,gdata->eos,gdata->initialspacing,cfldt,&(pellet_solver->mass_accum));
         }
         // reorder particles, make sure particle position is in order, set neighbours
         gdata->reorderParticles();
@@ -48,10 +48,10 @@ void LPSolver::solve_1d(){
         }
         // heating model
         pellet_solver->heatingModel(currenttime);
-        // lax-wendroff solver
+        // lax-wendroff solver for other particles
         solve_laxwendroff();
-        // calculate right boundary using upwind method
-        solve_upwind_right_boundary();
+        // calculate right & left boundaries using upwind method
+        solve_upwind();
 
         // compute boundary condition, the choice of dx needs to be updated
         pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing*10);
@@ -60,7 +60,9 @@ void LPSolver::solve_1d(){
         // radiation cooling
         pellet_solver->neonRadiationCooling(cfldt);
         // move particles
-        moveParticle();       
+        moveParticle();  
+        // update local spacing based on volume change    
+        //updateLocalSpacing();
         // reorder particle and update loacl spacing, move to next timestep
         //gdata->updatelocalSpacing();
         // coupute temperature
@@ -245,7 +247,21 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
     *outVolume = inVolume +dt*inVolume*ux + 0.5*dt*dt*(-inVolume*vx*px - inVolume*inVolume*pxx);
 }
 
-void LPSolver::solve_upwind_right_boundary() {
+void LPSolver::solve_upwind(){
+    
+    cout<<"[LPSolver] Entering solve_upwind..."<<endl;
+    pdata *pad;
+    double lpnum = gdata->particle_data->size();
+    // solve left boundary
+    pad = &((*gdata->particle_data)[0]);
+    solve_upwind_particle(pad, 0);
+    // solve right boundary
+    pad = &((*gdata->particle_data)[lpnum-1]);
+    solve_upwind_particle(pad, lpnum-1);
+    cout<<"[LPSolver] solve_upwind finished!"<<endl;
+}
+
+void LPSolver::solve_upwind_particle(pdata *pad, int pnum) {
 
     const double *invelocity, *inpressure, *involume, *insoundspeed;
     double *outvelocity, *outpressure, *outvolume, *outsoundspeed;
@@ -256,11 +272,8 @@ void LPSolver::solve_upwind_right_boundary() {
     double Pd[2] = {0.,0.};
     double Vd[2] = {0.,0.};
 
-    pdata *pad;
-    size_t lpnum = gdata->particle_data->size();
     //double dt = cfldt;
 
-    pad = &((*gdata->particle_data)[lpnum-1]);
     // get the in state
     invelocity = &(pad->v);
     inpressure = &(pad->pressure);
@@ -282,7 +295,7 @@ void LPSolver::solve_upwind_right_boundary() {
     // if the particle has 0 volume or 0 soundspeed, skip it
     if(*insoundspeed < 1e-10 || *involume < 1e-10) {
         cout<<"[LW] Detect a particle has 0 volume or 0 soundspeed!"<<endl;
-        cout<<"[LW] Particle ID= "<<lpnum-1<<", position = "<<(pad->x)<<endl;
+        cout<<"[LW] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
         return;
     }
 
@@ -296,7 +309,7 @@ void LPSolver::solve_upwind_right_boundary() {
     // check if time integration gives nan value
     if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
     cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
-    cout<<"[timeIntegration] Particle ID= "<<lpnum-1<<", position = "<<(pad->x)<<endl;
+    cout<<"[timeIntegration] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
     assert(false);
     }
 
@@ -304,7 +317,7 @@ void LPSolver::solve_upwind_right_boundary() {
     *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
 
     // coumpute soundspeed
-    *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume),lpnum-1);
+    *outsoundspeed = gdata->eos->getSoundSpeed(*outpressure, 1./(*outvolume),pnum);
 
     // assign vaules to out state
     pad->oldv = *outvelocity;
@@ -413,6 +426,10 @@ void LPSolver::computeCFLCondition(){
 }
 
 bool LPSolver::adjustDtByWriteTimeInterval(){
+    cout<<"--------[Time Analysis]----------"<<endl;
+    cout<<"[LPSolver] Current time = "<<currenttime<<endl;
+    cout<<"[LPSolver] Current timestep = "<<timestep<<endl;
+    cout<<"[LPSolver] Current cfldt = "<<cfldt<<endl;
     if(currenttime + cfldt >= nextwritetime){
         cfldt = nextwritetime - currenttime;
         currenttime = nextwritetime;
@@ -431,5 +448,5 @@ bool LPSolver::adjustDtByWriteTimeInterval(){
         currenttime += cfldt;
         return false;
     }
-
+    cout<<"-------------------------------"<<endl;
 }

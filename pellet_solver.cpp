@@ -13,6 +13,7 @@ double Bessel_I1(double x);
 
 PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     gdata = g;   
+    mass_accum = 0.;
     heatsource_numer = init->getHeatingSourceNumber();
     for(int i = 0; i < heatsource_numer; i++){
         teinf.push_back(init->getTeinf(i));
@@ -223,7 +224,9 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
                 ss = sound;
             }
             r_shift = x-pellet_cen - ss*dt;
-            if(r_shift<pellet_cen+dx && r_shift>pellet_cen-dx){
+            
+            //if(r_shift<pellet_cen+dx && r_shift>pellet_cen-dx){
+            if(r_shift<pellet_cen+dx){
                 pvolume = pad->volume;
                 ppressure = pad->pressure;
                 pur = v;

@@ -11,7 +11,7 @@ using namespace std;
 
 PelletInflowBoundary::PelletInflowBoundary():Pinflow(16),Uinflow(0),Vinflow(100){}
 
-void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS, double dx, double dt){
+void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS, double dx, double dt, double *mass){
 
     PelletSolver *p = g->pellet_solver;
     pdata *pad = new pdata;
@@ -21,6 +21,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
     size_t pnum = p->pelletlist->size();
     size_t li;
 
+    // accumulate mass from last time step
+    double *mass_accum = mass;
     double mass_fix = dx/Vinflow;
     double massflowrate;
     double pelletvinflow, pelletpinflow;
@@ -45,8 +47,12 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
         cout<<"-----------------"<<endl;
         // output the particle_data[0]->x
         cout<<"[Boundary] the smallest x = "<<g->particle_data->at(0).x<<endl;
-        // generate new particles
-        size_t newParticleNum = (size_t)(massflowrate*dt/mass_fix);
+        // generate new particles, new mass + accumulated mass
+        size_t newParticleNum = (size_t)((massflowrate*dt+(*mass_accum))/mass_fix);
+        cout<<"[Boundary] input accumulated mass = "<<*mass_accum<<endl;
+        // compute accumulated mass for next time step
+        *mass_accum = massflowrate*dt+(*mass_accum) - newParticleNum*mass_fix;
+        cout<<"[Boundary] new accumulated mass = "<<*mass_accum<<endl;
         cout<<"[Boundary] massflowrate = "<<massflowrate<<endl;
         cout<<"[Boundary] dt = "<<dt<<endl;
         cout<<"[Boundary] mass_fix = "<<mass_fix<<endl;

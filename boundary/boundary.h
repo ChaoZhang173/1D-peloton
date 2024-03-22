@@ -17,7 +17,7 @@ public:
 	 * \param [out] xb  The x-coordinate of boundary particle	
 	 */
 	virtual void UpdateInflowBoundary(Global_Data* gdata, EOS* m_pEOS, double dt, double m_fInitParticleSpacing){return ;}
-    virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing,double dt)  {return ;}  
+    virtual void generateBoundaryParticle(Global_Data *gdata, EOS* m_pEOS, double m_fInitParticleSpacing,double dt,double *mass)  {return ;}  
 
 
 };
