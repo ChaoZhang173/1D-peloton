@@ -100,10 +100,11 @@ We are currently working on the following jobs:
   Finished debugging, code could run successfully 03/19/2024  
 1. Fixed issues:  
 1.1. uninitialized variable: vector<double> neeff 03/19/2024  
-1.2. x=0 is the pellet, 1st particle x = 1*initial spacing 03/20/2024  
-2. Current issues:  
+1.2. x=0 is the pellet, 1st particle x = 1*initial spacing 03/20/2024
+1.3. the left boundary needs to change to use upwind method  03/22/2024  
+3. Current issues:  
 2.1. particles near the pellet didn't generated  
-2.2. the left boundary needs to change to use upwind method  
+2.2. density integral too large for right boundary, the right particle moves too far away    
 4. The accuracy needs to be verified
 
 **1. timer: Chao**   
