@@ -66,7 +66,8 @@ void PelletSolver::computeDensityIntegral(){
     for(li = lpnum-1; li >= 0; li--){
         pad = &((*gdata->particle_data)[li]);
         pad2 = pad->rightneighbour;
-        integral_local = 0.5*(pad2->x - pad->x)*(1./pad2->volume + 1./pad->volume);
+        integral_local = (pad2->x - pad->x)*(1./pad2->volume);
+        //integral_local = 0.5*(pad2->x - pad->x)*(1./pad2->volume + 1./pad->volume);
         integral_sum += integral_local;
         pad->leftintegral = integral_sum;
 

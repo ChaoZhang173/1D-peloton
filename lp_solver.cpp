@@ -34,7 +34,7 @@ void LPSolver::solve_1d(){
         }
         // reorder particles, make sure particle position is in order, set neighbours
         gdata->reorderParticles();
-        // generate ghost partilces(for boundary particles)
+        // generate(update) ghost partilces(for boundary particles)
         gdata->generateGhostParticles();
         // update loacal spacing, replace particles if too close
         gdata->updatelocalSpacing();
@@ -54,7 +54,7 @@ void LPSolver::solve_1d(){
         solve_upwind();
 
         // compute boundary condition, the choice of dx needs to be updated
-        pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing*10);
+        pellet_solver->computeBoundaryCondition(gdata, cfldt, gdata->initialspacing);
         // update particle states
         gdata->updateParticleStates();
         // radiation cooling
@@ -70,7 +70,7 @@ void LPSolver::solve_1d(){
         // output data, move to begining of the next timestep
 
         // delete remote particles/ghost particles
-
+        gdata->deleteBadParticles();
         // update the ifStart
         gdata->ifStart = false;
     }
@@ -151,7 +151,7 @@ void LPSolver::solve_laxwendroff() {
             double gamma = (*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure);
             cout<<"[LW Solver] inpressure: "<<*inpressure<<", outpressure: "<<*outpressure<<endl;
             cout<<"   involume: "<<*involume<<", outvolume: "<<*outvolume<<endl;
-            cout<<"   position: "<<pad->x<<", heating: "<<(gamma-1)*cfldt*pad->deltaq<<endl;
+            cout<<"   position: "<<pad->x<<"li: "<<li<<", heating: "<<(gamma-1)*cfldt*pad->deltaq<<endl;
             assert(false);
         }
 
@@ -307,8 +307,8 @@ void LPSolver::solve_upwind_particle(pdata *pad, int pnum) {
 
     // if the particle has 0 volume or 0 soundspeed, skip it
     if(*insoundspeed < 1e-10 || *involume < 1e-10) {
-        cout<<"[LW] Detect a particle has 0 volume or 0 soundspeed!"<<endl;
-        cout<<"[LW] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
+        cout<<"[UW] Detect a particle has 0 volume or 0 soundspeed!"<<endl;
+        cout<<"[UW] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
         return;
     }
 
@@ -321,16 +321,22 @@ void LPSolver::solve_upwind_particle(pdata *pad, int pnum) {
 
     // add -∇·q
     *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
- 
+
     // check if time integration gives nan/inf value
     if(isnan(*outvelocity) || isnan(*outpressure) || isnan(*outvolume)) {
     cout<<"[timeIntegration] Detect a particle has nan value!"<<endl;
     cout<<"[timeIntegration] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
+    cout<<"invelocity: "<<*invelocity<<", outvelocity: "<<*outvelocity<<endl;
+    cout<<"inpressure: "<<*inpressure<<", outpressure: "<<*outpressure<<endl;
+    cout<<"involume: "<<*involume<<", outvolume: "<<*outvolume<<endl;
     assert(false);
     }
     if(isinf(*outvelocity) || isinf(*outpressure) || isinf(*outvolume)) {
     cout<<"[timeIntegration] Detect a particle has inf value!"<<endl;
     cout<<"[timeIntegration] Particle ID= "<<pnum<<", position = "<<(pad->x)<<endl;
+    cout<<"invelocity: "<<*invelocity<<", outvelocity: "<<*outvelocity<<endl;
+    cout<<"inpressure: "<<*inpressure<<", outpressure: "<<*outpressure<<endl;
+    cout<<"involume: "<<*involume<<", outvolume: "<<*outvolume<<endl;
     assert(false);
     }
     // check if the value is within the physical range
@@ -434,17 +440,20 @@ void LPSolver::updateLocalSpacing(){
 }
 
 void LPSolver::computeCFLCondition(){
-    pdata *pad;
+    pdata *pad,*pad2;
     size_t li, lpnum = gdata->particle_data->size();
 
     double mindt = 100;
     double dt;
+    double dx;
     double soundspeed;
 
-    for (li = 0; li<lpnum; li++){
+    for (li = 0; li<lpnum-1; li++){
         pad = &((*gdata->particle_data)[li]);
+        pad2 = &((*gdata->particle_data)[li+1]);
+        dx = pad2->x - pad->x;
         soundspeed = pad->soundspeed;
-        dt = pad->localspacing/soundspeed;
+        dt = dx/soundspeed;
         if (dt<mindt) mindt = dt;
 
         cfldt = mindt * cflcoeff;   

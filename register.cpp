@@ -4,5 +4,6 @@
 namespace{
 
     StateRegistrar<PelletState> s1("pelletstate");
+    StateRegistrar<PelletState> s2("teststate");
     BoundaryRegistrar<PelletInflowBoundary> b1("pelletinflowboundary");
 }

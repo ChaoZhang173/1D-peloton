@@ -51,6 +51,9 @@ class Initializer {
     double getInvalidPressure(){return i_invalidPressure;};
     double getInvalidDensity(){return i_invalidDensity;};
 
+    double getBadPressure(){return i_badPressure;};
+    double getBadVolume(){return i_badVolume;};
+
     private:
     // currently not using
     void readInputfile(const std::string& inputfileName);
@@ -103,6 +106,10 @@ class Initializer {
     void setInvalidPressure(double p){i_invalidPressure = p;};
     //! set the invalid density
     void setInvalidDensity(double d){i_invalidDensity = d;};
+    //! set the bad pressure
+    void setBadPressure(double p){i_badPressure = p;};
+    //! set the bad volume
+    void setBadVolume(double v){i_badVolume = v;};
 
     double i_StartTime;
     double i_EndTime;
@@ -120,6 +127,9 @@ class Initializer {
 
     double i_invalidPressure;
     double i_invalidDensity;
+
+    double i_badPressure;
+    double i_badVolume;
 
     double i_minDx;
 

@@ -29,6 +29,7 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
 
     // compute massflowrate, need to be finished
     p->computeMassFlowRate();
+
     // currently only has 1 pellet
     for(pi = 0; pi < pnum; pi++){
         pellet = &((*p->pelletlist)[pi]);
@@ -43,6 +44,20 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
             pellet->vinflow = pelletvinflow = Vinflow;
             pellet->pinflow = pelletpinflow = Pinflow;
         }
+
+        // set the boundary condition to fixed value, do test
+        pellet->pinflow = 9.37944;
+        pellet->vinflow = 197.681;
+        pellet->pelletvelocity = 14.5343;
+        pellet->massflowrate = 0.03679986557478038;
+        massflowrate = pellet->massflowrate;
+        pelletpinflow = pellet->pinflow;
+        pelletvinflow = pellet->vinflow;
+        cout<<"--------[Boundary Test]---------"<<endl;
+        cout<<"The pinflow has been set to: "<<pelletpinflow<<endl;
+        cout<<"The vinflow has been set to: "<<pelletvinflow<<endl;
+        cout<<"The pellet velocity has been set to: "<<pellet->pelletvelocity<<endl;
+        cout<<"The massflowrate has been set to: "<<massflowrate<<endl;
         
         cout<<"-----------------"<<endl;
         // output the particle_data[0]->x

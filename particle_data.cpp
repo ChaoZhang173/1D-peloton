@@ -21,6 +21,10 @@ Global_Data::Global_Data(Initializer *init) {
     invalidpressure = init->getInvalidPressure();
     invaliddensity = init->getInvalidDensity();
 
+    // get the bad pressure and volume, used to delete particles
+    badpressure = init->getBadPressure();
+    badvolume = init->getBadVolume();
+
     eoschoice = init->getEOSChoice();
     // set up eos
     setEOS();
@@ -103,14 +107,15 @@ void Global_Data::reorderParticles(){
         
         pad->leftneighbour = &((*particle_data)[li-1]);
         pad->rightneighbour = &((*particle_data)[li+1]);
-       
     }
 }
 
 void Global_Data::generateGhostParticles(){
-    pdata *pad;
+    pdata *pad,*pad2;
     pdata *ghostpad;
     pellet_info *pellet;
+
+    double dis = 0;
 
     double vacumm_volume = 1.0e6;
 
@@ -119,30 +124,34 @@ void Global_Data::generateGhostParticles(){
     
     // left ghost particle
     pad = &((*particle_data)[0]);
+    pad2 = &((*particle_data)[1]);
+    dis = pad2->x - pad->x;
     ghostpad = &((*ghostparticle_data)[0]);
-    ghostpad->x = pad->x - pad->localspacing;
+    ghostpad->x = pad->x - dis;
     ghostpad->localspacing = pad->localspacing;
     ghostpad->ifboundary = true;
     ghostpad->mass = pad->mass;
-    // if the 1st particle is near the pellet surface
-    if(pad->x<10*initialspacing){
+//    // if the 1st particle is near the pellet surface
+//    if(pad->x<10*initialspacing){
         ghostpad->v = pellet->pelletvelocity;
         ghostpad->volume = pellet->vinflow;
         ghostpad->pressure = pellet->pinflow;
         ghostpad->soundspeed = eos->getSoundSpeed(ghostpad->pressure, 1./ghostpad->volume, 0);
-    }
-    // if the 1st particle is far from the pellet surface
-    else{
-        ghostpad->v = pad->v;
-        ghostpad->volume = vacumm_volume;
-        ghostpad->pressure = pad->pressure;
-        ghostpad->soundspeed = pad->soundspeed;
-    }
+//    }
+//    // if the 1st particle is far from the pellet surface
+//    else{
+//        ghostpad->v = pad->v;
+//        ghostpad->volume = vacumm_volume;
+//        ghostpad->pressure = pad->pressure;
+//        ghostpad->soundspeed = pad->soundspeed;
+//    }
 
     // right ghost particle, vacumm
     pad = &((*particle_data)[particle_data->size()-1]);
+    pad2 = &((*particle_data)[particle_data->size()-2]);
+    dis = pad->x - pad2->x;
     ghostpad = &((*ghostparticle_data)[1]);
-    ghostpad->x = pad->x + 0.5*pad->localspacing;
+    ghostpad->x = pad->x + dis;
     ghostpad->v = pad->v;
     ghostpad->volume = vacumm_volume;
     ghostpad->pressure = backgroundpressure;
@@ -152,6 +161,25 @@ void Global_Data::generateGhostParticles(){
     ghostpad->ifboundary = true;
 
 
+}
+
+void Global_Data::deleteBadParticles(){
+    pdata *pad;
+    int li;
+    size_t lpnum = particle_data->size();
+
+    for(li = lpnum-1; li >= 0; li--){
+        pad = &((*particle_data)[li]);
+        if(pad->volume > badvolume){
+            cout<<"----------Delete Bad Particles----------"<<endl;
+            cout<<"Warning: delete particle "<<li<<"at "<<pad->x<<endl;
+            cout<<"P = "<<pad->pressure<<"V = "<<pad->volume<<"T = "<<pad->temperature<<endl;
+            // delete the particle
+            particle_data->erase(particle_data->begin()+li);
+            cout<<"-------Finish Delete Bad Particles-------"<<endl;
+        }
+
+    }
 }
 
 void Global_Data::updatelocalSpacing(){

@@ -81,6 +81,9 @@ public:
   // if two particles too close, replace the particle
   void updatelocalSpacing();
 
+  //! delete particles with bad states(small pressure, large volume, high temperature, etc.)
+  void deleteBadParticles();
+
   //! true: at the first step
   bool ifStart;
 
@@ -106,6 +109,10 @@ public:
   // invalid pressure and density
   double invalidpressure;
   double invaliddensity;
+
+  // bad pressure and volume, used to delete bad particles
+  double badpressure;
+  double badvolume;
 
   int pelletnumber; //! =1
   double currenttime;
