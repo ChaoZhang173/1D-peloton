@@ -11,9 +11,9 @@ James Corbett
 ## Algorithm:
 1. MHD equations:
    The Lagrangian formulation of MHD equation in spherical symmetric case:  
-   ![equation](https://latex.codecogs.com/gif.latex?\frac{DV}{Dt}=\frac{2}{x}Vu+Vu_x)
+   ![equation](https://latex.codecogs.com/gif.latex?\frac{DV}{Dt}=\frac{2}{x}Vu+Vu_x)  
    ![equation](https://latex.codecogs.com/gif.latex?\frac{Du}{Dt}=xVP_x)  
-   ![equation](https://latex.codecogs.com/gif.latex?\frac{DP}{Dt}=-\frac{2}{x}\gammaPu-\gammaPu_x)
+   ![equation](https://latex.codecogs.com/gif.latex?\frac{DP}{Dt}=-\frac{2}{x}\gammaPu-\gammaPu_x)  
    Now using lax-wendroff and upwind (only for right boundar) scheme.    
    Other schemes maybe added in the future.
    The upwind is applied on the right boundary, laxwendroff has high oscillation near the boundary   
