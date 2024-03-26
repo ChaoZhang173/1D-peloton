@@ -51,7 +51,7 @@ void Initializer::setInputs() {
   setBadPressure(0);
   setBadVolume(1e6);
   // set state name
-  setStateName("pelletstate");
+  setStateName("teststate");
   setBoundaryNumber(1);// currently only one boundary
   setBoundaryName("pelletinflowboundary");
   // set pellets, currently only use 1 pellet
