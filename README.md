@@ -104,10 +104,10 @@ We are currently working on the following jobs:
 1.3. the left boundary needs to change to use upwind method  03/22/2024  
 2. Current issues:  
 3.1. particles near the pellet didn't generated  
-3.2. density integral too large for right boundary, the right particle moves too far away
-3.3. the formula of pde is incorrect (with spherical coordinate)  
-3.4. lax-wendroff introduces dispersion, change to use upwind only (for now)
-3.5. delete remote particles
+3.2. density integral too large for right boundary, the right particle moves too far away  
+3.3. the formula of pde is incorrect (with spherical coordinate)   
+3.4. lax-wendroff introduces dispersion, change to use upwind only (for now)  
+3.5. delete remote particles  
 3.6. set the properityh of the right neighbour of right boundary to some value slightly smaller than right boundary   
 4. The accuracy needs to be verified
 
