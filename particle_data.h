@@ -82,6 +82,7 @@ public:
   void updatelocalSpacing();
 
   //! delete particles with bad states(small pressure, large volume, high temperature, etc.)
+  // and the particles that move out of the interested region, currently >20cm
   void deleteBadParticles();
 
   //! true: at the first step
