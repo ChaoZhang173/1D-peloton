@@ -55,10 +55,16 @@ void Global_Data::initFluidParticles_line(){
     ghostparticle_data = make_unique<vector<pdata>>(2);
     
     pdata *pad;
-    // the first particle is set near but not at the pellet surface
+
+    // currently only use 1 pellet
+    pellet_info *pellet = &((*pellet_solver->pelletlist)[0]);
+    double pellet_cen = pellet->x;
+    double pellet_radius = pellet->radius;
+
+    // the first particle is set next to the pellet surface 
     for (int i = 0; i < pnum; i++){
         pad = &((*particle_data)[i]);
-        pad->x = (i+1) * initialspacing;
+        pad->x = pellet_cen + pellet_radius + (i+1) * initialspacing;
         pad->v = state->velocity();
         pad->volume = 1./state->density();
         pad->pressure = state->pressure();

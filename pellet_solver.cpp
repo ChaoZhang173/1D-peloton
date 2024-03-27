@@ -36,6 +36,7 @@ PelletSolver::PelletSolver(Initializer *init,Global_Data*g){
     for (int i = 0; i < pelletnumber; i++){
         pellet = &((*pelletlist)[i]);
         pellet->x = init->getPelletLocation();
+        pellet->radius = init->getPelletRadius();
         pellet->layerlength = init->getLayerLength();
     }
     // asgin the pellet_solver to the global data
@@ -197,6 +198,7 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
     double r_shift;
     double x; // the position of the particle
     double pellet_cen; 
+    double pellet_radius;
 
     double gamma = g->gamma;
     double R = 83.1466/mu;
@@ -213,7 +215,8 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
         pad = &((*g->particle_data)[0]);
         // the position of the pellet
         pellet_cen = pellet->x;
-        cout<<"[BoundaryCondition] searching radius: "<<pellet_cen-dx<<" ~ "<<pellet_cen+dx<<endl;
+        pellet_radius = pellet->radius;
+        //cout<<"[BoundaryCondition] searching radius: "<<pellet_cen+pellet_radius-dx<<" ~ "<<pellet_cen+pellet_radius+dx<<endl;
         for(li = 0; li < lpnum; li++){
             pad = &((*g->particle_data)[li]);
             x = pad->x;
@@ -224,10 +227,11 @@ void PelletSolver::computeBoundaryCondition(Global_Data *g, double dt, double dx
             else{
                 ss = sound;
             }
-            r_shift = x-pellet_cen - ss*dt;
+            // need to dissuss about whether to consider particle velocity
+            r_shift = x - pellet_cen - pellet_radius - ss*dt;
             
             //if(r_shift<pellet_cen+dx && r_shift>pellet_cen-dx){
-            if(r_shift<pellet_cen+dx){
+            if(r_shift<dx && r_shift>-dx){
                 pvolume = pad->volume;
                 ppressure = pad->pressure;
                 pur = v;

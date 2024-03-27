@@ -19,7 +19,7 @@ private:
 	double m_fDen;
 	double m_fVel;
 	double m_fPressure;
-	double xcen;
+	double m_xcen;
 };
 #endif
 

@@ -36,11 +36,11 @@ void Initializer::setInputs() {
   // set pellet material; 0:neon
   setMaterialChoice(0);
   // the length of layer that will generate initial particles
-  setLayerLength(0.2);
+  setLayerLength(0.02);
   // set the estimated max number of particles, currenlyt not used
   //setMaxParticleNumber(10000);
   // set the initial spacing between particles
-  setInitialSpacing(0.01);
+  setInitialSpacing(0.005);
   // set the smallest dx between particles
   setMinDx(1e-10);
   setBackgroundPressure(0.64);//2kev 1e14 -> 0.64
@@ -56,5 +56,8 @@ void Initializer::setInputs() {
   setBoundaryName("pelletinflowboundary");
   // set pellets, currently only use 1 pellet
   setPelletNumber(1);
+  // set the location of the pellet
   setPelletLocation(0);
+  // set the radius of the pellet
+  setPelletRadius(0.2);
 }

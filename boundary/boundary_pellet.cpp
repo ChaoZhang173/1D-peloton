@@ -17,6 +17,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
     pdata *pad = new pdata;
     pellet_info *pellet;
 
+    double pellet_cen, pellet_radius; 
+
     size_t pi;
     size_t pnum = p->pelletlist->size();
     size_t li;
@@ -33,6 +35,8 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
     // currently only has 1 pellet
     for(pi = 0; pi < pnum; pi++){
         pellet = &((*p->pelletlist)[pi]);
+        pellet_cen = pellet->x;
+        pellet_radius = pellet->radius;
         massflowrate = pellet->massflowrate;
         // if not at the beggining of the job, and massflowrate >0, pinflow is a number  
         if(!g->ifStart&& abs(massflowrate)>1e-10 &&!isnan(pellet->pinflow)){
@@ -91,7 +95,7 @@ void PelletInflowBoundary::generateBoundaryParticle(Global_Data *g, EOS* m_pEOS,
         // currently generate particle at 1*newdx~pellet velocity *dt
         double newdx = dis/newParticleNum;
         for(li=0; li<newParticleNum; li++){
-            pad->x = (li+1)*newdx;
+            pad->x = pellet_cen + pellet_radius + (li+1)*newdx;
             pad->v = pellet->pelletvelocity;
             pad->volume = pelletvinflow;
             pad->pressure = pelletpinflow;

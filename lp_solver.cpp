@@ -317,7 +317,7 @@ void LPSolver::solve_upwind_particle(pdata *pad, int pnum) {
 
     // time integration
     timeIntegration_upwind(*invelocity, *inpressure, *involume, *insoundspeed, Ud, 
-                            Pd, Vd, outvelocity, outpressure, outvolume);
+                            Pd, Vd, outvelocity, outpressure, outvolume, pad->x);
 
     // add -∇·q
     *outpressure += cfldt*pad->deltaq*((*insoundspeed)*(*insoundspeed)/(*involume)/(*inpressure)-1);
@@ -382,7 +382,7 @@ void LPSolver::computeSpatialDer_upwind(pdata *pad, double *Ud, double *Pd, doub
 
 void LPSolver::timeIntegration_upwind(double inVelocity, double inPressure, double inVolume, 
                   double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
-                  double *outPressure, double *outVolume) {
+                  double *outPressure, double *outVolume, double x) {
     
     double vt,pt,ut;
     double dt = cfldt;
@@ -397,9 +397,9 @@ void LPSolver::timeIntegration_upwind(double inVelocity, double inPressure, doub
     //double vxl = Vd[0];
     //double vxr = Vd[1];
 
-    vt = 0.5 * inVolume * (uxr + uxl) - 0.5 * inVolume / sqrt(K) * (pxr - pxl);
-    ut = 0.5 * inVolume * sqrt(K) * (uxr - uxl) - 0.5 * inVolume * (pxr + pxl);
-    pt = -0.5 * inVolume * K * (uxr + uxl) + 0.5 * inVolume * sqrt(K) * (pxr - pxl);
+    vt = 0.5*inVolume*(uxr+uxl) - 0.5*inVolume*sqrt(x/K)*(pxr-pxl) + 2/x*inVolume*inVelocity;
+    ut = 0.5 * inVolume * sqrt(x * K) * (uxr - uxl) - 0.5 * x * inVolume * (pxr + pxl);
+    pt = -0.5*inVolume*K*(uxr+uxl) + 0.5*inVolume*sqrt(x*K)*(pxr-pxl) - 2/x*inVolume*K*inVelocity;
 
     *outVelocity = inVelocity + dt*ut;
     *outPressure = inPressure + dt*pt;

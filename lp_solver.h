@@ -40,7 +40,7 @@ public:
   //! time integration using upwind method
   void timeIntegration_upwind(double inVelocity, double inPressure, double inVolume, 
                   double inSoundspeed, double *Ud, double *Pd, double *Vd, double *outVelocity, 
-                  double *outPressure, double *outVolume);              
+                  double *outPressure, double *outVolume, double x);              
 
   void computeCFLCondition();
 

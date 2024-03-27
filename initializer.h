@@ -44,6 +44,7 @@ class Initializer {
 
     int getPelletNumber(){return i_PelletNumber;};
     double getPelletLocation(){return i_PelletLocation;};
+    double getPelletRadius(){return i_Pelletradius;};
     
     double getBackgroundPressure(){return i_BackgroundPressure;};
     double getMinDx(){return i_minDx;};
@@ -98,6 +99,8 @@ class Initializer {
     void setPelletNumber(int n){i_PelletNumber = n;};
     //! the location of pellet, currently only use 0
     void setPelletLocation(double l){i_PelletLocation = l;};
+    //! the radius of the pellet
+    void setPelletRadius(double r){i_Pelletradius = r;};
     //! the background pressure
     void setBackgroundPressure(double p){i_BackgroundPressure = p;};
     //! the smallest dx between particles
@@ -142,6 +145,8 @@ class Initializer {
     int i_PelletNumber;
     //! the location of pellet
     double i_PelletLocation;
+    //! the radius of the pellet
+    double i_Pelletradius;
 
     //! a length that used to generate initial particles
     double i_layerlength;

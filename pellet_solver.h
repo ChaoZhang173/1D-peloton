@@ -15,6 +15,7 @@ The class PelletSolver stores all functions that related to pellet problem.
 //! struct to store pellet information
 struct pellet_info{
   double x;
+  double radius;
   double layerlength;
   double pelletvelocity;
   double vinflow;

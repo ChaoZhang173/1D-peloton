@@ -53,7 +53,7 @@ class PelletSolver;
 
 class Global_Data{
 public:
-  friend PelletSolver; //! PelletSolver could access private and proteced memebers
+  friend class PelletSolver; //! PelletSolver could access private and proteced memebers
   Global_Data(Initializer* init);
   // destructor
   ~Global_Data();
