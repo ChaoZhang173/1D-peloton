@@ -107,17 +107,17 @@ We are currently working on the following jobs:
 1.2. x=0 is the pellet, 1st particle x = 1*initial spacing 03/20/2024   
 1.3. the left boundary needs to change to use upwind method  03/22/2024  
 1.4. finished changing the upwind method to spherical symmetric case 03/27/2024  
-1.5. add the pellet raidus, now the generating of particles starts near the pellet surface 03/27/2024  
-2. Current issues:  
+1.5. add the pellet raidus, now the generating of particles starts near the pellet surface 03/27/2024
+1.6. delete remote particles  03/27/2024
+1.7. set the properity of the right neighbour of right boundary to some value slightly smaller than right boundary 03/27/2024
+1.8. set the left boundary to the pellet surface  03/27/2024  
+3. Current issues:  
 2.1. particles near the pellet didn't generated  
 2.2. density integral too large for right boundary, the right particle moves too far away  
-2.3. the formula of pde is incorrect (with spherical coordinate)   
+2.3. the lax-wendroff formula of pde is incorrect (with spherical coordinate)   
 2.4. lax-wendroff introduces dispersion, change to use upwind only (for now)  
-2.5. delete remote particles  
-2.6. set the properityh of the right neighbour of right boundary to some value slightly smaller than right boundary
-     after reaching the steady state, mayge change the neighbour properity
-2.7. set the left boundary to the pellet surface  
-3. The accuracy needs to be verified
+2.6. after reaching the steady state, mayge change the neighbour properity  
+4. The accuracy needs to be verified
 
 **1. timer: Chao**   
 
