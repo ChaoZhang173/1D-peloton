@@ -26,6 +26,7 @@ double PolytropicEOS::getTemperature(double pressure, double density){
     return mu*pressure/(R*density)/11604.525;
 }
 
+// -1: left ghost partilc, -2: right ghost particle
 double PolytropicEOS::getSoundSpeed(double pressure, double density, int num){
     double soundspeed;
 
