@@ -198,10 +198,12 @@ void Global_Data::updatelocalSpacing(){
     pellet_info *pellet;
 
     pellet = &((*pellet_solver->pelletlist)[0]);
+    double pellet_cen = pellet->x;
+    double pellet_radius = pellet->radius;
 
     // 1st particle
     pad = &((*particle_data)[0]);
-    pad->localspacing = 0.5 * ((*particle_data)[1].x - pellet->x);
+    pad->localspacing = 0.5 * ((*particle_data)[1].x - pellet_cen - pellet_radius);
     // last particle
     pad = &((*particle_data)[lpnum-1]);
     pad->localspacing = pad->x - (*particle_data)[lpnum-2].x;
