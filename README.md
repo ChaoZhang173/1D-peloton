@@ -27,9 +27,9 @@ James Corbett
 6. write result:
    (to be done)write initial state at the beginning while write the output function   
    other steps will be written normally.
-7. local spacing:
+7. local spacing: the local spacing is not used currently  
    the local spaing = 0.5((distance to left) + (distance to right))  
-   1st particle: local spacing = 0.5*(x_2nd - pellet_cen(0))    
+   1st particle: local spacing = 0.5*(x_2nd - pellet_surf)    
    last particle: local spacing = x_last - x_(last-1)  
 9. electron density integral and heat deposition:   
    The 1D code only has left integral, and right integral is not used.  
