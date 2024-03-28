@@ -48,9 +48,12 @@ void LPSolver::solve_1d(){
         }
         // heating model
         pellet_solver->heatingModel(currenttime);
-        // lax-wendroff solver for other particles
-        solve_laxwendroff();
-        // calculate right & left boundaries using upwind method
+//        // lax-wendroff solver for other particles
+//        solve_laxwendroff();
+//        // calculate right & left boundaries using upwind method
+//        solve_upwind_boundries();
+
+        // only use upwind method for now
         solve_upwind();
 
         // compute boundary condition, the choice of dx needs to be updated
@@ -261,6 +264,20 @@ void LPSolver::timeIntegration(double inVelocity, double inPressure, double inVo
 }
 
 void LPSolver::solve_upwind(){
+    
+    cout<<"[LPSolver] Entering solve_upwind..."<<endl;
+    pdata *pad;
+    size_t li, lpnum = gdata->particle_data->size();
+
+    for(li = 0; li<lpnum; li++){
+        pad = &((*gdata->particle_data)[li]);
+        solve_upwind_particle(pad, li);
+    }
+    cout<<"[LPSolver] solve_upwind finished!"<<endl;
+
+}
+
+void LPSolver::solve_upwind_boundaries(){
     
     cout<<"[LPSolver] Entering solve_upwind..."<<endl;
     pdata *pad;

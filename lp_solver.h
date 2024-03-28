@@ -21,8 +21,10 @@ public:
   void moveParticle();
   // for all particles expect right boundary
   void solve_laxwendroff();
-  // use upwind for left & right boundary
+  // sole all particles using upwind
   void solve_upwind();
+  // use upwind for left & right boundary
+  void solve_upwind_boundaries();
   // use upwind for one particle, input: particle and index
   void solve_upwind_particle(pdata *pad, int pnum);
   //! compute spatial derivatives using Newton Interpolation
